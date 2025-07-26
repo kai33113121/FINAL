@@ -1,0 +1,109 @@
+.text-shadow {
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.btn-purple {
+    background-color: #6a11cb;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-purple:hover {
+    background-color: #5011a1;
+    transform: scale(1.05);
+}
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.text-purple {
+    color: #6a1b9a;
+}
+
+.bg-purple-light {
+    background-color: #f3e5f5;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.text-purple {
+    color: #6a1b9a;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-purple {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-purple:hover {
+    background-color: #4a148c;
+    transform: scale(1.05);
+}
+
+.collage-container {
+    pointer-events: none;
+    z-index: 1;
+}
+
+.collage-img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.collage-img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.collage-img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: float 6s ease-in-out infinite;
+}
+
+img[alt="Decoración triangular"] {
+    transition: transform 0.5s ease;
+}
+
+img[alt="Decoración triangular"]:hover {
+    transform: rotate(15deg) scale(1.1);
+}
