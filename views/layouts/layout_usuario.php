@@ -55,13 +55,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <!-- Secciones centradas -->
                 <ul class="navbar-nav gap-3 mx-auto">
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Libros</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Comprar libros</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Vender libros</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Intercambiar libros</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Actualizaciones</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Gestionar</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard#libros">Libros</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard#productos">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard#categorias">Categorias</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard#lanzamientos">Lanzamientos</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard#blog">Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link text-shadow" href="index.php?c=UsuarioController&a=dashboard#contacto">Contanctanos</a></li>
                     <li class="nav-item"><a class="nav-link text-shadow"
                             href="index.php?c=EventoController&a=listar">Foros</a></li>
                     <li class="nav-item"><a class="nav-link text-shadow"
