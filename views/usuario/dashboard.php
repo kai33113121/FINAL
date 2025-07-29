@@ -174,7 +174,7 @@ $usuario = $_SESSION['usuario'];
         <div class="container">
             <div class="row justify-content-center mb-4">
                 <div class="col-md-8 text-center">
-                    <h2 class="fw-bold text-purple text-shadow">📚 Libros destacados para ti</h2>
+                    <h2 id="libros" class="fw-bold text-purple text-shadow">📚 Libros destacados para ti</h2>
                     <p class="text-muted">Explora títulos recomendados y los más populares del momento.</p>
                 </div>
             </div>
@@ -417,8 +417,8 @@ $usuario = $_SESSION['usuario'];
   background-image: url('/FINAL/public/img/adminside.png');
   color: white;
 ">
-        <div class="container">
-            <h2 class="text-center fw-bold mb-5 text-white text-shadow">📚 Explora por Categorías</h2>
+        <div id="categorias" class="container">
+            <h2  class="text-center fw-bold mb-5 text-white text-shadow">📚 Explora por Categorías</h2>
 
             <!-- Cubos horizontales -->
             <div class="d-flex flex-column gap-4 align-items-center">
@@ -574,7 +574,7 @@ seccion de actividades recientes -->
 
                 <!-- Texto y acción -->
                 <div class="col-md-6">
-                    <h2 class="fw-bold text-purple mb-3">✨ Lanzamiento exclusivo</h2>
+                    <h2 id="lanzamientos" class="fw-bold text-purple mb-3">✨ Lanzamiento exclusivo</h2>
                     <h4 class="mb-3">La joya literaria del año</h4>
                     <p class="text-muted">Una memoria cruda y poética sobre viajes, identidad y los encuentros que nos
                         marcan para siempre.</p>
@@ -864,7 +864,7 @@ seccion de actividades recientes -->
 
     <section class="py-5 bg-white">
         <div class="container">
-            <h2 class="text-center text-purple fw-bold mb-5 text-shadow">📝 Blogs y Noticias Literarias</h2>
+            <h2 id="blog" class="text-center text-purple fw-bold mb-5 text-shadow">📝 Blogs y Noticias Literarias</h2>
             <div class="row g-4 justify-content-center">
 
                 <!-- Blog 1 -->
@@ -919,7 +919,7 @@ seccion de actividades recientes -->
 
     <!-- seccion footer final final -->
 
-    <footer class="bg-dark text-white py-5">
+    <footer id="contacto" class="bg-dark text-white py-5">
         <div class="container text-center">
             <h5 class="mb-3">📚 LibrosWap — Compartiendo conocimiento desde 2025</h5>
             <p class="mb-3">Diseñado con 💜 LIBROS WAP</p>
