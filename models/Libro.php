@@ -8,21 +8,6 @@ class Libro {
         $this->conexion = conectar();
     }
 
-//     public function subir($datos) {
-//     $stmt = $this->conexion->prepare("INSERT INTO libros (titulo, autor, genero, estado, descripcion, imagen, usuario_id, modo, precio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//     $stmt->bind_param("ssssssisd", 
-//         $datos['titulo'], 
-//         $datos['autor'], 
-//         $datos['genero'], 
-//         $datos['estado'], 
-//         $datos['descripcion'], 
-//         $datos['imagen'], 
-//         $datos['usuario_id'], 
-//         $datos['modo'], 
-//         $datos['precio']
-//     );
-//     return $stmt->execute();
-// }
     public function obtenerPorUsuario($usuario_id) {
     $stmt = $this->conexion->prepare("SELECT * FROM libros WHERE usuario_id = ?");
     $stmt->bind_param("i", $usuario_id);
