@@ -13,4 +13,4 @@ $controlador = isset($_GET['c']) ? $_GET['c'] : 'UsuarioController';
 $accion = isset($_GET['a']) ? $_GET['a'] : 'landing';
 
 $controlador = new $controlador();
-call_user_func([$controlador, $accion]);
+call_user_func([$controlador, $accion]); 

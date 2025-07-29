@@ -66,6 +66,7 @@
                             href="index.php?c=EventoController&a=listar">Foros</a></li>
                     <li class="nav-item"><a class="nav-link text-shadow"
                             href="index.php?c=MensajeController&a=mensajes">Mensajes</a></li>
+                    
                 </ul>
 
                 <!-- Íconos y perfil -->
@@ -120,8 +121,8 @@
                                 height="32">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><a class="dropdown-item" href="#">Configuración</a></li>
+                            <li><a class="dropdown-item" href="index.php?c=UsuarioController&a=perfil">Perfil</a></li>
+                            <li><a class="dropdown-item" href="index.php?c=UsuarioController&a=configuracion">Configuración</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -129,7 +130,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item" href="index.php?c=UsuarioController&a=logout">Cerrar sesión</a>
+                    
                 </ul>
             </div>
         </div>
@@ -139,7 +140,7 @@
         <?php include($contenido); ?>
     </div>
 
-    <!-- ✅ Bootstrap JS al final -->
+    <!--  Bootstrap JS al final -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -128,6 +128,7 @@
             <a href="index.php?c=UsuarioController&a=logout">
                 <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
             </a>
+            <a class="dropdown-item" href="index.php?c=AdminController&a=perfil">Perfil</a>
         </div>
         <div class="col-md-10 p-4">
             <?php include($contenido); ?>
