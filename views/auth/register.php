@@ -160,6 +160,11 @@
                 <div class="logo text-center"> LIBROSWAP</div>
                 <h2 class="text-center">Crear cuenta</h2>
                 <p class="subtitle text-center">Únete a la comunidad de lectores apasionados</p>
+                <?php if (isset($mensaje)): ?>
+                    <div class="alert <?= str_contains($mensaje, '✅') ? 'alert-success' : 'alert-danger' ?> text-center">
+                        <?= $mensaje ?>
+                    </div>
+                <?php endif; ?>
                 <form method="POST" action="index.php?c=UsuarioController&a=register">
                     <div class="mb-3 input-group">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -177,9 +182,10 @@
                 </form>
                 <p class="mt-3 text-center">¿Ya tienes cuenta? <a href="index.php?c=UsuarioController&a=login">Inicia
                         sesión</a>
-                        <br>
-                    <a href="index.php">Volver al Home</a></p>
-                        
+                    <br>
+                    <a href="index.php">Volver al Home</a>
+                </p>
+
             </div>
         </div>
     </div>

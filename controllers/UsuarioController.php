@@ -13,39 +13,47 @@ class UsuarioController
     }
     public function register()
     {
+        $mensaje = null;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../models/Usuario.php';
             $usuario = new Usuario();
             $exito = $usuario->registrar($_POST['nombre'], $_POST['email'], $_POST['password']);
+
             if ($exito) {
-                echo "✅ Usuario registrado correctamente.";
+                $mensaje = "✅ Usuario registrado correctamente.";
             } else {
-                echo "❌ Error al registrar usuario: " . $usuario->getError();
+                $mensaje = "❌ Error al registrar usuario: " . $usuario->getError();
             }
-        } else {
-            include __DIR__ . '/../views/auth/register.php';
         }
+
+        include __DIR__ . '/../views/auth/register.php';
     }
     public function login()
     {
+        $mensaje = null;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../models/Usuario.php';
             $usuario = new Usuario();
             $datos = $usuario->verificar($_POST['email'], $_POST['password']);
+
             if ($datos) {
                 $_SESSION['usuario'] = $datos;
 
                 if ($datos['rol'] === 'admin') {
                     header("Location: index.php?c=AdminController&a=dashboard");
+                    exit;
                 } else {
                     header("Location: index.php?c=UsuarioController&a=dashboard");
+                    exit;
                 }
             } else {
-                echo "❌ Credenciales incorrectas.";
+                $mensaje = "❌ Credenciales incorrectas.";
             }
-        } else {
-            include __DIR__ . '/../views/auth/login.php';
         }
+
+        include __DIR__ . '/../views/auth/login.php';
     }
     public function dashboard()
     {
@@ -227,12 +235,86 @@ class UsuarioController
         }
     }
     public function biblioteca()
-{
-    require_once __DIR__ . '/../models/Libro.php';
-    $libro = new Libro();
-    $misLibros = $libro->obtenerPorUsuario($_SESSION['usuario']['id']);
+    {
+        require_once __DIR__ . '/../models/Libro.php';
+        $libro = new Libro();
+        $misLibros = $libro->obtenerPorUsuario($_SESSION['usuario']['id']);
 
-    $contenido = __DIR__ . '/../views/usuario/biblioteca.php';
-    include __DIR__ . '/../views/layouts/layout_usuario.php';
-}
+        $contenido = __DIR__ . '/../views/usuario/biblioteca.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
+    public function perfil()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
+        $usuario = $usuarioModel->obtenerPorId($_SESSION['usuario']['id']);
+
+        $contenido = __DIR__ . '/../views/usuario/perfil.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
+
+    public function actualizarPerfil()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
+
+        $id = $_SESSION['usuario']['id'];
+        $nombre = $_POST['nombre'];
+        $email = $_POST['email'];
+        $bio = $_POST['bio'] ?? '';
+        $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
+
+        if (!empty($_FILES['foto']['name'])) {
+            $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
+            $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
+                $foto = $nombreArchivo;
+            }
+        }
+
+        $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto);
+
+        // Actualizar sesión
+        $_SESSION['usuario']['nombre'] = $nombre;
+        $_SESSION['usuario']['email'] = $email;
+        $_SESSION['usuario']['bio'] = $bio;
+        $_SESSION['usuario']['foto'] = $foto;
+
+        header("Location: index.php?c=UsuarioController&a=perfil");
+    }
+    public function obtenerPorId($id)
+    {
+        $conn = conectar();
+        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_assoc();
+    }
+    public function configuracion()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
+        $config = $usuarioModel->obtenerConfiguracion($_SESSION['usuario']['id']);
+
+        $contenido = __DIR__ . '/../views/usuario/configuracion.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
+
+    public function guardarConfiguracion()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
+
+        $id = $_SESSION['usuario']['id'];
+        $tema = $_POST['tema'] ?? 'claro';
+        $color = $_POST['color_acento'] ?? 'morado';
+        $vista = $_POST['vista_libros'] ?? 'grid';
+        $notificaciones = isset($_POST['notificaciones']) ? 1 : 0;
+
+        $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones);
+
+        header("Location: index.php?c=UsuarioController&a=configuracion");
+    }
+
 }

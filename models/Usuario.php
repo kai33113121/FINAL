@@ -44,6 +44,7 @@ public function obtenerPorId($id) {
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
+
 public function actualizar($id, $datos) {
     $stmt = $this->conexion->prepare("UPDATE usuarios SET nombre = ?, email = ?, rol = ?, bio = ? WHERE id = ?");
     $stmt->bind_param("ssssi", $datos['nombre'], $datos['email'], $datos['rol'], $datos['bio'], $id);
@@ -101,5 +102,40 @@ public function contarUsuarios() {
     $resultado = $stmt->get_result();
     $row = $resultado->fetch_row();
     return $row[0];
+}
+
+public function actualizarPerfil($id, $nombre, $email, $bio, $foto)
+{
+    $stmt = $this->conexion->prepare("UPDATE usuarios SET nombre = ?, email = ?, bio = ?, foto = ? WHERE id = ?");
+    $stmt->bind_param("ssssi", $nombre, $email, $bio, $foto, $id);
+    return $stmt->execute();
+}
+public function obtenerConfiguracion($idUsuario) {
+    $conn = conectar();
+    $stmt = $conn->prepare("SELECT * FROM config_usuario WHERE id_usuario = ?");
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    return $resultado->fetch_assoc();
+}
+
+public function guardarConfiguracion($idUsuario, $tema, $color, $vista, $notificaciones) {
+    $conn = conectar();
+
+    // Verificar si ya existe
+    $stmt = $conn->prepare("SELECT id FROM config_usuario WHERE id_usuario = ?");
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    $existe = $stmt->get_result()->fetch_assoc();
+
+    if ($existe) {
+        $stmt = $conn->prepare("UPDATE config_usuario SET tema = ?, color_acento = ?, vista_libros = ?, notificaciones = ? WHERE id_usuario = ?");
+        $stmt->bind_param("sssii", $tema, $color, $vista, $notificaciones, $idUsuario);
+    } else {
+        $stmt = $conn->prepare("INSERT INTO config_usuario (id_usuario, tema, color_acento, vista_libros, notificaciones) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssi", $idUsuario, $tema, $color, $vista, $notificaciones);
+    }
+
+    $stmt->execute();
 }
 }

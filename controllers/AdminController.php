@@ -279,4 +279,43 @@ class AdminController
 
     header("Location: index.php?c=AdminController&a=libros");
 }
+public function perfil()
+{
+    require_once __DIR__ . '/../models/Usuario.php';
+    $usuarioModel = new Usuario();
+    $usuario = $usuarioModel->obtenerPorId($_SESSION['usuario']['id']);
+
+    $contenido = __DIR__ . '/../views/admin/perfil.php';
+    include __DIR__ . '/../views/layouts/layout_admin.php';
+}
+
+public function actualizarPerfil()
+{
+    require_once __DIR__ . '/../models/Usuario.php';
+    $usuarioModel = new Usuario();
+
+    $id = $_SESSION['usuario']['id'];
+    $nombre = $_POST['nombre'];
+    $email = $_POST['email'];
+    $bio = $_POST['bio'] ?? '';
+    $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
+
+    if (!empty($_FILES['foto']['name'])) {
+        $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
+        $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
+            $foto = $nombreArchivo;
+        }
+    }
+
+    $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto);
+
+    // Actualizar sesión
+    $_SESSION['usuario']['nombre'] = $nombre;
+    $_SESSION['usuario']['email'] = $email;
+    $_SESSION['usuario']['bio'] = $bio;
+    $_SESSION['usuario']['foto'] = $foto;
+
+    header("Location: index.php?c=AdminController&a=perfil");
+}
 }

@@ -8,7 +8,8 @@ $usuario = $_SESSION['usuario'];
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - LibrosWap</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/FINAL/public/css/dashboardu.css">
 </head>
 
@@ -159,13 +160,10 @@ $usuario = $_SESSION['usuario'];
             <h2 class="text-center mb-4 text-purple">Tu Perfil</h2>
             <div class="row g-4 justify-content-center">
                 <div class="col-md-3">
-                    <a href="editar-perfil" class="btn btn-purple w-100 py-3 shadow">✏️ Editar perfil</a>
+                    <a href="index.php?c=UsuarioController&a=perfil" class="btn btn-purple w-100 py-3 shadow">✏️ Editar perfil</a>
                 </div>
                 <div class="col-md-3">
-                    <a href="cambiar-clave" class="btn btn-purple w-100 py-3 shadow">🔐 Cambiar contraseña</a>
-                </div>
-                <div class="col-md-3">
-                    <a href="preferencias" class="btn btn-purple w-100 py-3 shadow">🎨 Preferencias visuales</a>
+                    <a href="index.php?c=UsuarioController&a=configuracion" class="btn btn-purple w-100 py-3 shadow">🎨 Preferencias visuales</a>
                 </div>
             </div>
         </div>
@@ -489,6 +487,7 @@ $usuario = $_SESSION['usuario'];
 
             </div>
         </div>
+        
         <?php
         require_once $_SERVER['DOCUMENT_ROOT'] . '/FINAL/controllers/LibroController.php';
         $controller = new LibroController();
@@ -942,7 +941,8 @@ seccion de actividades recientes -->
         </div>
     </footer>
 
-
+ <!--  Bootstrap JS al final -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

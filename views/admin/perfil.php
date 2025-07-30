@@ -1,6 +1,6 @@
-<h2 class="mb-4">👤 Mi perfil</h2>
+<h2 class="mb-4">👤 Editar perfil</h2>
 
-<form method="POST" enctype="multipart/form-data" action="index.php?c=UsuarioController&a=actualizarPerfil">
+<form method="POST" enctype="multipart/form-data" action="index.php?c=AdminController&a=actualizarPerfil">
     <div class="mb-3">
         <label>Nombre</label>
         <input type="text" name="nombre" class="form-control" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>

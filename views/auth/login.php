@@ -146,6 +146,11 @@
                 <div class="logo text-center"> LIBROSWAP</div>
                 <h2 class="text-center">Iniciar sesión</h2>
                 <p class="subtitle text-center">o usa tu correo electrónico y contraseña</p>
+                <?php if (isset($mensaje)): ?>
+                    <div class="alert alert-danger text-center">
+                        <?= $mensaje ?>
+                    </div>
+                <?php endif; ?>
                 <form method="POST" action="index.php?c=UsuarioController&a=login">
                     <div class="mb-3 input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
