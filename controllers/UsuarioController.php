@@ -13,39 +13,47 @@ class UsuarioController
     }
     public function register()
     {
+        $mensaje = null;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../models/Usuario.php';
             $usuario = new Usuario();
             $exito = $usuario->registrar($_POST['nombre'], $_POST['email'], $_POST['password']);
+
             if ($exito) {
-                echo "✅ Usuario registrado correctamente.";
+                $mensaje = "✅ Usuario registrado correctamente.";
             } else {
-                echo "❌ Error al registrar usuario: " . $usuario->getError();
+                $mensaje = "❌ Error al registrar usuario: " . $usuario->getError();
             }
-        } else {
-            include __DIR__ . '/../views/auth/register.php';
         }
+
+        include __DIR__ . '/../views/auth/register.php';
     }
     public function login()
     {
+        $mensaje = null;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../models/Usuario.php';
             $usuario = new Usuario();
             $datos = $usuario->verificar($_POST['email'], $_POST['password']);
+
             if ($datos) {
                 $_SESSION['usuario'] = $datos;
 
                 if ($datos['rol'] === 'admin') {
                     header("Location: index.php?c=AdminController&a=dashboard");
+                    exit;
                 } else {
                     header("Location: index.php?c=UsuarioController&a=dashboard");
+                    exit;
                 }
             } else {
-                echo "❌ Credenciales incorrectas.";
+                $mensaje = "❌ Credenciales incorrectas.";
             }
-        } else {
-            include __DIR__ . '/../views/auth/login.php';
         }
+
+        include __DIR__ . '/../views/auth/login.php';
     }
     public function dashboard()
     {
@@ -284,29 +292,29 @@ class UsuarioController
         return $resultado->fetch_assoc();
     }
     public function configuracion()
-{
-    require_once __DIR__ . '/../models/Usuario.php';
-    $usuarioModel = new Usuario();
-    $config = $usuarioModel->obtenerConfiguracion($_SESSION['usuario']['id']);
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
+        $config = $usuarioModel->obtenerConfiguracion($_SESSION['usuario']['id']);
 
-    $contenido = __DIR__ . '/../views/usuario/configuracion.php';
-    include __DIR__ . '/../views/layouts/layout_usuario.php';
-}
+        $contenido = __DIR__ . '/../views/usuario/configuracion.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
 
-public function guardarConfiguracion()
-{
-    require_once __DIR__ . '/../models/Usuario.php';
-    $usuarioModel = new Usuario();
+    public function guardarConfiguracion()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
 
-    $id = $_SESSION['usuario']['id'];
-    $tema = $_POST['tema'] ?? 'claro';
-    $color = $_POST['color_acento'] ?? 'morado';
-    $vista = $_POST['vista_libros'] ?? 'grid';
-    $notificaciones = isset($_POST['notificaciones']) ? 1 : 0;
+        $id = $_SESSION['usuario']['id'];
+        $tema = $_POST['tema'] ?? 'claro';
+        $color = $_POST['color_acento'] ?? 'morado';
+        $vista = $_POST['vista_libros'] ?? 'grid';
+        $notificaciones = isset($_POST['notificaciones']) ? 1 : 0;
 
-    $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones);
+        $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones);
 
-    header("Location: index.php?c=UsuarioController&a=configuracion");
-}
+        header("Location: index.php?c=UsuarioController&a=configuracion");
+    }
 
 }
