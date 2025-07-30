@@ -6,9 +6,10 @@
         <p style="color:#555;margin-bottom:30px;">Ingresa tu nueva contraseña para acceder nuevamente a LibrosWap.</p>
 
         <h2>Restablecer contraseña</h2>
-        <form method="POST" action="index.php?c=UsuarioController&a=resetPassword">
-            <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
-            <input type="password" name="new_password" placeholder="Nueva contraseña" required>
+        <form action="index.php?c=UsuarioController&a=resetPassword" method="post">
+            <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
+            <label>Nueva contraseña:</label>
+            <input type="password" name="password" required>
             <button type="submit">Restablecer</button>
         </form>
 
