@@ -1,10 +1,9 @@
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2025 at 08:00 PM
+-- Generation Time: Jul 30, 2025 at 04:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -40,8 +39,7 @@ CREATE TABLE `carrito` (
 --
 
 INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`) VALUES
-(2, 3, 3, '2025-07-24 03:00:41'),
-(7, 1, 4, '2025-07-25 23:10:46');
+(2, 3, 3, '2025-07-24 03:00:41');
 
 -- --------------------------------------------------------
 
@@ -79,7 +77,8 @@ CREATE TABLE `comentarios_evento` (
 INSERT INTO `comentarios_evento` (`id`, `id_evento`, `id_usuario`, `comentario`, `fecha`) VALUES
 (1, 2, 1, 'Es duro y complejo pero opino que para saber que estoy leyendo y de que trata especificamente el tema del libro', '2025-07-25 21:37:44'),
 (2, 3, 3, 'a', '2025-07-25 21:44:11'),
-(3, 3, 1, 'interesante', '2025-07-26 02:17:50');
+(3, 3, 1, 'interesante', '2025-07-26 02:17:50'),
+(4, 1, 8, 'hhhdvhs', '2025-07-29 16:08:48');
 
 -- --------------------------------------------------------
 
@@ -101,7 +100,34 @@ CREATE TABLE `compras` (
 INSERT INTO `compras` (`id`, `usuario_id`, `libro_id`, `fecha`) VALUES
 (1, 3, 2, '2025-07-24 02:56:11'),
 (2, 1, 2, '2025-07-24 17:01:08'),
-(3, 1, 4, '2025-07-24 17:01:08');
+(3, 1, 4, '2025-07-24 17:01:08'),
+(4, 1, 4, '2025-07-29 15:03:42'),
+(5, 8, 6, '2025-07-29 16:09:11'),
+(6, 1, 4, '2025-07-29 17:03:55'),
+(7, 1, 2, '2025-07-29 17:03:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `config_usuario`
+--
+
+CREATE TABLE `config_usuario` (
+  `id` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `tema` varchar(20) DEFAULT 'claro',
+  `color_acento` varchar(20) DEFAULT 'morado',
+  `vista_libros` varchar(10) DEFAULT 'grid',
+  `notificaciones` tinyint(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `config_usuario`
+--
+
+INSERT INTO `config_usuario` (`id`, `id_usuario`, `tema`, `color_acento`, `vista_libros`, `notificaciones`) VALUES
+(1, 1, 'oscuro', 'azul', 'lista', 1),
+(2, 8, 'oscuro', 'morado', 'lista', 0);
 
 -- --------------------------------------------------------
 
@@ -148,7 +174,8 @@ CREATE TABLE `intercambios` (
 --
 
 INSERT INTO `intercambios` (`id`, `libro_id_1`, `libro_id_2`, `usuario_1`, `usuario_2`, `estado`, `fecha`) VALUES
-(2, 2, 3, 3, 1, 'rechazado', '2025-07-24 02:13:08');
+(2, 2, 3, 3, 1, 'aceptado', '2025-07-24 02:13:08'),
+(3, 6, 4, 1, 2, 'aceptado', '2025-07-29 14:51:04');
 
 -- --------------------------------------------------------
 
@@ -180,14 +207,14 @@ INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`
 (4, 'El psicoanalista', 'Ricardo', 'Romance', 'nuevo', 'LIBRACO', 'cardadmin.jpg', 2, 'intercambio', NULL, 0),
 (6, 'DUNE', 'Frank Herbert', 'Ciencia Ficción', 'nuevo', 'Épica interestelar sobre poder, religión y ecología en el desértico planeta Arrakis.', '687eb9c590e03_crepusculo.jpg', 1, NULL, NULL, 0),
 (7, '\"Sapiens: De animales a dioses\"', 'Yuval Noah Harari', 'No Ficción', 'nuevo', 'Historia de la humanidad desde la evolución hasta la era digital.', 'viento.jpg', 1, 'venta', 222222.00, 0),
-(8, 'Romeo y Julieta (Romeo and Juliet)', 'William Shakespeare', 'Tragedia romántica / Drama', 'usado', 'Romeo y Julieta cuenta la historia de dos jóvenes enamorados pertenecientes a familias rivales en la ciudad de Verona: los Montesco (Romeo) y los Capuleto (Julieta). A pesar del odio entre sus familias', NULL, 1, NULL, NULL, 0),
 (12, 'sasaas', 'asassa', 'assasa', 'nuevo', 'asas', 'default.jpg', NULL, 'intercambio', 0.00, 3),
 (13, 'El guardián entre el centeno', 'J.D. Salinger', ' Novela literaria / Bildungsroman (novela de formación)', 'nuevo', 'La novela sigue a Holden Caulfield, un adolescente de 16 años expulsado de su escuela preparatoria, quien deambula por Nueva York durante tres días después de huir del colegio. ', 'default.jpg', NULL, 'intercambio', 0.00, 3),
 (14, 'Bajo la misma estrella', ' John Green', 'Romance', 'usado', 'Dos adolescentes con cáncer se enamoran y buscan significado en su vida.', 'default.jpg', NULL, 'intercambio', 0.00, 3),
 (15, 'Los Miserables', 'Victor Hugo', 'Sátira política', 'nuevo', 'Los animales de una granja expulsan a los humanos y crean un sistema igualitario, pero los cerdos (líderes) corrompen el ideal revolucionario hasta replicar la tiranía anterior. Una crítica feroz al totalitarismo soviético y a la manipulación del poder.', '6884776aae082_ficcion.jpg', NULL, 'intercambio', 0.00, 1),
 (16, 'Los Miserables', 'Victor Hugo', 'Sátira política', 'nuevo', 'Los animales de una granja expulsan a los humanos y crean un sistema igualitario, pero los cerdos (líderes) corrompen el ideal revolucionario hasta replicar la tiranía anterior. Una crítica feroz al totalitarismo soviético y a la manipulación del poder.', '6884778759368_ficcion.jpg', NULL, 'intercambio', 0.00, 1),
-(17, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'ppppp', '688478b7005a7_687eb83e41abb_crepusculo.jpg', NULL, 'intercambio', 0.00, 1),
-(20, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'sasasa', '68847cf804bfc_6.jpg', NULL, 'intercambio', 0.00, 1);
+(17, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'ppppp', NULL, NULL, NULL, NULL, 1),
+(20, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'sasasa', '68847cf804bfc_6.jpg', NULL, 'intercambio', 0.00, 1),
+(22, 'patatas', 'ahhasgbh', 'hsgahgahsg', 'nuevo', 'gsjahasj', '688925fa3340b_6.jpg', NULL, 'intercambio', 0.00, 8);
 
 -- --------------------------------------------------------
 
@@ -215,7 +242,12 @@ INSERT INTO `mensajes` (`id`, `emisor_id`, `receptor_id`, `mensaje`, `fecha_envi
 (4, 1, 4, 'Toncessss', '2025-07-25 22:50:03', 0),
 (5, 8, 1, 'Uyy', '2025-07-25 22:51:17', 0),
 (6, 1, 8, 'Holaaaa', '2025-07-25 22:51:45', 0),
-(7, 8, 6, 'a', '2025-07-25 22:58:19', 0);
+(7, 8, 6, 'a', '2025-07-25 22:58:19', 0),
+(8, 1, 8, 'habaskasjas\r\n', '2025-07-29 14:48:18', 0),
+(9, 10, 1, 'QUE MAS PENDEJP, QUE HIZO MIS 7000 LUKAS?\r\n', '2025-07-29 14:56:22', 0),
+(10, 1, 10, 'entonces', '2025-07-29 14:57:01', 0),
+(11, 1, 10, 'olaaaaaaa', '2025-07-29 16:08:07', 0),
+(12, 11, 1, 'HOLA', '2025-07-29 17:07:28', 0);
 
 -- --------------------------------------------------------
 
@@ -288,12 +320,31 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`) VALUES
-(1, 'Angel', 'angelvanegas944@gmail.com', '$2y$10$a89XEhF.pngwvfbfaquaXufwRCURa7/iQu00HkTSv9XSMro8dhzXa', 'usuario', NULL, NULL, '58dbc9961b39835b640f989d838d4407e395edd721cf891fd8be39a32c7113f4', '2025-07-25 12:03:02'),
+(1, 'Angels', 'angelvanegas944@gmail.com', '$2y$10$qilQp4gPc5YigRUy.8AdJu1d.xoxytCNI2n5lh009GGsOc937jXcS', 'usuario', 'default.jpg', '', '0a83b38d99f6d258aed380f2b55dfc9d141f2ad391cee407fff7976711dcabd8', '2025-07-30 09:44:38'),
 (2, 'Ana', 'aelixabeth201@gmail.com', '$2y$10$jxv1n/Z0gK3nuacmUrrje.U107zmdguQOX.902IvsMeafWqdyd8aK', 'usuario', NULL, '', NULL, NULL),
-(3, 'Jair', 'jair@gmail.com', '$2y$10$a4k0KvfdkJqDuRTKTB473erMg8Utd5js0EmCuzzB4mlNPy348.hwe', 'admin', NULL, NULL, NULL, NULL),
+(3, 'Jairs', 'jair@gmail.com', '$2y$10$a4k0KvfdkJqDuRTKTB473erMg8Utd5js0EmCuzzB4mlNPy348.hwe', 'admin', 'default.jpg', 'Estudiante Tecnologo del SENA', NULL, NULL),
 (4, 'cristian', 'giovannyv292@gmail.com', '$2y$10$B9E8UKgSV5Z4aoDXh3AJN.TrdIVuyCWwfaXjpGZjemF9gUzgZVpTG', 'usuario', NULL, NULL, NULL, NULL),
 (6, 'prueba, Angel 2', 'a@gmail.com', '$2y$10$Je9oSR1kFa.2vPN3xL3Sreuw919ovXhN3s/Gh4PE2kc82/FZMoL1i', 'usuario', NULL, '', NULL, NULL),
-(8, 'Prueba, Angel', 'aa@gmail.com', '$2y$10$K8BHH802dqVSkaBF3Yk08.moYPD7V2ykS8vVd3jLNv9fPfyj7n416', 'usuario', NULL, '', NULL, NULL);
+(8, 'Prueba, Angel', 'aa@gmail.com', '$2y$10$K8BHH802dqVSkaBF3Yk08.moYPD7V2ykS8vVd3jLNv9fPfyj7n416', 'usuario', NULL, '', NULL, NULL),
+(10, 'PRUEBADOS', 'prueba4@gmail.com', '$2y$10$b.tz0uQHBmjLKDLvgU5Kh.lIDkYmknZrF0xepm/E6lTNsmxSjigve', 'usuario', NULL, NULL, NULL, NULL),
+(11, 'david', 'david@gmail.com', '$2y$10$L6ZNipHNBmoiezFzymf4hOfivs3pSn.lsqWx.y4JipUK.DAOKZhwG', 'usuario', NULL, NULL, NULL, NULL),
+(12, 'ssssssssssssssssss', 'shirlygeren+1058s67@zohomail.com', '$2y$10$ZPqtgV9uCk5vx4Iia3AlhOv5WV7lTpkmHNe94IN1idO5zZtdzWW9.', 'usuario', NULL, NULL, NULL, NULL),
+(13, 'misnotas_practica', 'aelizabeth@gmail.com', '$2y$10$82mw7BiF/JTIt4aHtcI4x.Zs6M0V7j72EO8/2Y5fKMq0GHrtQQwgS', 'usuario', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ventas`
+--
+
+CREATE TABLE `ventas` (
+  `id` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `id_libro` int(11) NOT NULL,
+  `fecha` datetime DEFAULT current_timestamp(),
+  `precio` decimal(10,2) NOT NULL,
+  `estado` varchar(20) DEFAULT 'completada'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -328,6 +379,13 @@ ALTER TABLE `compras`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`),
   ADD KEY `libro_id` (`libro_id`);
+
+--
+-- Indexes for table `config_usuario`
+--
+ALTER TABLE `config_usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indexes for table `eventos`
@@ -381,6 +439,14 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `ventas`
+--
+ALTER TABLE `ventas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_libro` (`id_libro`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -388,7 +454,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `categorias`
@@ -400,13 +466,19 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT for table `comentarios_evento`
 --
 ALTER TABLE `comentarios_evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `config_usuario`
+--
+ALTER TABLE `config_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `eventos`
@@ -418,19 +490,19 @@ ALTER TABLE `eventos`
 -- AUTO_INCREMENT for table `intercambios`
 --
 ALTER TABLE `intercambios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `notificaciones`
@@ -448,7 +520,13 @@ ALTER TABLE `resenas`
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `ventas`
+--
+ALTER TABLE `ventas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -474,6 +552,12 @@ ALTER TABLE `comentarios_evento`
 ALTER TABLE `compras`
   ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
+
+--
+-- Constraints for table `config_usuario`
+--
+ALTER TABLE `config_usuario`
+  ADD CONSTRAINT `config_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `intercambios`
@@ -502,6 +586,13 @@ ALTER TABLE `notificaciones`
 ALTER TABLE `resenas`
   ADD CONSTRAINT `resenas_ibfk_1` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`),
   ADD CONSTRAINT `resenas_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Constraints for table `ventas`
+--
+ALTER TABLE `ventas`
+  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`id_libro`) REFERENCES `libros` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
