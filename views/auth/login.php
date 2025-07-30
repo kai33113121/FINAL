@@ -1,32 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Login - LibrosWap</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <div class="container mt-5">
-        <h2>🔐 Iniciar sesión</h2>
-        <form method="POST" action="index.php?c=UsuarioController&a=login">
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label>Contraseña</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Entrar</button>
-        </form>
-        <p class="mt-3">¿No tienes cuenta? <a href="index.php?c=UsuarioController&a=register">Regístrate</a></p>
-    </div>
-</body>
-
-</html> -->
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -146,6 +117,11 @@
                 <div class="logo text-center"> LIBROSWAP</div>
                 <h2 class="text-center">Iniciar sesión</h2>
                 <p class="subtitle text-center">o usa tu correo electrónico y contraseña</p>
+                <?php if (isset($mensaje)): ?>
+                    <div class="alert alert-danger text-center">
+                        <?= $mensaje ?>
+                    </div>
+                <?php endif; ?>
                 <form method="POST" action="index.php?c=UsuarioController&a=login">
                     <div class="mb-3 input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>

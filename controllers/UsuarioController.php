@@ -12,41 +12,49 @@ class UsuarioController
         include __DIR__ . '/../views/auth/landing.php';
     }
     public function register()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            require_once __DIR__ . '/../models/Usuario.php';
-            $usuario = new Usuario();
-            $exito = $usuario->registrar($_POST['nombre'], $_POST['email'], $_POST['password']);
-            if ($exito) {
-                echo "✅ Usuario registrado correctamente.";
-            } else {
-                echo "❌ Error al registrar usuario: " . $usuario->getError();
-            }
-        } else {
-            include __DIR__ . '/../views/auth/register.php';
-        }
-    }
-    public function login()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            require_once __DIR__ . '/../models/Usuario.php';
-            $usuario = new Usuario();
-            $datos = $usuario->verificar($_POST['email'], $_POST['password']);
-            if ($datos) {
-                $_SESSION['usuario'] = $datos;
+{
+    $mensaje = null;
 
-                if ($datos['rol'] === 'admin') {
-                    header("Location: index.php?c=AdminController&a=dashboard");
-                } else {
-                    header("Location: index.php?c=UsuarioController&a=dashboard");
-                }
-            } else {
-                echo "❌ Credenciales incorrectas.";
-            }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuario = new Usuario();
+        $exito = $usuario->registrar($_POST['nombre'], $_POST['email'], $_POST['password']);
+
+        if ($exito) {
+            $mensaje = "✅ Usuario registrado correctamente.";
         } else {
-            include __DIR__ . '/../views/auth/login.php';
+            $mensaje = "❌ Error al registrar usuario: " . $usuario->getError();
         }
     }
+
+    include __DIR__ . '/../views/auth/register.php';
+}
+    public function login()
+{
+    $mensaje = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuario = new Usuario();
+        $datos = $usuario->verificar($_POST['email'], $_POST['password']);
+
+        if ($datos) {
+            $_SESSION['usuario'] = $datos;
+
+            if ($datos['rol'] === 'admin') {
+                header("Location: index.php?c=AdminController&a=dashboard");
+                exit;
+            } else {
+                header("Location: index.php?c=UsuarioController&a=dashboard");
+                exit;
+            }
+        } else {
+            $mensaje = "❌ Credenciales incorrectas.";
+        }
+    }
+
+    include __DIR__ . '/../views/auth/login.php';
+}
     public function dashboard()
     {
         if (!isset($_SESSION['usuario']) || !isset($_SESSION['usuario']['id'])) {
