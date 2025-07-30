@@ -55,7 +55,7 @@ Componentes: Landing page, dashboard, perfil de usuario
 
 bash
 # Clonar el repositorio
-git clone https://github.com/tuusuario/libroswap.git
+git clone https://github.com/kai33113121/FINAL.git
 cd libroswap
 
 # Configurar base de datos y entorno
