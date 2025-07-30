@@ -90,7 +90,7 @@ class UsuarioController
             $token = bin2hex(random_bytes(32));
             $usuario->guardarTokenRecuperacion($datos['id'], $token);
 
-            $link = "http://localhost/index.php?c=UsuarioController&a=resetPasswordForm&token=$token";
+            $link = "http://localhost/FINAL/index.php?c=UsuarioController&a=resetPasswordForm&token=$token";
             $asunto = "Recuperación de contraseña - LibrosWap";
             $mensaje = "Hola {$datos['nombre']},\n\nHaz clic en el siguiente enlace para recuperar tu contraseña:\n$link\n\nSi no solicitaste esto, ignora este mensaje.";
 
@@ -138,7 +138,7 @@ class UsuarioController
 
         // Aquí puedes validar el token si quieres
 
-        require_once 'views/auth/reset_password.php';
+        require_once __DIR__ . '/../views/auth/reset_password.php';
     }
 
     public function resetPassword()
@@ -168,7 +168,7 @@ class UsuarioController
             $usuario->actualizarPassword($datos['id'], $hash);
 
             // Mostrar vista visual
-            include __DIR__ . '/FINAL/views/auth/password_updated.php';
+            include __DIR__ . '/../views/auth/password_updated.php';
         } else {
             echo "❌ Token inválido o expirado.";
         }
