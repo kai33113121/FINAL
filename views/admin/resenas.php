@@ -30,7 +30,7 @@
                     <td><?= htmlspecialchars($r['comentario']) ?></td>
                     <td><?= $r['fecha'] ?></td>
                     <td>
-                        <a href="index.php?c=ResenaAdminController&a=eliminar&id=<?= $r['id'] ?>"
+                        <a href="index.php?c=ResenaController&a=eliminar&id=<?= $r['id'] ?>"
                            class="btn btn-danger btn-sm"
                            onclick="return confirm('¿Eliminar esta reseña?')">Eliminar</a>
                     </td>
