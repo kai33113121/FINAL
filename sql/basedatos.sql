@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2025 at 04:14 PM
+-- Generation Time: Aug 05, 2025 at 10:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -39,7 +39,8 @@ CREATE TABLE `carrito` (
 --
 
 INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`) VALUES
-(2, 3, 3, '2025-07-24 03:00:41');
+(2, 3, 3, '2025-07-24 03:00:41'),
+(13, 1, 6, '2025-08-05 14:47:56');
 
 -- --------------------------------------------------------
 
@@ -156,6 +157,28 @@ INSERT INTO `eventos` (`id`, `titulo`, `descripcion`, `fecha_creacion`, `creado_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `generos`
+--
+
+CREATE TABLE `generos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `generos`
+--
+
+INSERT INTO `generos` (`id`, `nombre`) VALUES
+(1, 'Ficción'),
+(2, 'Romance'),
+(3, 'Ciencia'),
+(4, 'Historia'),
+(5, 'Fantasía');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `intercambios`
 --
 
@@ -175,7 +198,8 @@ CREATE TABLE `intercambios` (
 
 INSERT INTO `intercambios` (`id`, `libro_id_1`, `libro_id_2`, `usuario_1`, `usuario_2`, `estado`, `fecha`) VALUES
 (2, 2, 3, 3, 1, 'aceptado', '2025-07-24 02:13:08'),
-(3, 6, 4, 1, 2, 'aceptado', '2025-07-29 14:51:04');
+(3, 6, 4, 1, 2, 'rechazado', '2025-07-29 14:51:04'),
+(4, 7, 4, 1, 2, 'pendiente', '2025-08-05 15:00:59');
 
 -- --------------------------------------------------------
 
@@ -215,6 +239,53 @@ INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`
 (17, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'ppppp', NULL, NULL, NULL, NULL, 1),
 (20, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'sasasa', '68847cf804bfc_6.jpg', NULL, 'intercambio', 0.00, 1),
 (22, 'patatas', 'ahhasgbh', 'hsgahgahsg', 'nuevo', 'gsjahasj', '688925fa3340b_6.jpg', NULL, 'intercambio', 0.00, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `libros_catalogo`
+--
+
+CREATE TABLE `libros_catalogo` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `autor` varchar(255) DEFAULT NULL,
+  `descripcion` text DEFAULT NULL,
+  `imagen` varchar(255) DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `estado` enum('nuevo','usado') DEFAULT 'nuevo',
+  `genero` varchar(100) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `libros_venta`
+--
+
+CREATE TABLE `libros_venta` (
+  `id` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `autor` varchar(255) DEFAULT NULL,
+  `descripcion` text DEFAULT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `imagen` varchar(255) DEFAULT NULL,
+  `fecha_publicacion` datetime DEFAULT current_timestamp(),
+  `estado` enum('nuevo','usado') NOT NULL DEFAULT 'nuevo',
+  `id_genero` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `libros_venta`
+--
+
+INSERT INTO `libros_venta` (`id`, `id_usuario`, `titulo`, `autor`, `descripcion`, `precio`, `imagen`, `fecha_publicacion`, `estado`, `id_genero`) VALUES
+(4, 1, 'Cien Años de Soledad', 'Gabriel Garcia Marquez', 'Cien años de soledad\", publicada en 1967, es considerada la obra maestra de Gabriel García Márquez y un hito del realismo mágico. La historia sigue a la familia Buendía, comenzando con su patriarca, José Arcadio Buendía, quien funda el pueblo de Macondo. A lo largo de la novela, se exploran temas como la soledad, el tiempo cíclico y la historia de América Latina.', 350000.00, '689266186aac6_cien.jpg', '2025-08-04 23:35:50', '', NULL),
+(6, 1, 'El Alquimista', 'Paulo Coelho', 'El Alquimista es una obra que explora el tema de los sueños y el destino a través de la mirada de Santiago, un pastor que emprende un viaje hacia su \"Leyenda Personal\". Santiago, un hombre curioso y amante de la libertad, nació en un pequeño pueblo de Andalucía y estudia el sacerdocio', 200000.00, '689265777929e_oferta4.jpg', '2025-08-05 13:47:49', '', NULL),
+(7, 8, 'Ciencia Visual', 'El Tiempo', 'CIENCIA', 2111.00, 'categoria4.jpg', '2025-08-05 14:14:52', 'nuevo', NULL),
+(8, 1, 'El profesor ', 'John Katzenbach', 'Adrian Thomas es un profesor universitario retirado, al que acaban de diagnosticarle una demencia degenerativa que lo llevará pronto a la muerte.  Jubilado, viudo y enfermo cree que lo mejor que puede hacer es quitarse la vida.\r\n', 150000.00, '689265d347a2a_recomendado4.jpg', '2025-08-05 14:59:46', 'nuevo', NULL);
 
 -- --------------------------------------------------------
 
@@ -320,7 +391,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`) VALUES
-(1, 'Angels', 'angelvanegas944@gmail.com', '$2y$10$qilQp4gPc5YigRUy.8AdJu1d.xoxytCNI2n5lh009GGsOc937jXcS', 'usuario', 'default.jpg', '', '0a83b38d99f6d258aed380f2b55dfc9d141f2ad391cee407fff7976711dcabd8', '2025-07-30 09:44:38'),
+(1, 'Angels', 'angelvanegas944@gmail.com', '$2y$10$qilQp4gPc5YigRUy.8AdJu1d.xoxytCNI2n5lh009GGsOc937jXcS', 'usuario', 'default.jpg', '', '6189b6aa33ad90c9e862e8dcc544bfb3cc16e5ee9b6704b662d98011ba115afd', '2025-07-30 14:07:04'),
 (2, 'Ana', 'aelixabeth201@gmail.com', '$2y$10$jxv1n/Z0gK3nuacmUrrje.U107zmdguQOX.902IvsMeafWqdyd8aK', 'usuario', NULL, '', NULL, NULL),
 (3, 'Jairs', 'jair@gmail.com', '$2y$10$a4k0KvfdkJqDuRTKTB473erMg8Utd5js0EmCuzzB4mlNPy348.hwe', 'admin', 'default.jpg', 'Estudiante Tecnologo del SENA', NULL, NULL),
 (4, 'cristian', 'giovannyv292@gmail.com', '$2y$10$B9E8UKgSV5Z4aoDXh3AJN.TrdIVuyCWwfaXjpGZjemF9gUzgZVpTG', 'usuario', NULL, NULL, NULL, NULL),
@@ -394,6 +465,12 @@ ALTER TABLE `eventos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `generos`
+--
+ALTER TABLE `generos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `intercambios`
 --
 ALTER TABLE `intercambios`
@@ -409,6 +486,19 @@ ALTER TABLE `intercambios`
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Indexes for table `libros_catalogo`
+--
+ALTER TABLE `libros_catalogo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `libros_venta`
+--
+ALTER TABLE `libros_venta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indexes for table `mensajes`
@@ -454,7 +544,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT for table `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `categorias`
@@ -487,16 +577,34 @@ ALTER TABLE `eventos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `generos`
+--
+ALTER TABLE `generos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `intercambios`
 --
 ALTER TABLE `intercambios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `libros`
 --
 ALTER TABLE `libros`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `libros_catalogo`
+--
+ALTER TABLE `libros_catalogo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `libros_venta`
+--
+ALTER TABLE `libros_venta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `mensajes`
@@ -573,6 +681,12 @@ ALTER TABLE `intercambios`
 --
 ALTER TABLE `libros`
   ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Constraints for table `libros_venta`
+--
+ALTER TABLE `libros_venta`
+  ADD CONSTRAINT `libros_venta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 
 --
 -- Constraints for table `notificaciones`
