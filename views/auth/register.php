@@ -1,36 +1,3 @@
-<!-- <!DOCTYPE html>
-    <html lang="es">
-
-    <head>
-        <meta charset="UTF-8">
-        <title>Registro - LibrosWap</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-
-    <body>
-        <div class="container mt-5">
-            <h2>📝 Crear cuenta</h2>
-            <form method="POST" action="index.php?c=UsuarioController&a=register">
-                <div class="mb-3">
-                    <label>Nombre</label>
-                    <input type="text" name="nombre" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>Contraseña</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-success">Registrarse</button>
-            </form>
-            <p class="mt-3">¿Ya tienes cuenta? <a href="index.php?c=UsuarioController&a=login">Inicia sesión</a></p>
-        </div>
-    </body>
-
-    </html> -->
-
 <!DOCTYPE html>
 <html lang="es">
 
