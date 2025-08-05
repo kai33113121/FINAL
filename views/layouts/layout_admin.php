@@ -101,8 +101,14 @@
             <a href="index.php?c=AdminController&a=dashboard">
                 <i class="bi bi-speedometer2 me-2"></i> Inicio
             </a>
+            <a href="index.php?c=AdminController&a=perfil">
+                <i class="bi bi-person-circle me-2"></i> Perfil
+            </a>
             <a href="index.php?c=AdminController&a=libros">
                 <i class="bi bi-book me-2"></i> Libros
+            </a>
+            <a href="index.php?c=AdminController&a=compras">
+                <i class="bi bi-bag-check me-2"></i> Compras
             </a>
             <a href="index.php?c=AdminController&a=ventas">
                 <i class="bi bi-cart-check me-2"></i> Ventas
@@ -128,7 +134,6 @@
             <a href="index.php?c=UsuarioController&a=logout">
                 <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
             </a>
-            <a class="dropdown-item" href="index.php?c=AdminController&a=perfil">Perfil</a>
         </div>
         <div class="col-md-10 p-4">
             <?php include($contenido); ?>

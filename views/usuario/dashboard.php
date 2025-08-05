@@ -45,29 +45,33 @@ $usuario = $_SESSION['usuario'];
             <p class="lead text-shadow">Todo lo que necesitas en un solo lugar</p>
 
             <div class="row justify-content-center mt-5 g-4">
+                <!-- Card de Explorar libros -->
+        <div class="col-md-5">
+    <div class="card h-100 border-0 shadow-lg card-hover bg-white text-purple position-relative overflow-hidden">
+        <div class="card-body">
+            <h4 class="card-title fw-bold">📖 Tu viaje literario comienza aquí</h4>
+            <p class="card-text">
+                Sumérgete en una biblioteca viva donde cada libro tiene una historia que espera ser descubierta. 
+                Compra, intercambia o simplemente explora lo que otros lectores han compartido.
+            </p>
+    
+        </div>
+    </div>
+</div>
+
                 <div class="col-md-5">
-                    <div class="card h-100 border-0 shadow-lg card-hover bg-white text-purple">
-                        <div class="card-body">
-                            <h4 class="card-title fw-bold">📚 Mis libros</h4>
-                            <p class="card-text">Administra los libros que has subido.</p>
-                            <a href="index.php?c=LibroController&a=biblioteca" class="btn btn-purple">Ver biblioteca</a>
-                            <img src="/FINAL/public/img/5.jpg" alt="Decoración triangular"
-                                style="width: 90px; margin-top: 10px;">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="card h-100 border-0 shadow-lg card-hover bg-white text-purple">
-                        <div class="card-body">
-                            <h4 class="card-title fw-bold">🔄 Intercambios</h4>
-                            <p class="card-text">Consulta tus solicitudes y ofertas.</p>
-                            <a href="index.php?c=LibroController&a=biblioteca" class="btn btn-purple">Ver
-                                Intercambios</a>
-                            <img src="/FINAL/public/img/6.jpg" alt="Decoración triangular"
-                                style="width: 90px; margin-top: 10px;">
-                        </div>
-                    </div>
-                </div>
+    <div class="card h-100 border-0 shadow-lg card-hover bg-white text-purple position-relative overflow-hidden">
+        <div class="card-body">
+            <h4 class="card-title fw-bold">📚 Comparte tu biblioteca con el mundo</h4>
+            <p class="card-text">
+                Cada libro que subes puede inspirar, enseñar o transformar a otro lector. 
+                Sé parte de una comunidad que valora el conocimiento, la imaginación y el intercambio justo.
+                Tu colección puede ser el inicio de nuevas historias.
+            </p>
+        </div>
+        
+    </div>
+</div>
             </div>
         </div>
 
@@ -85,18 +89,31 @@ $usuario = $_SESSION['usuario'];
         <h2 class="text-center fw-bold mb-5 text-purple text-shadow">🚀 Accesos rápidos</h2>
         <div class="row g-4 justify-content-center">
 
-            <!-- Subir libro -->
-            <div class="col-md-4">
-                <a href="index.php?c=LibroController&a=subir" class="text-decoration-none">
-                    <div class="card card-flip h-100 shadow-lg border-0 text-center bg-white text-purple">
-                        <div class="card-body">
-                            <i class="bi bi-upload fs-1 mb-3"></i>
-                            <h5 class="card-title fw-bold">Subir nuevo libro</h5>
-                            <p class="card-text">Agrega tus libros a la plataforma y compártelos con otros lectores.</p>
-                        </div>
-                    </div>
-                </a>
+            <!-- Libros en venta -->
+<div class="col-md-4">
+    <a href="index.php?c=VentaController&a=crearVista" class="text-decoration-none">
+        <div class="card card-flip h-100 shadow-lg border-0 text-center bg-white text-purple">
+            <div class="card-body">
+                <i class="bi bi-cash-coin fs-1 mb-3"></i>
+                <h5 class="card-title fw-bold">Publicar libro en venta</h5>
+                <p class="card-text">Ofrece libros nuevos o de segunda mano para que otros usuarios los compren.</p>
             </div>
+        </div>
+    </a>
+</div>
+
+<!-- Mis publicaciones -->
+<div class="col-md-4">
+    <a href="index.php?c=VentaController&a=misVentas" class="text-decoration-none">
+        <div class="card card-flip h-100 shadow-lg border-0 text-center bg-white text-purple">
+            <div class="card-body">
+                <i class="bi bi-journal-text fs-1 mb-3"></i>
+                <h5 class="card-title fw-bold">Mis publicaciones</h5>
+                <p class="card-text">Administra los libros que has puesto en venta en la plataforma.</p>
+            </div>
+        </div>
+    </a>
+</div>
 
             <!-- Ver carrito -->
             <div class="col-md-4">
@@ -488,11 +505,7 @@ $usuario = $_SESSION['usuario'];
             </div>
         </div>
         
-        <?php
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/FINAL/controllers/LibroController.php';
-        $controller = new LibroController();
-        $controller->publicos();
-        ?>
+        
     </section>
 
     <!-- 
