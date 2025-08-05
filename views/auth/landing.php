@@ -448,11 +448,6 @@
         </div>
     </section>
 
-    <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/FINAL/controllers/LibroController.php';
-    $controller = new LibroController();
-    $controller->publicos();
-    ?>
     <!-- Foro / Noticia destacada -->
     <section class="section bg-white">
         <div class="container">
