@@ -109,30 +109,37 @@ class UsuarioController
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'angelvanegas944@gmail.com';
-                $mail->Password = 'icae zsuz fdws svoq'; // Usa contraseña de aplicación si es Gmail
+                $mail->Username = 'libroswapgroup@gmail.com';
+                $mail->Password = 'abrc kttg dzrx rnhr'; // Usa contraseña de aplicación si es Gmail
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
+                $mail->CharSet = 'UTF-8';
 
-                $mail->setFrom('tu_correo@gmail.com', 'LibrosWap');
+                $mail->setFrom('libroswapgroup@gmail.com', 'LibrosWap');
                 $mail->addAddress($email, $datos['nombre']);
 
                 $mail->isHTML(true);
                 $mail->Subject = $asunto;
                 $mail->Body = "
-            <div style='font-family:sans-serif;padding:20px;background:#f3f3f3;border-radius:10px;'>
+                <div style='font-family:sans-serif;padding:20px;background:#f3f3f3;border-radius:10px;'>
                 <h2 style='color:#6a1b9a;'>Hola {$datos['nombre']},</h2>
                 <p>Haz clic en el siguiente botón para recuperar tu contraseña:</p>
                 <a href='$link' style='display:inline-block;padding:10px 20px;background:#6a1b9a;color:white;text-decoration:none;border-radius:5px;'>Recuperar contraseña</a>
                 <p style='margin-top:20px;font-size:12px;color:#555;'>Si no solicitaste esto, puedes ignorar este mensaje.</p>
-            </div>
-        ";
+                </div>";
 
                 $mail->send();
-                echo "✅ Enlace de recuperación enviado a tu correo.";
+                header("Location: index.php?c=UsuarioController&a=forgotPassword&status=ok");
+                exit;
             } catch (Exception $e) {
-                echo "❌ Error al enviar el correo: {$mail->ErrorInfo}";
+                $msg = urlencode($mail->ErrorInfo);
+                header("Location: index.php?c=UsuarioController&a=forgotPassword&status=error&msg=$msg");
+                exit;
             }
+        } else {
+            $msg = urlencode('No se encontró el correo.');
+            header("Location: index.php?c=UsuarioController&a=forgotPassword&status=error&msg=$msg");
+            exit;
         }
     }
 
