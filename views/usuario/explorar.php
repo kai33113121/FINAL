@@ -37,7 +37,7 @@
         <div class="row">
 
             <!-- Libros del catálogo del admin -->
-            <?php foreach ($libros_catalogo as $libro): ?>
+            <?php foreach ($libros as $libro): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card bg-purple-light">
                         <img src="public/img/<?= $libro['imagen'] ?>" class="card-img-top" alt="Portada">
@@ -47,8 +47,10 @@
                                 <?= htmlspecialchars($libro['genero']) ?>
                             </p>
                             <p class="card-text"><small>Estado: <?= htmlspecialchars($libro['estado']) ?></small></p>
-                            <p class="card-text"><small>📦 Libro ofrecido por LibrosWap</small></p>
-                            <a href="index.php?c=CarritoController&a=agregar&id=<?= $libro['id'] ?>&tipo=catalogo"
+                            <p class="card-text"><small>Subido por: <?= htmlspecialchars($libro['nombre']) ?></small></p>
+                            <a href="index.php?c=IntercambioController&a=solicitar&id=<?= $libro['id'] ?>"
+                                class="btn btn-outline-purple btn-sm">Solicitar intercambio</a>
+                            <a href="index.php?c=CarritoController&a=agregar&id=<?= $libro['id'] ?>"
                                 class="btn btn-custom-purple btn-sm">Agregar al carrito</a>
                             <a href="index.php?c=ResenaController&a=formulario&id=<?= $libro['id'] ?>&titulo=<?= urlencode($libro['titulo']) ?>"
                                 class="btn btn-outline-purple btn-sm mt-1">✍️ Escribir reseña</a>

@@ -23,6 +23,12 @@ class Libro {
 //     );
 //     return $stmt->execute();
 // }
+
+    public function obtenerTodos() {
+        $sql = "SELECT l.*, u.nombre FROM libros l LEFT JOIN usuarios u ON l.id_usuario = u.id";
+        $resultado = $this->conexion->query($sql);
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
     public function obtenerPorUsuario($usuario_id) {
     $stmt = $this->conexion->prepare("SELECT * FROM libros WHERE usuario_id = ?");
     $stmt->bind_param("i", $usuario_id);

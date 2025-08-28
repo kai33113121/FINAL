@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../models/LibroCatalogo.php';
+require_once __DIR__ . '/../models/Libro.php';
 require_once __DIR__ . '/../models/Venta.php';
 
 class LibroController {
@@ -7,12 +7,12 @@ class LibroController {
     private $ventaModel;
 
     public function __construct() {
-        $this->catalogoModel = new LibroCatalogo(conectar());
+        $this->catalogoModel = new Libro();
         $this->ventaModel = new Venta(); // Ya se conecta internamente
     }
 
     public function explorar() {
-    $libros_catalogo = $this->catalogoModel->obtenerTodos();
+    $libros = $this->catalogoModel->obtenerTodos();
     $libros_venta = $this->ventaModel->obtenerTodos();
 
     $contenido = __DIR__ . '/../views/usuario/explorar.php';
