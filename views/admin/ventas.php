@@ -27,7 +27,7 @@
                             <?= ucfirst($libro['estado']) ?>
                         </span>
                     </td>
-                    <td><?= htmlspecialchars($libro['usuario']) ?></td>
+                    <td><?= htmlspecialchars($libro['id']) ?></td>
                     <td>
                         <a href="index.php?c=AdminController&a=editarVenta&id=<?= $libro['id'] ?>"
                             class="btn btn-sm btn-outline-primary">

@@ -5,7 +5,10 @@ class Compra {
     private $db;
 
     public function __construct() {
-        $this->db = conectar(); // Usa tu función real
+        $this->db = conectar();
+        if (!$this->db) {
+            throw new Exception("No se pudo conectar a la base de datos.");
+        }
     }
 
     public function obtenerConDetalles() {
@@ -15,6 +18,8 @@ class Compra {
                 JOIN libros l ON c.libro_id = l.id
                 ORDER BY c.fecha DESC";
         $resultado = $this->db->query($sql);
-        return $resultado ? $resultado->fetch_all(MYSQLI_ASSOC) : [];
+        $detalles = $resultado ? $resultado->fetch_all(MYSQLI_ASSOC) : [];
+        if ($resultado) $resultado->free();
+        return $detalles;
     }
 }

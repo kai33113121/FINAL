@@ -254,151 +254,151 @@ class AdminController
     }
     
         public function guardarLibro()
-{
-    $libro = new Libro();
+    {
+        $libro = new Libro();
 
-    $datos = [
-    'titulo' => $_POST['titulo'],
-    'autor' => $_POST['autor'],
-    'genero' => $_POST['genero'],
-    'estado' => $_POST['estado'],
-    'descripcion' => $_POST['descripcion'],
-    'modo' => $_POST['modo'] ?? 'intercambio',
-    'precio' => $_POST['precio'] ?? 0,
-    'imagen' => '',
-    'id_usuario' => $_SESSION['usuario']['id'] // ✅ Este nombre debe coincidir con el modelo
-];
+        $datos = [
+        'titulo' => $_POST['titulo'],
+        'autor' => $_POST['autor'],
+        'genero' => $_POST['genero'],
+        'estado' => $_POST['estado'],
+        'descripcion' => $_POST['descripcion'],
+        'modo' => $_POST['modo'] ?? 'intercambio',
+        'precio' => $_POST['precio'] ?? 0,
+        'imagen' => '',
+        'id_usuario' => $_SESSION['usuario']['id'] // ✅ Este nombre debe coincidir con el modelo
+    ];
 
-    if (!empty($_FILES['imagen']['name'])) {
-        $nombreArchivo = uniqid() . '_' . basename($_FILES['imagen']['name']);
-        move_uploaded_file($_FILES['imagen']['tmp_name'], 'public/img/' . $nombreArchivo);
-        $datos['imagen'] = $nombreArchivo;
-    } else {
-        $datos['imagen'] = 'default.jpg';
+        if (!empty($_FILES['imagen']['name'])) {
+            $nombreArchivo = uniqid() . '_' . basename($_FILES['imagen']['name']);
+            move_uploaded_file($_FILES['imagen']['tmp_name'], 'public/img/' . $nombreArchivo);
+            $datos['imagen'] = $nombreArchivo;
+        } else {
+            $datos['imagen'] = 'default.jpg';
+        }
+
+        $libro->crear($datos);
+
+        header("Location: index.php?c=AdminController&a=libros");
+    }
+    public function perfil()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
+        $usuario = $usuarioModel->obtenerPorId($_SESSION['usuario']['id']);
+
+        $contenido = __DIR__ . '/../views/admin/perfil.php';
+        include __DIR__ . '/../views/layouts/layout_admin.php';
     }
 
-    $libro->crear($datos);
+    public function actualizarPerfil()
+    {
+        require_once __DIR__ . '/../models/Usuario.php';
+        $usuarioModel = new Usuario();
 
-    header("Location: index.php?c=AdminController&a=libros");
-}
-public function perfil()
-{
-    require_once __DIR__ . '/../models/Usuario.php';
-    $usuarioModel = new Usuario();
-    $usuario = $usuarioModel->obtenerPorId($_SESSION['usuario']['id']);
+        $id = $_SESSION['usuario']['id'];
+        $nombre = $_POST['nombre'];
+        $email = $_POST['email'];
+        $bio = $_POST['bio'] ?? '';
+        $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
 
-    $contenido = __DIR__ . '/../views/admin/perfil.php';
-    include __DIR__ . '/../views/layouts/layout_admin.php';
-}
+        if (!empty($_FILES['foto']['name'])) {
+            $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
+            $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
+                $foto = $nombreArchivo;
+            }
+        }
 
-public function actualizarPerfil()
-{
-    require_once __DIR__ . '/../models/Usuario.php';
-    $usuarioModel = new Usuario();
+        $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto);
 
-    $id = $_SESSION['usuario']['id'];
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $bio = $_POST['bio'] ?? '';
-    $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
+        // Actualizar sesión
+        $_SESSION['usuario']['nombre'] = $nombre;
+        $_SESSION['usuario']['email'] = $email;
+        $_SESSION['usuario']['bio'] = $bio;
+        $_SESSION['usuario']['foto'] = $foto;
 
-    if (!empty($_FILES['foto']['name'])) {
-        $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
-        $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
-        if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
-            $foto = $nombreArchivo;
+        header("Location: index.php?c=AdminController&a=perfil");
+    }
+    public function ventas()
+    {
+        require_once __DIR__ . '/../models/Venta.php';
+        $venta = new Venta();
+        $librosEnVenta = $venta->obtenerTodos(); // ya lo tienes en el modelo
+        extract(['librosEnVenta' => $librosEnVenta]);
+
+        $contenido = __DIR__ . '/../views/admin/ventas.php';
+        include __DIR__ . '/../views/layouts/layout_admin.php';
+    }
+    public function eliminarVenta()
+    {
+        require_once __DIR__ . '/../models/Venta.php';
+        $venta = new Venta();
+
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $venta->eliminarPorId($_GET['id']); // ✅ usa el nuevo método
+        }
+
+        header('Location: index.php?c=AdminController&a=ventas');
+        exit;
+    }
+    public function editarVenta()
+    {
+        require_once __DIR__ . '/../models/Venta.php';
+        $venta = new Venta();
+
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            header('Location: index.php?c=AdminController&a=ventas');
+            exit;
+        }
+
+    $libro = $venta->obtenerPorIdAdmin($_GET['id']);
+        if (!$libro) {
+            header('Location: index.php?c=AdminController&a=ventas');
+            exit;
+        }
+
+        extract(['libro' => $libro]);
+        $contenido = __DIR__ . '/../views/admin/editar_venta.php';
+        include __DIR__ . '/../views/layouts/layout_admin.php';
+    }
+    public function actualizarVenta()
+    {
+        require_once __DIR__ . '/../models/Venta.php';
+        $venta = new Venta();
+
+        $id = $_POST['id'] ?? null;
+        $titulo = $_POST['titulo'] ?? '';
+        $autor = $_POST['autor'] ?? '';
+        $descripcion = $_POST['descripcion'] ?? '';
+        $precio = $_POST['precio'] ?? 0;
+        $estado = $_POST['estado'] ?? 'usado';
+
+        if (!$id || !is_numeric($id)) {
+            header('Location: index.php?c=AdminController&a=ventas');
+            exit;
+        }
+
+        // Manejo de imagen
+        $imagen = null;
+        if (!empty($_FILES['imagen']['name'])) {
+            $nombreArchivo = uniqid() . '_' . basename($_FILES['imagen']['name']);
+            $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
+                $imagen = $nombreArchivo;
+            }
+        }
+
+        $venta->actualizarAdmin($id, $titulo, $autor, $descripcion, $precio, $estado, $imagen);
+        header('Location: index.php?c=AdminController&a=ventas');
+        exit;
+    }
+    public function compras() {
+            $compraModel = new Compra();
+            $compras = $compraModel->obtenerConDetalles();
+
+            $contenido = __DIR__ . '/../views/admin/compras.php';
+            require_once __DIR__ . '/../views/layouts/layout_admin.php';
         }
     }
-
-    $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto);
-
-    // Actualizar sesión
-    $_SESSION['usuario']['nombre'] = $nombre;
-    $_SESSION['usuario']['email'] = $email;
-    $_SESSION['usuario']['bio'] = $bio;
-    $_SESSION['usuario']['foto'] = $foto;
-
-    header("Location: index.php?c=AdminController&a=perfil");
-}
-public function ventas()
-{
-    require_once __DIR__ . '/../models/Venta.php';
-    $venta = new Venta();
-    $librosEnVenta = $venta->obtenerTodos(); // ya lo tienes en el modelo
-    extract(['librosEnVenta' => $librosEnVenta]);
-
-    $contenido = __DIR__ . '/../views/admin/ventas.php';
-    include __DIR__ . '/../views/layouts/layout_admin.php';
-}
-public function eliminarVenta()
-{
-    require_once __DIR__ . '/../models/Venta.php';
-    $venta = new Venta();
-
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $venta->eliminarPorId($_GET['id']); // ✅ usa el nuevo método
-    }
-
-    header('Location: index.php?c=AdminController&a=ventas');
-    exit;
-}
-public function editarVenta()
-{
-    require_once __DIR__ . '/../models/Venta.php';
-    $venta = new Venta();
-
-    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-        header('Location: index.php?c=AdminController&a=ventas');
-        exit;
-    }
-
-$libro = $venta->obtenerPorIdAdmin($_GET['id']);
-    if (!$libro) {
-        header('Location: index.php?c=AdminController&a=ventas');
-        exit;
-    }
-
-    extract(['libro' => $libro]);
-    $contenido = __DIR__ . '/../views/admin/editar_venta.php';
-    include __DIR__ . '/../views/layouts/layout_admin.php';
-}
-public function actualizarVenta()
-{
-    require_once __DIR__ . '/../models/Venta.php';
-    $venta = new Venta();
-
-    $id = $_POST['id'] ?? null;
-    $titulo = $_POST['titulo'] ?? '';
-    $autor = $_POST['autor'] ?? '';
-    $descripcion = $_POST['descripcion'] ?? '';
-    $precio = $_POST['precio'] ?? 0;
-    $estado = $_POST['estado'] ?? 'usado';
-
-    if (!$id || !is_numeric($id)) {
-        header('Location: index.php?c=AdminController&a=ventas');
-        exit;
-    }
-
-    // Manejo de imagen
-    $imagen = null;
-    if (!empty($_FILES['imagen']['name'])) {
-        $nombreArchivo = uniqid() . '_' . basename($_FILES['imagen']['name']);
-        $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
-        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
-            $imagen = $nombreArchivo;
-        }
-    }
-
-    $venta->actualizarAdmin($id, $titulo, $autor, $descripcion, $precio, $estado, $imagen);
-    header('Location: index.php?c=AdminController&a=ventas');
-    exit;
-}
- public function compras() {
-        $compraModel = new Compra();
-        $compras = $compraModel->obtenerConDetalles();
-
-        $contenido = __DIR__ . '/../views/admin/compras.php';
-        require_once __DIR__ . '/../views/layouts/layout_admin.php';
-    }
-}
 

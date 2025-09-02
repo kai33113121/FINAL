@@ -5,13 +5,26 @@ $c = $_GET['c'] ?? null;
 $a = $_GET['a'] ?? null;
 
 if ($c && $a) {
-    require_once "controllers/{$c}.php";
-    $controller = new $c();
-    $controller->$a();
-} else {
-    if (isset($_SESSION['usuario'])) {
-        header("Location: index.php?c=UsuarioController&a=dashboard");
+    $controllerFile = "controllers/{$c}.php";
+
+    if (file_exists($controllerFile)) {
+        require_once $controllerFile;
+
+        if (class_exists($c)) {
+            $controller = new $c();
+
+            if (method_exists($controller, $a)) {
+                $controller->$a();
+            } else {
+                die("Error: No existe el método {$a} en {$c}.");
+            }
+        } else {
+            die("Error: No existe la clase {$c}.");
+        }
     } else {
-        include __DIR__ . '/views/auth/landing.php';
+        die("Error: No existe el archivo del controlador {$controllerFile}.");
     }
+} else {
+    include __DIR__ . '/views/auth/landing.php';
 }
+

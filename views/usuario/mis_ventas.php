@@ -5,7 +5,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100">
                     
-                    <img src="public/img/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top" alt="Libro">
+                    <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top" alt="Libro">
                     <div class="card-body">
                         <h5 class="card-title"><?= htmlspecialchars($libro['titulo']) ?></h5>
                         <p class="card-text text-muted"><?= htmlspecialchars($libro['autor']) ?></p>

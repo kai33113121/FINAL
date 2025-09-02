@@ -6,58 +6,83 @@ class Evento
     public function __construct()
     {
         $this->db = conectar();
+        if (!$this->db) {
+            throw new Exception("No se pudo conectar a la base de datos.");
+        }
     }
 
     public function crear($titulo, $descripcion, $creado_por)
 {
     $sql = "INSERT INTO eventos (titulo, descripcion, creado_por, activo) VALUES (?, ?, ?, 1)";
     $stmt = $this->db->prepare($sql);
+    if (!$stmt) return false;
     $stmt->bind_param("ssi", $titulo, $descripcion, $creado_por);
-    $stmt->execute();
+    $exito = $stmt->execute();
+    $stmt->close();
+    return $exito;
 }
 
     public function obtenerActivos()
     {
         $resultado = $this->db->query("SELECT * FROM eventos WHERE activo = 1 ORDER BY fecha_creacion DESC");
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+        return $resultado ? $resultado->fetch_all(MYSQLI_ASSOC) : [];
     }
 
     public function obtenerPorId($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM eventos WHERE id = ?");
+        if (!$stmt) return null;
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $resultado = $stmt->get_result();
-        return $resultado->fetch_assoc();
+        $evento = $resultado ? $resultado->fetch_assoc() : null;
+        $stmt->close();
+        return $evento;
     }
+
     public function actualizar($id, $titulo, $descripcion)
-{
-    $sql = "UPDATE eventos SET titulo = ?, descripcion = ? WHERE id = ?";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bind_param("ssi", $titulo, $descripcion, $id);
-    $stmt->execute();
-}
-public function eliminar($id)
-{
-    // Eliminación lógica: desactivar el evento
-    $sql = "UPDATE eventos SET activo = 0 WHERE id = ?";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-}
-public function contarEventos() {
-    $stmt = $this->db->prepare("SELECT COUNT(*) FROM eventos");
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-    $row = $resultado->fetch_row();
-    return $row[0];
-}
-public function contarPorGenero() {
-    $resultado = $this->db->query("SELECT genero, COUNT(*) as total FROM libros GROUP BY genero");
-    $result = [];
-    while ($row = $resultado->fetch_assoc()) {
-        $result[$row['genero']] = $row['total'];
+    {
+        $sql = "UPDATE eventos SET titulo = ?, descripcion = ? WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        if (!$stmt) return false;
+        $stmt->bind_param("ssi", $titulo, $descripcion, $id);
+        $exito = $stmt->execute();
+        $stmt->close();
+        return $exito;
     }
-    return $result;
-}
+
+    public function eliminar($id)
+    {
+        $sql = "UPDATE eventos SET activo = 0 WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        if (!$stmt) return false;
+        $stmt->bind_param("i", $id);
+        $exito = $stmt->execute();
+        $stmt->close();
+        return $exito;
+    }
+
+    public function contarEventos()
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM eventos");
+        if (!$stmt) return 0;
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $row = $resultado ? $resultado->fetch_row() : [0];
+        $stmt->close();
+        return $row[0];
+    }
+
+    public function contarPorGenero()
+    {
+        $resultado = $this->db->query("SELECT genero, COUNT(*) as total FROM libros GROUP BY genero");
+        $result = [];
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $result[$row['genero']] = $row['total'];
+            }
+            $resultado->free();
+        }
+        return $result;
+    }
 }

@@ -65,16 +65,49 @@ class UsuarioController
 
         require_once __DIR__ . '/../models/Resena.php';
         $resena = new Resena();
-
         $idUsuario = $_SESSION['usuario']['id'];
         $mis_reseñas = $resena->obtenerPorUsuario($idUsuario);
 
-        // 🔔 Cargar notificaciones
-        require_once __DIR__ . '/../models/Notificacion.php';
-        $notificacion = new Notificacion();
-        $notificaciones = $notificacion->obtenerPorUsuario($_SESSION['usuario']['id']);
+        // Obtener libros de la tabla libros
+        require_once __DIR__ . '/../models/Libro.php';
+        $libroModel = new Libro();
+        $libros = $libroModel->obtenerTodos();
 
-        // 📦 Pasar datos a la vista
+        // Si quieres mostrar libros en venta también:
+        require_once __DIR__ . '/../models/Venta.php';
+        $ventaModel = new Venta();
+        $libros_venta = $ventaModel->obtenerTodos();
+
+        // Notificaciones
+        require_once __DIR__ . '/../models/Notificacion.php';
+        $notificacionModel = new Notificacion();
+        $notificacionesRaw = $notificacionModel->obtenerPorUsuario($idUsuario);
+        $notificaciones = [];
+        foreach ($notificacionesRaw as $n) {
+            $notificaciones[] = [
+                'mensaje' => $n['mensaje'] ?? '',
+                'link' => $n['link'] ?? 'index.php?c=IntercambioController&a=notificaciones',
+                'fecha' => !empty($n['fecha']) ? date('d/m/Y H:i', strtotime($n['fecha'])) : ''
+            ];
+        }
+
+        // Notificaciones de intercambios pendientes
+        require_once __DIR__ . '/../models/Intercambio.php';
+        $intercambio = new Intercambio();
+        $pendientes = $intercambio->obtenerPendientes($idUsuario);
+        foreach ($pendientes as $notif) {
+            $libroOfrecido = $libroModel->obtenerPorId($notif['libro_id_1']);
+            $libroSolicitado = $libroModel->obtenerPorId($notif['libro_id_2']);
+            $tituloOfrecido = $libroOfrecido && isset($libroOfrecido['titulo']) ? $libroOfrecido['titulo'] : 'Libro ofrecido';
+            $tituloSolicitado = $libroSolicitado && isset($libroSolicitado['titulo']) ? $libroSolicitado['titulo'] : 'Libro solicitado';
+
+            $notificaciones[] = [
+                'mensaje' => "Solicitud de intercambio #{$notif['id']}: \"{$tituloOfrecido}\" por \"{$tituloSolicitado}\"",
+                'link' => "index.php?c=IntercambioController&a=notificaciones",
+                'fecha' => !empty($notif['fecha']) ? date('d/m/Y H:i', strtotime($notif['fecha'])) : ''
+            ];
+        }
+
         $contenido = __DIR__ . '/../views/usuario/dashboard.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
@@ -244,18 +277,32 @@ class UsuarioController
     }
     public function biblioteca()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Libro.php';
         $libro = new Libro();
         $misLibros = $libro->obtenerPorUsuario($_SESSION['usuario']['id']);
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
         $contenido = __DIR__ . '/../views/usuario/biblioteca.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
     public function perfil()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Usuario.php';
         $usuarioModel = new Usuario();
         $usuario = $usuarioModel->obtenerPorId($_SESSION['usuario']['id']);
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
         $contenido = __DIR__ . '/../views/usuario/perfil.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
@@ -301,9 +348,16 @@ class UsuarioController
     }
     public function configuracion()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Usuario.php';
         $usuarioModel = new Usuario();
         $config = $usuarioModel->obtenerConfiguracion($_SESSION['usuario']['id']);
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
         $contenido = __DIR__ . '/../views/usuario/configuracion.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
@@ -311,6 +365,10 @@ class UsuarioController
 
     public function guardarConfiguracion()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Usuario.php';
         $usuarioModel = new Usuario();
 
@@ -318,11 +376,12 @@ class UsuarioController
         $tema = $_POST['tema'] ?? 'claro';
         $color = $_POST['color_acento'] ?? 'morado';
         $vista = $_POST['vista_libros'] ?? 'grid';
-        $notificaciones = isset($_POST['notificaciones']) ? 1 : 0;
+        $notificaciones_activas = isset($_POST['notificaciones']) ? 1 : 0; // <-- cambio de nombre
 
-        $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones);
+        $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones_activas);
 
         header("Location: index.php?c=UsuarioController&a=configuracion");
+        exit;
     }
 
 }

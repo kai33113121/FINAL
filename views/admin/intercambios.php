@@ -24,10 +24,6 @@
                 <td><?= $i['estado'] ?></td>
                 <td><?= $i['fecha'] ?></td>
                 <td>
-                    <a href="index.php?c=AdminController&a=cambiarEstadoIntercambio&id=<?= $i['id'] ?>&estado=aceptado"
-                        class="btn btn-outline-purple btn-sm">Aceptar</a>
-                    <a href="index.php?c=AdminController&a=cambiarEstadoIntercambio&id=<?= $i['id'] ?>&estado=rechazado"
-                        class="btn btn-outline-purple btn-sm">Rechazar</a>
                     <a href="index.php?c=AdminController&a=eliminarIntercambio&id=<?= $i['id'] ?>"
                         class="btn btn-danger btn-sm">Eliminar</a>
                 </td>

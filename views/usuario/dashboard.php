@@ -11,6 +11,7 @@ $usuario = $_SESSION['usuario'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/FINAL/public/css/dashboardu.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
@@ -18,7 +19,7 @@ $usuario = $_SESSION['usuario'];
         style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, #6a11cb, #333a45ff); overflow: hidden;">
 
         <!-- Collage decorativo disperso -->
-        <div class="collage-container position-absolute w-100 h-100 z-1">
+        <div class="collage-container position-absolute w-100 h-100" style="z-index: 0;">
             <img src="/FINAL/public/img/1.jpg" class="collage-img" style="top: 4%; left: 6%;">
             <img src="/FINAL/public/img/2.jpg" class="collage-img" style="top: 12%; right: 8%;">
             <img src="/FINAL/public/img/3.png" class="collage-img" style="top: 22%; left: 18%;">
@@ -38,7 +39,7 @@ $usuario = $_SESSION['usuario'];
         </div>
 
         <!-- Contenido principal -->
-        <div class="container position-relative z-2 text-center py-5">
+        <div class="container position-relative text-center py-5">
             <h1 class="display-5 fw-bold mb-3 text-shadow">👋 Bienvenido a Libros Wap, señor@, <?= htmlspecialchars($usuario['nombre']) ?>
             </h1>
             <p class="lead text-shadow">Gestiona tus libros, intercambios y conecta con otros lectores.</p>
@@ -349,93 +350,32 @@ $usuario = $_SESSION['usuario'];
     <section class="section bg-white py-5" id="productos">
         <div class="container">
             <h2 class="text-center mb-5 text-purple text-shadow">🎁 Productos y Ofertas</h2>
-
-            <!-- Estante horizontal -->
             <div class="overflow-auto pb-3">
                 <div class="d-flex flex-nowrap gap-4 px-2" style="scroll-snap-type: x mandatory;">
-
-                    <!-- Card 1 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/oferta1.jpg" class="card-img-top" alt="Harry Potter">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Harry Potter</h6>
-                            <p class="text-muted small">Fantasía</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/oferta2.jpg" class="card-img-top" alt="Atomic Habits">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Atomic Habits</h6>
-                            <p class="text-muted small">Autoayuda</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/oferta4.jpg" class="card-img-top" alt="El Alquimista">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Alquimista</h6>
-                            <p class="text-muted small">Ficción inspiracional</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/oferta5.jpg" class="card-img-top" alt="Los Juegos del Hambre">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Los Juegos del Hambre</h6>
-                            <p class="text-muted small">Distopía</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 5 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/oferta6.jpg" class="card-img-top" alt="Dune">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Dune</h6>
-                            <p class="text-muted small">Ciencia Ficción</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 6 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/oferta7.jpg" class="card-img-top" alt="Código Da Vinci">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Código Da Vinci</h6>
-                            <p class="text-muted small">Thriller</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 7 -->
-                    <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="Cats">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">The many lives of cats</h6>
-                            <p class="text-muted small">Acción</p>
-                            <a href="#" class="btn btn-purple btn-sm">Ver más</a>
-                        </div>
-                    </div>
-
+                    <?php if (!empty($libros)): ?>
+                        <?php foreach ($libros as $libro): ?>
+                            <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
+                                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top" alt="<?= htmlspecialchars($libro['titulo']) ?>">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold"><?= htmlspecialchars($libro['titulo']) ?></h6>
+                                    <p class="text-muted small"><?= htmlspecialchars($libro['genero'] ?? '') ?></p>
+                                    <p class="text-muted small">Estado: <?= htmlspecialchars($libro['estado'] ?? 'N/A') ?></p>
+                                    <a href="index.php?c=DetalleLibroController&a=verDetalle&id=<?= $libro['id'] ?>" class="btn btn-purple btn-sm">Ver más</a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-center">No hay libros disponibles.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Categorías -->
-    <section class="py-5" id="categorias" style="
-  background-image: url('/FINAL/public/img/adminside.png');
-  color: white;
-">
+    <section class="py-5" id="categorias" style="background-image: url('/FINAL/public/img/adminside.png'); color: white;">
         <div id="categorias" class="container">
-            <h2  class="text-center fw-bold mb-5 text-white text-shadow">📚 Explora por Categorías</h2>
+            <h2 class="text-center fw-bold mb-5 text-white text-shadow">📚 Explora por Categorías</h2>
 
             <!-- Cubos horizontales -->
             <div class="d-flex flex-column gap-4 align-items-center">
@@ -515,7 +455,7 @@ seccion de actividades recientes -->
             <h2 class="text-center mb-4 text-purple">Actividad Reciente</h2>
             <div class="row g-4">
                 <div class="col-md-6">
-                    <div class="card shadow-lg border-0 bg-gradient-purple text-white">
+                    <div class="card shadow-lg border-0 bg-gradient-purple text-black">
                         <div class="card-body">
                             <h5 class="card-title">📚 Libro subido</h5>
                             <p class="card-text">"El nombre del viento"</p>
@@ -524,7 +464,7 @@ seccion de actividades recientes -->
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card shadow-lg border-0 bg-gradient-purple text-white">
+                    <div class="card shadow-lg border-0 bg-gradient-purple text-black">
                         <div class="card-body">
                             <h5 class="card-title">🔄 Intercambio realizado</h5>
                             <p class="card-text">Con usuario: @lectora23</p>
@@ -644,90 +584,6 @@ seccion de actividades recientes -->
                         <img src="/FINAL/public/img/intercambia3.jpg" class="card-img-top rounded-top" alt="The Raven">
                         <div class="card-body text-center">
                             <h6 class="card-title fw-bold">The Raven (Ilustrado)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Libro 1 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top rounded-top"
-                            alt="El Principito">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Principito (Pop-Up)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 2 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top rounded-top" alt="Alice">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Alice in Wonderland</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Libro 1 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top rounded-top"
-                            alt="El Principito">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Principito (Pop-Up)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 2 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top rounded-top" alt="Alice">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Alice in Wonderland</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Libro 1 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top rounded-top"
-                            alt="El Principito">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Principito (Pop-Up)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 2 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top rounded-top" alt="Alice">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Alice in Wonderland</h6>
                             <div class="d-grid gap-2">
                                 <a href="index.php?c=UsuarioController&a=login"
                                     class="btn btn-purple btn-sm">Intercambiar</a>
