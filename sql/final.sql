@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 05, 2025 at 10:51 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 03-09-2025 a las 00:27:43
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `final`
+-- Base de datos: `final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carrito`
+-- Estructura de tabla para la tabla `carrito`
 --
 
 CREATE TABLE `carrito` (
@@ -34,18 +34,10 @@ CREATE TABLE `carrito` (
   `fecha_agregado` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `carrito`
---
-
-INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`) VALUES
-(2, 3, 3, '2025-07-24 03:00:41'),
-(13, 1, 6, '2025-08-05 14:47:56');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorias`
+-- Estructura de tabla para la tabla `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -60,7 +52,7 @@ CREATE TABLE `categorias` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comentarios_evento`
+-- Estructura de tabla para la tabla `comentarios_evento`
 --
 
 CREATE TABLE `comentarios_evento` (
@@ -72,7 +64,7 @@ CREATE TABLE `comentarios_evento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `comentarios_evento`
+-- Volcado de datos para la tabla `comentarios_evento`
 --
 
 INSERT INTO `comentarios_evento` (`id`, `id_evento`, `id_usuario`, `comentario`, `fecha`) VALUES
@@ -84,7 +76,7 @@ INSERT INTO `comentarios_evento` (`id`, `id_evento`, `id_usuario`, `comentario`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `compras`
+-- Estructura de tabla para la tabla `compras`
 --
 
 CREATE TABLE `compras` (
@@ -95,7 +87,7 @@ CREATE TABLE `compras` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `compras`
+-- Volcado de datos para la tabla `compras`
 --
 
 INSERT INTO `compras` (`id`, `usuario_id`, `libro_id`, `fecha`) VALUES
@@ -110,7 +102,7 @@ INSERT INTO `compras` (`id`, `usuario_id`, `libro_id`, `fecha`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `config_usuario`
+-- Estructura de tabla para la tabla `config_usuario`
 --
 
 CREATE TABLE `config_usuario` (
@@ -123,7 +115,7 @@ CREATE TABLE `config_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `config_usuario`
+-- Volcado de datos para la tabla `config_usuario`
 --
 
 INSERT INTO `config_usuario` (`id`, `id_usuario`, `tema`, `color_acento`, `vista_libros`, `notificaciones`) VALUES
@@ -133,7 +125,7 @@ INSERT INTO `config_usuario` (`id`, `id_usuario`, `tema`, `color_acento`, `vista
 -- --------------------------------------------------------
 
 --
--- Table structure for table `eventos`
+-- Estructura de tabla para la tabla `eventos`
 --
 
 CREATE TABLE `eventos` (
@@ -146,7 +138,7 @@ CREATE TABLE `eventos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `eventos`
+-- Volcado de datos para la tabla `eventos`
 --
 
 INSERT INTO `eventos` (`id`, `titulo`, `descripcion`, `fecha_creacion`, `creado_por`, `activo`) VALUES
@@ -157,7 +149,7 @@ INSERT INTO `eventos` (`id`, `titulo`, `descripcion`, `fecha_creacion`, `creado_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `generos`
+-- Estructura de tabla para la tabla `generos`
 --
 
 CREATE TABLE `generos` (
@@ -166,7 +158,7 @@ CREATE TABLE `generos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `generos`
+-- Volcado de datos para la tabla `generos`
 --
 
 INSERT INTO `generos` (`id`, `nombre`) VALUES
@@ -179,7 +171,7 @@ INSERT INTO `generos` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `intercambios`
+-- Estructura de tabla para la tabla `intercambios`
 --
 
 CREATE TABLE `intercambios` (
@@ -193,18 +185,19 @@ CREATE TABLE `intercambios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `intercambios`
+-- Volcado de datos para la tabla `intercambios`
 --
 
 INSERT INTO `intercambios` (`id`, `libro_id_1`, `libro_id_2`, `usuario_1`, `usuario_2`, `estado`, `fecha`) VALUES
-(2, 2, 3, 3, 1, 'aceptado', '2025-07-24 02:13:08'),
-(3, 6, 4, 1, 2, 'rechazado', '2025-07-29 14:51:04'),
-(4, 7, 4, 1, 2, 'pendiente', '2025-08-05 15:00:59');
+(27, 25, 26, 14, 15, 'rechazado', '2025-09-02 13:06:07'),
+(28, 25, 26, 14, 15, 'rechazado', '2025-09-02 13:50:44'),
+(29, 26, 25, 15, 14, 'rechazado', '2025-09-02 13:54:36'),
+(30, 26, 25, 15, 14, 'rechazado', '2025-09-02 13:57:57');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libros`
+-- Estructura de tabla para la tabla `libros`
 --
 
 CREATE TABLE `libros` (
@@ -222,7 +215,7 @@ CREATE TABLE `libros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `libros`
+-- Volcado de datos para la tabla `libros`
 --
 
 INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`, `imagen`, `usuario_id`, `modo`, `precio`, `id_usuario`) VALUES
@@ -232,18 +225,20 @@ INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`
 (6, 'DUNE', 'Frank Herbert', 'Ciencia Ficción', 'nuevo', 'Épica interestelar sobre poder, religión y ecología en el desértico planeta Arrakis.', '687eb9c590e03_crepusculo.jpg', 1, NULL, NULL, 0),
 (7, '\"Sapiens: De animales a dioses\"', 'Yuval Noah Harari', 'No Ficción', 'nuevo', 'Historia de la humanidad desde la evolución hasta la era digital.', 'viento.jpg', 1, 'venta', 222222.00, 0),
 (12, 'sasaas', 'asassa', 'assasa', 'nuevo', 'asas', 'default.jpg', NULL, 'intercambio', 0.00, 3),
-(13, 'El guardián entre el centeno', 'J.D. Salinger', ' Novela literaria / Bildungsroman (novela de formación)', 'nuevo', 'La novela sigue a Holden Caulfield, un adolescente de 16 años expulsado de su escuela preparatoria, quien deambula por Nueva York durante tres días después de huir del colegio. ', 'default.jpg', NULL, 'intercambio', 0.00, 3),
+(13, 'El guardián entre el centeno', 'J.D. Salinger', ' Novela literaria', 'nuevo', 'La novela sigue a Holden Caulfield, un adolescente de 16 años expulsado de su escuela preparatoria, quien deambula por Nueva York durante tres días después de huir del colegio. ', 'default.jpg', NULL, 'intercambio', 0.00, 3),
 (14, 'Bajo la misma estrella', ' John Green', 'Romance', 'usado', 'Dos adolescentes con cáncer se enamoran y buscan significado en su vida.', 'default.jpg', NULL, 'intercambio', 0.00, 3),
 (15, 'Los Miserables', 'Victor Hugo', 'Sátira política', 'nuevo', 'Los animales de una granja expulsan a los humanos y crean un sistema igualitario, pero los cerdos (líderes) corrompen el ideal revolucionario hasta replicar la tiranía anterior. Una crítica feroz al totalitarismo soviético y a la manipulación del poder.', '6884776aae082_ficcion.jpg', NULL, 'intercambio', 0.00, 1),
 (16, 'Los Miserables', 'Victor Hugo', 'Sátira política', 'nuevo', 'Los animales de una granja expulsan a los humanos y crean un sistema igualitario, pero los cerdos (líderes) corrompen el ideal revolucionario hasta replicar la tiranía anterior. Una crítica feroz al totalitarismo soviético y a la manipulación del poder.', '6884778759368_ficcion.jpg', NULL, 'intercambio', 0.00, 1),
-(17, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'ppppp', NULL, NULL, NULL, NULL, 1),
+(17, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'ppppp', 'default.jpg', NULL, NULL, NULL, 1),
 (20, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'sasasa', '68847cf804bfc_6.jpg', NULL, 'intercambio', 0.00, 1),
-(22, 'patatas', 'ahhasgbh', 'hsgahgahsg', 'nuevo', 'gsjahasj', '688925fa3340b_6.jpg', NULL, 'intercambio', 0.00, 8);
+(22, 'patatas', 'ahhasgbh', 'hsgahgahsg', 'nuevo', 'gsjahasj', '688925fa3340b_6.jpg', NULL, 'intercambio', 0.00, 8),
+(25, 'hola', 'nuevo', 'drama', 'usado', 'casca', '68b70122d774c_4.jpg', NULL, 'intercambio', 100606.00, 14),
+(26, 'ayer cuando te vi', 'yo', 'comedia', 'usado', 'akjsdas', '68b70d07bb663_1984.jpg', NULL, 'intercambio', 552505.00, 15);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libros_catalogo`
+-- Estructura de tabla para la tabla `libros_catalogo`
 --
 
 CREATE TABLE `libros_catalogo` (
@@ -261,7 +256,7 @@ CREATE TABLE `libros_catalogo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libros_venta`
+-- Estructura de tabla para la tabla `libros_venta`
 --
 
 CREATE TABLE `libros_venta` (
@@ -278,7 +273,7 @@ CREATE TABLE `libros_venta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `libros_venta`
+-- Volcado de datos para la tabla `libros_venta`
 --
 
 INSERT INTO `libros_venta` (`id`, `id_usuario`, `titulo`, `autor`, `descripcion`, `precio`, `imagen`, `fecha_publicacion`, `estado`, `id_genero`) VALUES
@@ -290,7 +285,7 @@ INSERT INTO `libros_venta` (`id`, `id_usuario`, `titulo`, `autor`, `descripcion`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mensajes`
+-- Estructura de tabla para la tabla `mensajes`
 --
 
 CREATE TABLE `mensajes` (
@@ -303,7 +298,7 @@ CREATE TABLE `mensajes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `mensajes`
+-- Volcado de datos para la tabla `mensajes`
 --
 
 INSERT INTO `mensajes` (`id`, `emisor_id`, `receptor_id`, `mensaje`, `fecha_envio`, `leido`) VALUES
@@ -323,7 +318,7 @@ INSERT INTO `mensajes` (`id`, `emisor_id`, `receptor_id`, `mensaje`, `fecha_envi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notificaciones`
+-- Estructura de tabla para la tabla `notificaciones`
 --
 
 CREATE TABLE `notificaciones` (
@@ -336,16 +331,18 @@ CREATE TABLE `notificaciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `notificaciones`
+-- Volcado de datos para la tabla `notificaciones`
 --
 
 INSERT INTO `notificaciones` (`id`, `usuario_id`, `mensaje`, `link`, `tipo`, `fecha`) VALUES
-(1, 3, '📖 ¡Tu libro recibió una nueva reseña!', 'index.php?c=ResenaController&a=ver&id=2', 'reseña', '2025-07-25 20:47:57');
+(1, 3, '📖 ¡Tu libro recibió una nueva reseña!', 'index.php?c=ResenaController&a=ver&id=2', 'reseña', '2025-07-25 20:47:57'),
+(2, 3, '📖 ¡Tu libro recibió una nueva reseña!', 'index.php?c=ResenaController&a=ver&id=2', 'reseña', '2025-09-02 10:22:39'),
+(13, 14, '🔄 Has recibido una solicitud de intercambio por tu libro \"hola\".', 'index.php?c=IntercambioController&a=notificaciones', 'info', '2025-09-02 13:57:58');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `resenas`
+-- Estructura de tabla para la tabla `resenas`
 --
 
 CREATE TABLE `resenas` (
@@ -358,7 +355,7 @@ CREATE TABLE `resenas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `resenas`
+-- Volcado de datos para la tabla `resenas`
 --
 
 INSERT INTO `resenas` (`id`, `libro_id`, `usuario_id`, `calificacion`, `comentario`, `fecha`) VALUES
@@ -366,12 +363,13 @@ INSERT INTO `resenas` (`id`, `libro_id`, `usuario_id`, `calificacion`, `comentar
 (2, 4, 1, 1, 'ss', '2025-07-24 16:42:14'),
 (3, 3, 8, 5, 'Muy buen libro, interesante.', '2025-07-25 19:25:46'),
 (4, 4, 8, 5, 'Libro tan gueno mano', '2025-07-25 20:40:19'),
-(5, 2, 8, 3, 'Libro bueno', '2025-07-25 20:47:57');
+(5, 2, 8, 3, 'Libro bueno', '2025-07-25 20:47:57'),
+(6, 2, 14, 5, 'excelente libro muy recomendado', '2025-09-02 10:22:39');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -387,25 +385,26 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `usuarios`
+-- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`) VALUES
 (1, 'Angels', 'angelvanegas944@gmail.com', '$2y$10$qilQp4gPc5YigRUy.8AdJu1d.xoxytCNI2n5lh009GGsOc937jXcS', 'usuario', 'default.jpg', '', '6189b6aa33ad90c9e862e8dcc544bfb3cc16e5ee9b6704b662d98011ba115afd', '2025-07-30 14:07:04'),
 (2, 'Ana', 'aelixabeth201@gmail.com', '$2y$10$jxv1n/Z0gK3nuacmUrrje.U107zmdguQOX.902IvsMeafWqdyd8aK', 'usuario', NULL, '', NULL, NULL),
 (3, 'Jairs', 'jair@gmail.com', '$2y$10$a4k0KvfdkJqDuRTKTB473erMg8Utd5js0EmCuzzB4mlNPy348.hwe', 'admin', 'default.jpg', 'Estudiante Tecnologo del SENA', NULL, NULL),
-(4, 'cristian', 'giovannyv292@gmail.com', '$2y$10$B9E8UKgSV5Z4aoDXh3AJN.TrdIVuyCWwfaXjpGZjemF9gUzgZVpTG', 'usuario', NULL, NULL, NULL, NULL),
 (6, 'prueba, Angel 2', 'a@gmail.com', '$2y$10$Je9oSR1kFa.2vPN3xL3Sreuw919ovXhN3s/Gh4PE2kc82/FZMoL1i', 'usuario', NULL, '', NULL, NULL),
 (8, 'Prueba, Angel', 'aa@gmail.com', '$2y$10$K8BHH802dqVSkaBF3Yk08.moYPD7V2ykS8vVd3jLNv9fPfyj7n416', 'usuario', NULL, '', NULL, NULL),
 (10, 'PRUEBADOS', 'prueba4@gmail.com', '$2y$10$b.tz0uQHBmjLKDLvgU5Kh.lIDkYmknZrF0xepm/E6lTNsmxSjigve', 'usuario', NULL, NULL, NULL, NULL),
 (11, 'david', 'david@gmail.com', '$2y$10$L6ZNipHNBmoiezFzymf4hOfivs3pSn.lsqWx.y4JipUK.DAOKZhwG', 'usuario', NULL, NULL, NULL, NULL),
 (12, 'ssssssssssssssssss', 'shirlygeren+1058s67@zohomail.com', '$2y$10$ZPqtgV9uCk5vx4Iia3AlhOv5WV7lTpkmHNe94IN1idO5zZtdzWW9.', 'usuario', NULL, NULL, NULL, NULL),
-(13, 'misnotas_practica', 'aelizabeth@gmail.com', '$2y$10$82mw7BiF/JTIt4aHtcI4x.Zs6M0V7j72EO8/2Y5fKMq0GHrtQQwgS', 'usuario', NULL, NULL, NULL, NULL);
+(13, 'misnotas_practica', 'aelizabeth@gmail.com', '$2y$10$82mw7BiF/JTIt4aHtcI4x.Zs6M0V7j72EO8/2Y5fKMq0GHrtQQwgS', 'usuario', NULL, NULL, NULL, NULL),
+(14, 'giovanny', 'giovannyv292@gmail.com', '$2y$10$zAnEFh83UmezF7RwKtB1ZenyF4Ou3epEgrmWKy4bs5rHHRPwpdLVS', 'admin', NULL, NULL, NULL, NULL),
+(15, 'prueba1', 'prueba1@gmail.com', '$2y$10$iI2HTp7Vuy1w8f07ZLRNIedMHkPVJhxGyH61rbI7Sa1nbCuy9sMqK', 'usuario', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ventas`
+-- Estructura de tabla para la tabla `ventas`
 --
 
 CREATE TABLE `ventas` (
@@ -418,11 +417,11 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `carrito`
+-- Indices de la tabla `carrito`
 --
 ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id`),
@@ -430,13 +429,13 @@ ALTER TABLE `carrito`
   ADD KEY `libro_id` (`libro_id`);
 
 --
--- Indexes for table `categorias`
+-- Indices de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `comentarios_evento`
+-- Indices de la tabla `comentarios_evento`
 --
 ALTER TABLE `comentarios_evento`
   ADD PRIMARY KEY (`id`),
@@ -444,7 +443,7 @@ ALTER TABLE `comentarios_evento`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `compras`
+-- Indices de la tabla `compras`
 --
 ALTER TABLE `compras`
   ADD PRIMARY KEY (`id`),
@@ -452,26 +451,26 @@ ALTER TABLE `compras`
   ADD KEY `libro_id` (`libro_id`);
 
 --
--- Indexes for table `config_usuario`
+-- Indices de la tabla `config_usuario`
 --
 ALTER TABLE `config_usuario`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `eventos`
+-- Indices de la tabla `eventos`
 --
 ALTER TABLE `eventos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `generos`
+-- Indices de la tabla `generos`
 --
 ALTER TABLE `generos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `intercambios`
+-- Indices de la tabla `intercambios`
 --
 ALTER TABLE `intercambios`
   ADD PRIMARY KEY (`id`),
@@ -481,40 +480,40 @@ ALTER TABLE `intercambios`
   ADD KEY `usuario_2` (`usuario_2`);
 
 --
--- Indexes for table `libros`
+-- Indices de la tabla `libros`
 --
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Indexes for table `libros_catalogo`
+-- Indices de la tabla `libros_catalogo`
 --
 ALTER TABLE `libros_catalogo`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `libros_venta`
+-- Indices de la tabla `libros_venta`
 --
 ALTER TABLE `libros_venta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `mensajes`
+-- Indices de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `notificaciones`
+-- Indices de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Indexes for table `resenas`
+-- Indices de la tabla `resenas`
 --
 ALTER TABLE `resenas`
   ADD PRIMARY KEY (`id`),
@@ -522,14 +521,14 @@ ALTER TABLE `resenas`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Indexes for table `usuarios`
+-- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `ventas`
+-- Indices de la tabla `ventas`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id`),
@@ -537,138 +536,138 @@ ALTER TABLE `ventas`
   ADD KEY `id_libro` (`id_libro`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `carrito`
+-- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `categorias`
+-- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `comentarios_evento`
+-- AUTO_INCREMENT de la tabla `comentarios_evento`
 --
 ALTER TABLE `comentarios_evento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `compras`
+-- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `config_usuario`
+-- AUTO_INCREMENT de la tabla `config_usuario`
 --
 ALTER TABLE `config_usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `eventos`
+-- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `generos`
+-- AUTO_INCREMENT de la tabla `generos`
 --
 ALTER TABLE `generos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `intercambios`
+-- AUTO_INCREMENT de la tabla `intercambios`
 --
 ALTER TABLE `intercambios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `libros`
+-- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table `libros_catalogo`
+-- AUTO_INCREMENT de la tabla `libros_catalogo`
 --
 ALTER TABLE `libros_catalogo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `libros_venta`
+-- AUTO_INCREMENT de la tabla `libros_venta`
 --
 ALTER TABLE `libros_venta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `mensajes`
+-- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `notificaciones`
+-- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `resenas`
---
-ALTER TABLE `resenas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `ventas`
+-- AUTO_INCREMENT de la tabla `resenas`
+--
+ALTER TABLE `resenas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `carrito`
+-- Filtros para la tabla `carrito`
 --
 ALTER TABLE `carrito`
   ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `carrito_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
 
 --
--- Constraints for table `comentarios_evento`
+-- Filtros para la tabla `comentarios_evento`
 --
 ALTER TABLE `comentarios_evento`
   ADD CONSTRAINT `comentarios_evento_ibfk_1` FOREIGN KEY (`id_evento`) REFERENCES `eventos` (`id`),
   ADD CONSTRAINT `comentarios_evento_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `compras`
+-- Filtros para la tabla `compras`
 --
 ALTER TABLE `compras`
   ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
 
 --
--- Constraints for table `config_usuario`
+-- Filtros para la tabla `config_usuario`
 --
 ALTER TABLE `config_usuario`
   ADD CONSTRAINT `config_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `intercambios`
+-- Filtros para la tabla `intercambios`
 --
 ALTER TABLE `intercambios`
   ADD CONSTRAINT `intercambios_ibfk_1` FOREIGN KEY (`libro_id_1`) REFERENCES `libros` (`id`),
@@ -677,32 +676,32 @@ ALTER TABLE `intercambios`
   ADD CONSTRAINT `intercambios_ibfk_4` FOREIGN KEY (`usuario_2`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `libros`
+-- Filtros para la tabla `libros`
 --
 ALTER TABLE `libros`
   ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `libros_venta`
+-- Filtros para la tabla `libros_venta`
 --
 ALTER TABLE `libros_venta`
   ADD CONSTRAINT `libros_venta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `notificaciones`
+-- Filtros para la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
   ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `resenas`
+-- Filtros para la tabla `resenas`
 --
 ALTER TABLE `resenas`
   ADD CONSTRAINT `resenas_ibfk_1` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`),
   ADD CONSTRAINT `resenas_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `ventas`
+-- Filtros para la tabla `ventas`
 --
 ALTER TABLE `ventas`
   ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
