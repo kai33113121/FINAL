@@ -30,3 +30,22 @@
     <?php endif; ?>
     <a href="index.php?c=UsuarioController&a=notificaciones" class="btn btn-outline-secondary">Volver a notificaciones</a>
 </div>
+
+    <footer id="contacto" class="bg-dark text-white py-5">
+        <div class="container text-center">
+            <h5 class="mb-3">📚 LibrosWap — Compartiendo conocimiento desde 2025</h5>
+            <p class="mb-3">Diseñado con 💜 LIBROS WAP</p>
+            <div class="d-flex justify-content-center gap-4 mb-3">
+                <a href="#" class="text-white text-decoration-none">Inicio</a>
+                <a href="#" class="text-white text-decoration-none">Libros</a>
+                <a href="#" class="text-white text-decoration-none">Blog</a>
+                <a href="#" class="text-white text-decoration-none">Contacto</a>
+            </div>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <i class="bi bi-facebook fs-5"></i>
+                <i class="bi bi-instagram fs-5"></i>
+                <i class="bi bi-twitter fs-5"></i>
+            </div>
+            <p class="mt-4 small">© 2025 LibrosWap. Todos los derechos reservados.</p>
+        </div>
+    </footer>

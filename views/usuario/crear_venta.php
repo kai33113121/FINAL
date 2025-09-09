@@ -17,6 +17,22 @@
         <input type="number" step="0.01" name="precio" class="form-control" required>
     </div>
     <div class="mb-3">
+        <label>Género literario</label>
+        <select name="genero" class="form-select" required>
+            <option value="">Selecciona un género</option>
+            <option value="Fantasía">Fantasía</option>
+            <option value="Ciencia Ficción">Ciencia Ficción</option>
+            <option value="Romance">Romance</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Misterio">Misterio</option>
+            <option value="No Ficción">No Ficción</option>
+            <option value="Clásicos">Clásicos</option>
+            <option value="Juvenil">Juvenil</option>
+            <option value="Aventura">Aventura</option>
+            <option value="Otro">Otro</option>
+        </select>
+    </div>
+    <div class="mb-3">
         <label>Estado</label>
         <select name="estado" class="form-select">
             <option value="nuevo">Nuevo</option>

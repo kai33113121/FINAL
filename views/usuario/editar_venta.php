@@ -25,7 +25,7 @@
         <?php if (!empty($libro['imagen'])): ?>
             <div class="mb-3">
                 <label>Imagen actual:</label><br>
-                <img src="img/<?= $libro['imagen'] ?>" alt="Portada actual" class="img-thumbnail" style="max-width: 150px;">
+                <img src="public/img/libros/<?= $libro['imagen'] ?>" alt="Portada actual" class="img-thumbnail" style="max-width: 150px;">
             </div>
         <?php endif; ?>
         <input type="hidden" name="imagen_actual" value="<?= htmlspecialchars($libro['imagen']) ?>">
@@ -35,7 +35,7 @@
             <input type="file" name="imagen" id="imagen" class="form-control">
             <?php if (!empty($libro['imagen'])): ?>
                 <p class="mt-2">Imagen actual:</p>
-                <img src="public/img/<?= htmlspecialchars($libro['imagen']) ?>" alt="Imagen actual" class="img-thumbnail"
+                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" alt="Imagen actual" class="img-thumbnail"
                     style="max-width: 150px;">
             <?php endif; ?>
         </div>

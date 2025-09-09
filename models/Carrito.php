@@ -21,7 +21,7 @@ class Carrito {
     }
 
     public function obtener($usuario_id) {
-    $sql = "SELECT c.*, l.titulo, l.autor, l.precio 
+    $sql = "SELECT c.*, l.titulo, l.autor, l.precio, l.imagen 
             FROM carrito c 
             JOIN libros l ON c.libro_id = l.id 
             WHERE c.usuario_id = ?";

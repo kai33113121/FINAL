@@ -383,10 +383,7 @@
     </section>
 
     <!-- Categorías -->
-    <section class="py-5" id="categorias" style="
-  background: linear-gradient(135deg, #6a0dad, #c084fc);
-  color: white;
-">
+    <section class="py-5" id="categorias" style="background: linear-gradient(135deg, #6a0dad, #c084fc); color: white;">
         <div class="container">
             <h2 class="text-center fw-bold mb-5 text-white">📚 Explora por Categorías</h2>
             <div class="row g-4 justify-content-center">
@@ -459,7 +456,6 @@
                     <h1>LANZAMIENTO EXCLUSIVO: LA JOYA LITERARIA DEL AÑO</h1>
                     <h1>Una memoria cruda y poética sobre viajes, identidad y los encuentros que nos marcan para siempre
                     </h1>
-
                     <p>En las paredes desconchadas de un hostel perdido en Marruecos, cada huésped esconde una historia.
                         Esta es la crónica de Alina K., quien documentó 3 años de viajes en cuadernos manchados de té y
                         polvo del desierto. Un libro que desarma el alma y rearma el significado de 'pertenecer</p>
@@ -659,54 +655,8 @@
             </div>
         </div>
     </section>
-    <section class="section bg-white py-5">
-        <div class="container">
-            <h2 class="text-center text-purple mb-4">📝 Blogs y Noticias Literarias</h2>
-            <div class="row g-4">
 
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/noticia1.jpg" class="card-img-top" alt="Blog 1">
-                        <div class="card-body">
-                            <h6 class="card-title text-purple">¿Por qué leemos terror?</h6>
-                            <p class="card-text">Exploramos cómo el miedo puede ser terapéutico y por qué Stephen King
-                                sigue
-                                siendo el maestro del género.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/noticia2.jpg" class="card-img-top" alt="Blog 2">
-                        <div class="card-body">
-                            <h6 class="card-title text-purple">Libros que inspiran series</h6>
-                            <p class="card-text">De <em>La Torre Oscura</em> a <em>From</em>, cómo las novelas de King
-                                se
-                                transforman en éxitos televisivos.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/noticia3.jpg" class="card-img-top" alt="Blog 3">
-                        <div class="card-body">
-                            <h6 class="card-title text-purple">Recomendaciones para lectores nuevos</h6>
-                            <p class="card-text">¿Nunca has leído a Stephen King? Aquí te decimos por dónde empezar
-                                según tu
-                                estilo.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
+    <!--footer-->
     <footer class="bg-dark text-white py-4">
         <div class="container text-center">
             <p class="mb-1">📚 LibrosWap — Compartiendo conocimiento desde 2025</p>
@@ -720,6 +670,8 @@
             <p class="mt-3 small">© 2025 LibrosWap. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js"
         integrity="sha512-j12pXc2gXZL/JZw5Mhi6LC7lkiXL0e2h+9ZWpqhniz0DkDrO01VNlBrG3LkPBn6DgG2b8CDjzJT+lxfocsS1Vw=="

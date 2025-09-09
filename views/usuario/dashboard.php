@@ -357,7 +357,7 @@ if (!function_exists('fecha_relativa')) {
                     <?php if (!empty($libros)): ?>
                         <?php foreach ($libros as $libro): ?>
                             <div class="card shadow-sm border-0" style="min-width: 220px; scroll-snap-align: start;">
-                                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top" alt="<?= htmlspecialchars($libro['titulo']) ?>">
+                                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top mx-auto d-block" alt="<?= htmlspecialchars($libro['titulo']) ?>" style="height: 220px; width: 150px; object-fit: cover; object-position: center;">
                                 <div class="card-body text-center">
                                     <h6 class="card-title fw-bold"><?= htmlspecialchars($libro['titulo']) ?></h6>
                                     <p class="text-muted small"><?= htmlspecialchars($libro['genero'] ?? '') ?></p>
@@ -450,8 +450,7 @@ if (!function_exists('fecha_relativa')) {
         
     </section>
 
-    <!-- 
-seccion de actividades recientes -->
+    <!--seccion de actividades recientes -->
     <section class="py-5 bg-light position-relative">
         <div class="container">
             <h2 class="text-center mb-4 text-purple">Actividad Reciente</h2>
@@ -553,7 +552,7 @@ seccion de actividades recientes -->
                     <?php if (!empty($libros)): ?>
                         <?php foreach ($libros as $libro): ?>
                             <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top rounded-top" alt="<?= htmlspecialchars($libro['titulo']) ?>">
+                                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top rounded-top mx-auto d-block" alt="<?= htmlspecialchars($libro['titulo']) ?>" style="height: 220px; width: 150px; object-fit: cover; object-position: center;">
                                 <div class="card-body text-center">
                                     <h6 class="card-title fw-bold"><?= htmlspecialchars($libro['titulo']) ?></h6>
                                     <p class="text-muted small mb-1">Autor: <?= htmlspecialchars($libro['autor'] ?? '') ?></p>

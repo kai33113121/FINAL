@@ -28,7 +28,7 @@ class VentaController
         $venta = new Venta();
 
         // Validar que los campos requeridos no estén vacíos
-        if (empty($_POST['titulo']) || empty($_POST['autor']) || empty($_POST['descripcion']) || empty($_POST['precio']) || empty($_POST['estado'])) {
+    if (empty($_POST['titulo']) || empty($_POST['autor']) || empty($_POST['descripcion']) || empty($_POST['precio']) || empty($_POST['estado']) || empty($_POST['genero'])) {
             $_SESSION['error'] = "Todos los campos son obligatorios.";
             header("Location: index.php?c=VentaController&a=crearVista");
             exit;
@@ -40,7 +40,8 @@ class VentaController
         $autor = htmlspecialchars($_POST['autor']);
         $descripcion = htmlspecialchars($_POST['descripcion']);
         $precio = floatval($_POST['precio']);
-        $estado = htmlspecialchars($_POST['estado']);
+    $genero = htmlspecialchars($_POST['genero']);
+    $estado = htmlspecialchars($_POST['estado']);
         $fecha = date('Y-m-d');
 
         if ($precio <= 0) {
@@ -91,7 +92,7 @@ class VentaController
         }
 
         // Guardar en BD
-        if ($venta->crear($id_usuario, $titulo, $autor, $descripcion, $precio, $estado, $nombreImagen)) {
+    if ($venta->crear($id_usuario, $titulo, $autor, $descripcion, $genero, $precio, $estado, $nombreImagen)) {
             $_SESSION['success'] = "¡Libro publicado exitosamente!";
             header("Location: index.php?c=VentaController&a=misVentas");
             exit;

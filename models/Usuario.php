@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/config.php';
 
 class Usuario {
     private $conexion;
+    private $error = '';
 
     public function __construct() {
         $this->conexion = conectar();
@@ -17,10 +18,21 @@ class Usuario {
 
         $stmt = $this->conexion->prepare("INSERT INTO usuarios (nombre, email, password, rol) VALUES (?, ?, ?, ?)");
         if (!$stmt) {
-            die("Error en prepare: " . $this->conexion->error);
+            $this->error = "Error en prepare: " . $this->conexion->error;
+            return false;
         }
         $stmt->bind_param("ssss", $nombre, $email, $hash, $rol);
-        return $stmt->execute();
+        try {
+            $exito = $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                $this->error = 'El correo ya está en uso, por favor verifique o inicie sesión.';
+            } else {
+                $this->error = $e->getMessage();
+            }
+            return false;
+        }
+        return $exito;
     }
 
     public function verificar($email, $password) {
@@ -37,7 +49,7 @@ class Usuario {
     }
 
     public function getError() {
-        return $this->conexion->error;
+        return $this->error;
     }
 
     public function obtenerTodos() {

@@ -48,7 +48,12 @@ class UsuarioController
             if ($exito) {
                 $mensaje = "✅ Usuario registrado correctamente.";
             } else {
-                $mensaje = "❌ Error al registrar usuario: " . $usuario->getError();
+                $error = $usuario->getError();
+                if (strpos($error, 'correo ya está en uso') !== false || strpos($error, 'correo ya está en uso') !== false) {
+                    $mensaje = "❌ El correo ya está en uso, por favor verifique o inicie sesión.";
+                } else {
+                    $mensaje = "❌ Error al registrar usuario: " . $error;
+                }
             }
         }
 

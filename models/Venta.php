@@ -14,19 +14,20 @@ class Venta
     }
 
     // Crear libro en venta
-    public function crear($id_usuario, $titulo, $autor, $descripcion, $precio, $estado, $imagen)
+    public function crear($id_usuario, $titulo, $autor, $descripcion, $genero, $precio, $estado, $imagen)
     {
         $stmt = $this->db->prepare("
             INSERT INTO libros 
-            (id_usuario, titulo, autor, descripcion, precio, estado, imagen) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (id_usuario, titulo, autor, descripcion, genero, precio, estado, imagen) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
         if (!$stmt) return false;
-        $stmt->bind_param("isssdss", 
+        $stmt->bind_param("isssssds", 
             $id_usuario, 
             $titulo, 
             $autor, 
             $descripcion, 
+            $genero,
             $precio, 
             $estado, 
             $imagen

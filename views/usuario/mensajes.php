@@ -41,8 +41,7 @@
                         <?php foreach ($usuarios as $u): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="<?= $u['foto'] ?? 'default.jpg' ?>" class="rounded-circle me-3" width="40"
-                                        height="40">
+                                    <img src="public/img/usuarios/<?= !empty($u['foto']) ? htmlspecialchars($u['foto']) : 'default.jpg' ?>" class="rounded-circle me-3" width="40" height="40" onerror="this.onerror=null;this.src='public/img/usuarios/default.jpg';">
                                     <span class="fw-semibold"><?= htmlspecialchars($u['nombre']) ?></span>
                                 </div>
                                 <a href="index.php?c=MensajeController&a=chat&id=<?= $u['id'] ?>"
@@ -69,8 +68,7 @@
                                 <div class="col-12 mb-3">
                                     <div class="card border-0 shadow-sm">
                                         <div class="card-body d-flex align-items-center">
-                                            <img src="<?= $usuario['foto'] ?? 'default.jpg' ?>" class="rounded-circle me-3"
-                                                width="50" height="50">
+                                            <img src="public/img/usuarios/<?= !empty($usuario['foto']) ? htmlspecialchars($usuario['foto']) : 'default.jpg' ?>" class="rounded-circle me-3" width="50" height="50" onerror="this.onerror=null;this.src='public/img/usuarios/default.jpg';">
                                             <div class="flex-grow-1">
                                                 <h6
                                                     class="mb-1 fw-semibold d-flex justify-content-between align-items-center">
@@ -103,4 +101,22 @@
     </div>
 </body>
 
+    <footer id="contacto" class="bg-dark text-white py-5">
+        <div class="container text-center">
+            <h5 class="mb-3">📚 LibrosWap — Compartiendo conocimiento desde 2025</h5>
+            <p class="mb-3">Diseñado con 💜 LIBROS WAP</p>
+            <div class="d-flex justify-content-center gap-4 mb-3">
+                <a href="#" class="text-white text-decoration-none">Inicio</a>
+                <a href="#" class="text-white text-decoration-none">Libros</a>
+                <a href="#" class="text-white text-decoration-none">Blog</a>
+                <a href="#" class="text-white text-decoration-none">Contacto</a>
+            </div>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <i class="bi bi-facebook fs-5"></i>
+                <i class="bi bi-instagram fs-5"></i>
+                <i class="bi bi-twitter fs-5"></i>
+            </div>
+            <p class="mt-4 small">© 2025 LibrosWap. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </html>

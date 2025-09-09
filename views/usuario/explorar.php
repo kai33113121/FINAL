@@ -163,37 +163,37 @@
                 <p class="text-center">No hay libros disponibles.</p>
             <?php endif; ?>
         </div>
-        <hr class="my-5">
+        <!-- <hr class="my-5">
         <h2 class="mb-4 text-center">💰 Libros en Venta</h2>
-        <div class="explorar-row">
+        <div class="explorar-row"> -->
             <!-- Libros subidos por usuarios (venta) -->
-            <?php if (!empty($libros_venta)): ?>
-                <?php foreach ($libros_venta as $libro): ?>
+            <!-- <php if (!empty($libros_venta)): ?>
+                <php foreach ($libros_venta as $libro): ?>
                     <div class="explorar-card">
-                        <img src="public/img/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top" alt="Portada">
+                        <img src="public/img/<= htmlspecialchars($libro['imagen']) ?>" class="card-img-top" alt="Portada">
                         <div class="card-body">
                             <div class="card-content">
-                                <h5 class="card-title"><?= htmlspecialchars($libro['titulo']) ?></h5>
+                                <h5 class="card-title"><= htmlspecialchars($libro['titulo']) ?></h5>
                                 <p class="card-text">
-                                    <?= htmlspecialchars($libro['autor'] ?? 'Autor desconocido') ?> - <?= htmlspecialchars($libro['genero'] ?? 'Género no definido') ?>
+                                    <= htmlspecialchars($libro['autor'] ?? 'Autor desconocido') ?> - <= htmlspecialchars($libro['genero'] ?? 'Género no definido') ?>
                                 </p>
-                                <p class="card-text"><small>Estado: <?= htmlspecialchars($libro['estado'] ?? 'Sin estado') ?></small></p>
-                                <p class="card-text"><small>Subido por: <?= htmlspecialchars($libro['nombre'] ?? 'Usuario anónimo') ?></small></p>
+                                <p class="card-text"><small>Estado: <= htmlspecialchars($libro['estado'] ?? 'Sin estado') ?></small></p>
+                                <p class="card-text"><small>Subido por: <= htmlspecialchars($libro['nombre'] ?? 'Usuario anónimo') ?></small></p>
                             </div>
                             <div class="btn-group">
-                                <a href="index.php?c=DetalleLibroController&a=verDetalle&id=<?= $libro['id'] ?>" class="btn btn-outline-purple btn-sm">📖 Ver detalle</a>
-                                <a href="index.php?c=IntercambioController&a=solicitar&id=<?= $libro['id'] ?>" class="btn btn-outline-purple btn-sm">Solicitar intercambio</a>
-                                <a href="index.php?c=CarritoController&a=agregar&id=<?= $libro['id'] ?>&tipo=venta" class="btn btn-custom-purple btn-sm">Agregar al carrito</a>
-                                <a href="index.php?c=ResenaController&a=formulario&id=<?= $libro['id'] ?>&titulo=<?= urlencode($libro['titulo']) ?>" class="btn btn-outline-purple btn-sm">✍️ Escribir reseña</a>
+                                <a href="index.php?c=DetalleLibroController&a=verDetalle&id=<= $libro['id'] ?>" class="btn btn-outline-purple btn-sm">📖 Ver detalle</a>
+                                <a href="index.php?c=IntercambioController&a=solicitar&id=<= $libro['id'] ?>" class="btn btn-outline-purple btn-sm">Solicitar intercambio</a>
+                                <a href="index.php?c=CarritoController&a=agregar&id=<= $libro['id'] ?>&tipo=venta" class="btn btn-custom-purple btn-sm">Agregar al carrito</a>
+                                <a href="index.php?c=ResenaController&a=formulario&id=<= $libro['id'] ?>&titulo=<= urlencode($libro['titulo']) ?>" class="btn btn-outline-purple btn-sm">✍️ Escribir reseña</a>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
+                <php endforeach; ?>
+            <php else: ?>
                 <p class="text-center">No hay libros en venta disponibles.</p>
-            <?php endif; ?>
+            <php endif; ?>
         </div>
-    </div>
+    </div> -->
 </body>
 
 

@@ -227,8 +227,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" id="perfilDropdown">
-                            <img src="/FINAL/public/img/client2.jpg" alt="Perfil" class="rounded-circle" width="32"
-                                height="32">
+                            <img src="/FINAL/public/img/usuarios/<?= !empty($_SESSION['usuario']['foto']) ? htmlspecialchars($_SESSION['usuario']['foto']) : 'default.jpg' ?>" alt="Perfil" class="rounded-circle" width="32" height="32" onerror="this.onerror=null;this.src='/FINAL/public/img/usuarios/default.jpg';">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="perfilDropdown">
                             <li><a class="dropdown-item" href="index.php?c=UsuarioController&a=perfil">Perfil</a></li>
