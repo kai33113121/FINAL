@@ -73,7 +73,12 @@ class IntercambioController
             $libroModel = new Libro();
             $libroSolicitado = $libroModel->obtenerPorId($libro_id_2);
 
-            $mensaje = "🔄 Has recibido una solicitud de intercambio por tu libro \"{$libroSolicitado['titulo']}\".";
+
+            if (is_array($libroSolicitado) && isset($libroSolicitado['titulo'])) {
+                $mensaje = "🔄 Has recibido una solicitud de intercambio por tu libro \"{$libroSolicitado['titulo']}\".";
+            } else {
+                $mensaje = "🔄 Has recibido una solicitud de intercambio por uno de tus libros.";
+            }
             $link = "index.php?c=IntercambioController&a=notificaciones";
             $notificacion = new Notificacion();
             $notificacion->crear($usuario_2, $mensaje, $link, $nuevo_id);
