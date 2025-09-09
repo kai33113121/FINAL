@@ -23,16 +23,9 @@ class Intercambio
         if (!$stmt) return false;
         $stmt->bind_param("iiii", $libro_id_1, $libro_id_2, $usuario_1, $usuario_2);
         $exito = $stmt->execute();
+        $nuevo_id = $exito ? $this->conexion->insert_id : false;
         $stmt->close();
-
-        if ($exito) {
-            require_once __DIR__ . '/Notificacion.php';
-            $notificacion = new Notificacion();
-            $mensaje = "Tienes una nueva solicitud de intercambio.";
-            $link = "index.php?c=IntercambioController&a=notificaciones";
-            $notificacion->crear($usuario_2, $mensaje, $link);
-        }
-        return $exito;
+        return $nuevo_id;
     }
 
     public function obtenerPorUsuario($usuario_id)
@@ -48,17 +41,18 @@ class Intercambio
     }
 
     public function obtenerDetallado($usuario_id) {
-        $sql = "SELECT i.*, 
-                       l1.titulo AS libro_ofrecido, 
-                       l2.titulo AS libro_solicitado,
-                       u1.nombre AS nombre_ofrece,
-                       u2.nombre AS nombre_recibe
-                FROM intercambios i
-                JOIN libros l1 ON i.libro_id_1 = l1.id
-                JOIN libros l2 ON i.libro_id_2 = l2.id
-                JOIN usuarios u1 ON i.usuario_1 = u1.id
-                JOIN usuarios u2 ON i.usuario_2 = u2.id
-                WHERE i.usuario_1 = ? OR i.usuario_2 = ?";
+    $sql = "SELECT i.*, 
+               l1.titulo AS libro_ofrecido, 
+               l2.titulo AS libro_solicitado,
+               u1.nombre AS nombre_ofrece,
+               u2.nombre AS nombre_recibe
+        FROM intercambios i
+        JOIN libros l1 ON i.libro_id_1 = l1.id
+        JOIN libros l2 ON i.libro_id_2 = l2.id
+        JOIN usuarios u1 ON i.usuario_1 = u1.id
+        JOIN usuarios u2 ON i.usuario_2 = u2.id
+        WHERE i.usuario_1 = ? OR i.usuario_2 = ?
+        ORDER BY i.fecha DESC";
         $stmt = $this->conexion->prepare($sql);
         if (!$stmt) return [];
         $stmt->bind_param("ii", $usuario_id, $usuario_id);

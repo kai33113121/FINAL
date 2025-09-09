@@ -18,7 +18,7 @@
 
         <form method="POST" action="index.php?c=IntercambioController&a=enviarSolicitud">
             <input type="hidden" name="libro_id_2" value="<?= $libroSolicitado['id'] ?>">
-            <input type="hidden" name="usuario_2" value="<?= $libroSolicitado['id_usuario'] ?>">
+            <input type="hidden" name="usuario_2" value="<?= htmlspecialchars($libroSolicitado['id_usuario']) ?>">
 
             <div class="mb-3">
                 <label>Selecciona uno de tus libros para ofrecer:</label>

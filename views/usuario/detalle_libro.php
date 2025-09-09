@@ -37,14 +37,17 @@
             <div class="row g-0">
                 <!-- Imagen -->
                 <div class="col-md-4">
-                    <img src="public/img/<?= htmlspecialchars($libro['imagen'] ?? 'default.png') ?>" 
-                         class="img-fluid rounded-start" alt="Portada de <?= htmlspecialchars($libro['titulo']) ?>">
+                    <img src="public/img/libros/<?= htmlspecialchars($libro['imagen'] ?? 'default.png') ?>" 
+                        class="img-fluid rounded-start" alt="Portada de <?= htmlspecialchars($libro['titulo']) ?>">
                 </div>
 
                 <!-- Detalles -->
                 <div class="col-md-8">
                     <div class="card-body">
                         <h2 class="card-title "><?= htmlspecialchars($libro['titulo']) ?></h2>
+                        <?php if (!empty($libro['descripcion'])): ?>
+                            <p class="mb-2"><em><?= nl2br(htmlspecialchars($libro['descripcion'])) ?></em></p>
+                        <?php endif; ?>
                         <p><strong>Autor:</strong> <?= htmlspecialchars($libro['autor']) ?></p>
                         <p><strong>Género:</strong> <?= htmlspecialchars($libro['genero']) ?></p>
                         <p><strong>Modo:</strong> <?= htmlspecialchars($libro['modo']) ?></p>

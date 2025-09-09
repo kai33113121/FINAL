@@ -116,7 +116,7 @@
             <div class="login-left">
                 <div class="logo text-center"> LIBROSWAP</div>
                 <h2 class="text-center">Iniciar sesión</h2>
-                <p class="subtitle text-center">o usa tu correo electrónico y contraseña</p>
+                <p class="subtitle text-center"> usa tu correo electrónico y contraseña</p>
                 <?php if (isset($mensaje)): ?>
                     <div class="alert alert-danger text-center">
                         <?= $mensaje ?>
@@ -134,9 +134,9 @@
                     <div class="d-flex justify-content-between mb-3">
                         <a href="index.php?c=UsuarioController&a=forgotPassword">¿Olvidaste tu contraseña?</a>
                         <br>
-                        <a href="index.php">Volver al Home</a>
+                        <a href="index.php">Volver al Inicio</a>
                     </div>
-                    <button type="submit" class="btn btn-purple w-100">SIGN IN</button>
+                    <button type="submit" class="btn btn-purple w-100">Iniciar sesión</button>
                 </form>
             </div>
 
@@ -145,7 +145,7 @@
                 <div class="divider"></div>
                 <h3 class="mb-3">✨ Crea tu cuenta en LibrosWAP</h3>
                 <p>Conéctate para comprar, vender o intercambiar libros con una comunidad de lectores apasionados.</p>
-                <a href="index.php?c=UsuarioController&a=register" class="btn btn-outline-light mt-3">SIGN UP</a>
+                <a href="index.php?c=UsuarioController&a=register" class="btn btn-outline-light mt-3">Registrarse</a>
             </div>
         </div>
     </div>

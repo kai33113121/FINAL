@@ -304,7 +304,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Harry Potter</h5>
                             <p class="text-muted">Fantasía</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -314,7 +314,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Atomic Habits</h5>
                             <p class="text-muted">Autoayuda</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -324,7 +324,7 @@
                         <div class="card-body">
                             <h5 class="card-title">El Alquimista" (Paulo Coelho)</h5>
                             <p class="text-muted">Ficción inspiracional</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -334,7 +334,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Los Juegos del Hambre</h5>
                             <p class="text-muted">Distopía</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -344,17 +344,17 @@
                         <div class="card-body">
                             <h5 class="card-title">Dune" (Frank Herbert)</h5>
                             <p class="text-muted">Ciencia Ficción</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta7.jpg" class="card-img-top" alt="Libro">
+                        <img src="/FINAL/public/img/libros/oferta7.jpg" class="card-img-top" alt="Libro">
                         <div class="card-body">
                             <h5 class="card-title">El Código Da Vinci" (Dan Brown)</h5>
                             <p class="text-muted">Thriller,Comics</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -364,7 +364,7 @@
                         <div class="card-body">
                             <h5 class="card-title">The many lives of cats</h5>
                             <p class="text-muted">action</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -374,7 +374,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Título</h5>
                             <p class="text-muted">Género</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -463,7 +463,7 @@
                     <p>En las paredes desconchadas de un hostel perdido en Marruecos, cada huésped esconde una historia.
                         Esta es la crónica de Alina K., quien documentó 3 años de viajes en cuadernos manchados de té y
                         polvo del desierto. Un libro que desarma el alma y rearma el significado de 'pertenecer</p>
-                    <button class="buy-now">Buy Now</button>
+                    <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple">comprar ahora</a>
                 </div>
 
 

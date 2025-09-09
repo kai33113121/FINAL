@@ -15,14 +15,20 @@
                 <tr>
                     <th>Título</th>
                     <th>Autor</th>
+                    <th>Precio</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($items as $item): ?>
+                <?php 
+                $total = 0;
+                foreach ($items as $item): 
+                    $total += $item['precio'];
+                ?>
                     <tr>
                         <td><?= htmlspecialchars($item['titulo']) ?></td>
                         <td><?= htmlspecialchars($item['autor']) ?></td>
+                        <td>$<?= number_format($item['precio'], 2) ?></td>
                         <td>
                             <a href="index.php?c=CarritoController&a=eliminar&id=<?= $item['id'] ?>"
                                 class="btn btn-danger btn-sm">Eliminar</a>
@@ -31,6 +37,9 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <div class="mb-3">
+            <strong>Total: $<?= number_format($total, 2) ?></strong>
+        </div>
         <a href="index.php?c=CarritoController&a=confirmar" class="btn btn-success">Confirmar compra</a>
     </div>
 </body>

@@ -21,16 +21,19 @@ class Carrito {
     }
 
     public function obtener($usuario_id) {
-        $sql = "SELECT c.*, l.titulo, l.autor FROM carrito c JOIN libros l ON c.libro_id = l.id WHERE c.usuario_id = ?";
-        $stmt = $this->conexion->prepare($sql);
-        if (!$stmt) return [];
-        $stmt->bind_param("i", $usuario_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $items = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-        $stmt->close();
-        return $items;
-    }
+    $sql = "SELECT c.*, l.titulo, l.autor, l.precio 
+            FROM carrito c 
+            JOIN libros l ON c.libro_id = l.id 
+            WHERE c.usuario_id = ?";
+    $stmt = $this->conexion->prepare($sql);
+    if (!$stmt) return [];
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $items = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    $stmt->close();
+    return $items;
+}
 
     public function eliminar($id) {
         $stmt = $this->conexion->prepare("DELETE FROM carrito WHERE id = ?");

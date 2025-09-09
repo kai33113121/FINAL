@@ -119,7 +119,7 @@
                 <div class="divider"></div>
                 <h3 class="mb-3">✨ Bienvenido a LibrosWAP</h3>
                 <p>Conéctate para comprar, vender o intercambiar libros con una comunidad de lectores apasionados.</p>
-                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-light mt-3">SIGN IN</a>
+                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-light mt-3">Iniciar sesión</a>
             </div>
 
             <!-- Formulario a la derecha -->
@@ -150,7 +150,7 @@
                 <p class="mt-3 text-center">¿Ya tienes cuenta? <a href="index.php?c=UsuarioController&a=login">Inicia
                         sesión</a>
                     <br>
-                    <a href="index.php">Volver al Home</a>
+                    <a href="index.php">Volver al Inicio</a>
                 </p>
 
             </div>

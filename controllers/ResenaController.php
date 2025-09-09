@@ -46,19 +46,7 @@ class ResenaController
                 $_POST['comentario']
             );
 
-            // 🔍 Obtener dueño del libro
-            require_once __DIR__ . '/../models/Libro.php';
-            $libro = new Libro();
-            $datosLibro = $libro->obtenerPorId($libro_id);
-            $id_dueño_libro = $datosLibro['id_usuario'];
-
-            // 🔔 Insertar notificación
-            require_once __DIR__ . '/../models/Notificacion.php';
-            $notificacion = new Notificacion();
-            $mensaje = "📖 ¡Tu libro recibió una nueva reseña!";
-            $link = "index.php?c=ResenaController&a=ver&id=$libro_id";
-            $notificacion->crear($id_dueño_libro, $mensaje, $link);
-
+            // Redirigir sin crear notificación
             header("Location: index.php?c=ResenaController&a=ver&id=$libro_id");
             exit;
         }

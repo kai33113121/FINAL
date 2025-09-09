@@ -7,6 +7,30 @@ use PHPMailer\PHPMailer\Exception;
 
 class UsuarioController
 {
+    // Mostrar notificaciones del usuario
+    public function notificaciones()
+    {
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
+        require_once __DIR__ . '/../models/Notificacion.php';
+        $notificacion = new Notificacion();
+        $usuario_id = $_SESSION['usuario']['id'];
+        // Marcar todas como leídas al abrir la vista
+        $notificaciones = $notificacion->obtenerPorUsuario($usuario_id);
+        // Si viene ?noti= en la URL, marcar como leída
+        if (isset($_GET['noti'])) {
+            $noti_id = intval($_GET['noti']);
+            if ($noti_id > 0) {
+                $notificacion->marcarComoLeida($noti_id, $usuario_id);
+                // Refrescar lista para reflejar el cambio
+                $notificaciones = $notificacion->obtenerPorUsuario($usuario_id);
+            }
+        }
+        $contenido = __DIR__ . '/../views/usuario/notificaciones.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
     public function landing()
     {
         include __DIR__ . '/../views/auth/landing.php';
@@ -78,35 +102,27 @@ class UsuarioController
         $ventaModel = new Venta();
         $libros_venta = $ventaModel->obtenerTodos();
 
-        // Notificaciones
-        require_once __DIR__ . '/../models/Notificacion.php';
-        $notificacionModel = new Notificacion();
-        $notificacionesRaw = $notificacionModel->obtenerPorUsuario($idUsuario);
-        $notificaciones = [];
-        foreach ($notificacionesRaw as $n) {
-            $notificaciones[] = [
-                'mensaje' => $n['mensaje'] ?? '',
-                'link' => $n['link'] ?? 'index.php?c=IntercambioController&a=notificaciones',
-                'fecha' => !empty($n['fecha']) ? date('d/m/Y H:i', strtotime($n['fecha'])) : ''
-            ];
-        }
-
-        // Notificaciones de intercambios pendientes
+        // Actividad reciente: libros subidos, intercambios, compras (últimos 5 de cada uno)
         require_once __DIR__ . '/../models/Intercambio.php';
-        $intercambio = new Intercambio();
-        $pendientes = $intercambio->obtenerPendientes($idUsuario);
-        foreach ($pendientes as $notif) {
-            $libroOfrecido = $libroModel->obtenerPorId($notif['libro_id_1']);
-            $libroSolicitado = $libroModel->obtenerPorId($notif['libro_id_2']);
-            $tituloOfrecido = $libroOfrecido && isset($libroOfrecido['titulo']) ? $libroOfrecido['titulo'] : 'Libro ofrecido';
-            $tituloSolicitado = $libroSolicitado && isset($libroSolicitado['titulo']) ? $libroSolicitado['titulo'] : 'Libro solicitado';
+        $intercambioModel = new Intercambio();
+        $intercambios_recientes = $intercambioModel->obtenerTodosDetallado();
+        $intercambios_recientes = array_slice($intercambios_recientes, 0, 5);
 
-            $notificaciones[] = [
-                'mensaje' => "Solicitud de intercambio #{$notif['id']}: \"{$tituloOfrecido}\" por \"{$tituloSolicitado}\"",
-                'link' => "index.php?c=IntercambioController&a=notificaciones",
-                'fecha' => !empty($notif['fecha']) ? date('d/m/Y H:i', strtotime($notif['fecha'])) : ''
-            ];
-        }
+        require_once __DIR__ . '/../models/Compra.php';
+        $compraModel = new Compra();
+        $compras_recientes = $compraModel->obtenerConDetalles();
+        $compras_recientes = array_slice($compras_recientes, 0, 5);
+
+        // Libros subidos recientemente (últimos 5)
+        $libros_recientes = $libroModel->obtenerTodosConUsuario();
+        usort($libros_recientes, function($a, $b) {
+            return strtotime($b['fecha_subida'] ?? $b['fecha'] ?? '1970-01-01') - strtotime($a['fecha_subida'] ?? $a['fecha'] ?? '1970-01-01');
+        });
+        $libros_recientes = array_slice($libros_recientes, 0, 5);
+
+        // Notificaciones (usar helper para mantener consistencia de campos)
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($idUsuario);
 
         $contenido = __DIR__ . '/../views/usuario/dashboard.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';

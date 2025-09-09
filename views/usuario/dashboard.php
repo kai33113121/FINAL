@@ -1,20 +1,22 @@
 <?php
 $usuario = $_SESSION['usuario'];
+// Helper para mostrar fechas relativas
+if (!function_exists('fecha_relativa')) {
+    function fecha_relativa($fecha) {
+        if (empty($fecha)) return '';
+        $timestamp = strtotime($fecha);
+        if (!$timestamp) return '';
+        $diferencia = time() - $timestamp;
+        if ($diferencia < 60) return 'Hace unos segundos';
+        if ($diferencia < 3600) return 'Hace ' . floor($diferencia/60) . ' minutos';
+        if ($diferencia < 86400) return 'Hace ' . floor($diferencia/3600) . ' horas';
+        if ($diferencia < 172800) return 'Ayer';
+        return 'Hace ' . floor($diferencia/86400) . ' días';
+    }
+}
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard - LibrosWap</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/FINAL/public/css/dashboardu.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-
-<body>
     <section class="dashboard-hero position-relative text-white"
         style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, #6a11cb, #333a45ff); overflow: hidden;">
 
@@ -173,7 +175,7 @@ $usuario = $_SESSION['usuario'];
     </section>
 
     <!-- seccion de edicion perfil -->
-    <section class="py-5 bg-white">
+    <!-- <section class="py-5 bg-white">
         <div class="container">
             <h2 class="text-center mb-4 text-purple">Tu Perfil</h2>
             <div class="row g-4 justify-content-center">
@@ -185,7 +187,7 @@ $usuario = $_SESSION['usuario'];
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Recomendaciones y Populares -->
     <section class="section bg-purple-light py-5">
@@ -391,7 +393,7 @@ $usuario = $_SESSION['usuario'];
                             <h5 class="fw-bold mb-0">Fantasía y Ciencia Ficción</h5>
                         </div>
                         <p class="mb-3">Universos épicos, magia, tecnología futurista y mundos imposibles.</p>
-                        <a href="index.php?c=LibroController&a=porGenero&genero=<?= urlencode($cat['nombre']) ?>"
+                        <a href="index.php?c=LibroController&a=explorar&genero=Fantasía%20y%20Ciencia%20Ficción"
                             class="btn btn-purple btn-sm fw-bold">Ver más del género</a>
                     </div>
                 </div>
@@ -407,7 +409,7 @@ $usuario = $_SESSION['usuario'];
                             <h5 class="fw-bold mb-0">Thriller y Misterio</h5>
                         </div>
                         <p class="mb-3">Suspenso, investigaciones, giros inesperados y tensión constante.</p>
-                        <a href="index.php?c=LibroController&a=porGenero&genero=<?= urlencode($cat['nombre']) ?>"
+                        <a href="index.php?c=LibroController&a=explorar&genero=Thriller%20y%20Misterio"
                             class="btn btn-purple btn-sm fw-bold">Ver más del género</a>
                     </div>
                 </div>
@@ -423,7 +425,7 @@ $usuario = $_SESSION['usuario'];
                             <h5 class="fw-bold mb-0">Romance</h5>
                         </div>
                         <p class="mb-3">Historias de amor, emociones intensas y conexiones inolvidables.</p>
-                        <a href="/genero/romance" class="btn btn-purple btn-sm fw-bold">Ver más del género</a>
+                        <a href="index.php?c=LibroController&a=explorar&genero=Romance" class="btn btn-purple btn-sm fw-bold">Ver más del género</a>
                     </div>
                 </div>
 
@@ -438,7 +440,7 @@ $usuario = $_SESSION['usuario'];
                             <h5 class="fw-bold mb-0">Literatura Clásica</h5>
                         </div>
                         <p class="mb-3">Obras atemporales que marcaron la historia de la literatura.</p>
-                        <a href="/genero/clasicos" class="btn btn-purple btn-sm fw-bold">Ver más del género</a>
+                        <a href="index.php?c=LibroController&a=explorar&genero=Literatura%20Clásica" class="btn btn-purple btn-sm fw-bold">Ver más del género</a>
                     </div>
                 </div>
 
@@ -454,59 +456,58 @@ seccion de actividades recientes -->
         <div class="container">
             <h2 class="text-center mb-4 text-purple">Actividad Reciente</h2>
             <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card shadow-lg border-0 bg-gradient-purple text-black">
-                        <div class="card-body">
-                            <h5 class="card-title">📚 Libro subido</h5>
-                            <p class="card-text">"El nombre del viento"</p>
-                            <small>Hace 2 horas</small>
+                <?php
+                // Unificar y ordenar actividades recientes
+                $actividades = [];
+                foreach ($libros_recientes as $libro) {
+                    $actividades[] = [
+                        'tipo' => 'libro',
+                        'titulo' => $libro['titulo'],
+                        'usuario' => $libro['nombre_usuario'] ?? $libro['nombre'] ?? '',
+                        'fecha' => $libro['fecha_subida'] ?? $libro['fecha'] ?? '',
+                    ];
+                }
+                foreach ($intercambios_recientes as $inter) {
+                    $actividades[] = [
+                        'tipo' => 'intercambio',
+                        'titulo' => $inter['libro_ofrecido'] . ' ↔ ' . $inter['libro_solicitado'],
+                        'usuario' => $inter['nombre_ofrece'] . ' y ' . $inter['nombre_recibe'],
+                        'fecha' => $inter['fecha'] ?? '',
+                    ];
+                }
+                foreach ($compras_recientes as $compra) {
+                    $actividades[] = [
+                        'tipo' => 'compra',
+                        'titulo' => $compra['libro'],
+                        'usuario' => $compra['usuario'],
+                        'fecha' => $compra['fecha'] ?? '',
+                    ];
+                }
+                // Ordenar por fecha descendente
+                usort($actividades, function($a, $b) {
+                    return strtotime($b['fecha']) - strtotime($a['fecha']);
+                });
+                $actividades = array_slice($actividades, 0, 6);
+                ?>
+                <?php foreach ($actividades as $actividad): ?>
+                    <div class="col-md-6">
+                        <div class="card shadow-lg border-0 bg-gradient-purple text-black">
+                            <div class="card-body">
+                                <?php if ($actividad['tipo'] === 'libro'): ?>
+                                    <h5 class="card-title">📚 Libro subido</h5>
+                                    <p class="card-text">"<?= htmlspecialchars($actividad['titulo']) ?>" por <?= htmlspecialchars($actividad['usuario']) ?></p>
+                                <?php elseif ($actividad['tipo'] === 'intercambio'): ?>
+                                    <h5 class="card-title"> 🔄️ Intercambio realizado</h5>
+                                    <p class="card-text">Entre <?= htmlspecialchars($actividad['usuario']) ?>: <br><span class="fw-bold"><?= htmlspecialchars($actividad['titulo']) ?></span></p>
+                                <?php elseif ($actividad['tipo'] === 'compra'): ?>
+                                    <h5 class="card-title">🛒 Compra realizada</h5>
+                                    <p class="card-text">"<?= htmlspecialchars($actividad['titulo']) ?>" por <?= htmlspecialchars($actividad['usuario']) ?></p>
+                                <?php endif; ?>
+                                <small><?= htmlspecialchars(fecha_relativa($actividad['fecha'])) ?></small>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card shadow-lg border-0 bg-gradient-purple text-black">
-                        <div class="card-body">
-                            <h5 class="card-title">🔄 Intercambio realizado</h5>
-                            <p class="card-text">Con usuario: @lectora23</p>
-                            <small>Hace 1 día</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!-- resumen de actividad seccion  -->
-    <section class="py-5 bg-white">
-        <div class="container">
-            <h2 class="text-center mb-4 text-purple">Resumen de Actividad</h2>
-            <div class="row text-center g-4">
-                <div class="col-md-4">
-                    <div class="card border-0 shadow bg-gradient-light-purple">
-                        <div class="card-body">
-                            <h5>🛒 Compras</h5>
-                            <p class="fs-4 fw-bold">12 libros</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow bg-gradient-light-purple">
-                        <div class="card-body">
-                            <h5>🔁 Intercambios</h5>
-                            <p class="fs-4 fw-bold">8 completados</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow bg-gradient-light-purple">
-                        <div class="card-body">
-                            <h5>📦 Pendientes</h5>
-                            <p class="fs-4 fw-bold">2 en proceso</p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
@@ -542,115 +543,31 @@ seccion de actividades recientes -->
 
 
     <!-- nuestra seleccion seccion -->
+
     <section class="py-5 bg-gradient-light-purple" id="seleccion">
         <div class="container">
             <h2 class="text-center text-purple fw-bold mb-4 text-shadow">🌟 Nuestra Selección</h2>
-
             <!-- Galería horizontal -->
             <div class="overflow-auto pb-3">
                 <div class="d-flex flex-nowrap gap-4 px-2" style="scroll-snap-type: x mandatory;">
-
-                    <!-- Libro 1 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top rounded-top"
-                            alt="El Principito">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Principito (Pop-Up)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
+                    <?php if (!empty($libros)): ?>
+                        <?php foreach ($libros as $libro): ?>
+                            <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
+                                <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>" class="card-img-top rounded-top" alt="<?= htmlspecialchars($libro['titulo']) ?>">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold"><?= htmlspecialchars($libro['titulo']) ?></h6>
+                                    <p class="text-muted small mb-1">Autor: <?= htmlspecialchars($libro['autor'] ?? '') ?></p>
+                                    <p class="text-muted small mb-1">Género: <?= htmlspecialchars($libro['genero'] ?? '') ?></p>
+                                    <div class="d-grid gap-2">
+                                        <a href="index.php?c=IntercambioController&a=solicitar&id=<?= $libro['id'] ?>" class="btn btn-purple btn-sm">Intercambiar</a>
+                                        <a href="index.php?c=DetalleLibroController&a=verDetalle&id=<?= $libro['id'] ?>" class="btn btn-outline-dark btn-sm">Comprar</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 2 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top rounded-top" alt="Alice">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Alice in Wonderland</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 3 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia3.jpg" class="card-img-top rounded-top" alt="The Raven">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">The Raven (Ilustrado)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Libro 1 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top rounded-top"
-                            alt="El Principito">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Principito (Pop-Up)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 2 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top rounded-top" alt="Alice">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Alice in Wonderland</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Libro 1 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top rounded-top"
-                            alt="El Principito">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">El Principito (Pop-Up)</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Libro 2 -->
-                    <div class="card book-card shadow-lg border-0" style="min-width: 200px; scroll-snap-align: start;">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top rounded-top" alt="Alice">
-                        <div class="card-body text-center">
-                            <h6 class="card-title fw-bold">Alice in Wonderland</h6>
-                            <div class="d-grid gap-2">
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-purple btn-sm">Intercambiar</a>
-                                <a href="index.php?c=UsuarioController&a=login"
-                                    class="btn btn-outline-dark btn-sm">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Agrega más libros aquí con el mismo formato -->
-
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-center">No hay libros disponibles.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -731,60 +648,6 @@ seccion de actividades recientes -->
         </div>
     </section>
 
-    <section class="py-5 bg-white">
-        <div class="container">
-            <h2 id="blog" class="text-center text-purple fw-bold mb-5 text-shadow">📝 Blogs y Noticias Literarias</h2>
-            <div class="row g-4 justify-content-center">
-
-                <!-- Blog 1 -->
-                <div class="col-md-4">
-                    <div class="card blog-card border-0 shadow-lg text-center">
-                        <div class="circle-img mx-auto mt-3">
-                            <img src="/FINAL/public/img/noticia1.jpg" class="img-fluid rounded-circle" alt="Blog 1">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title text-purple fw-bold">¿Por qué leemos terror?</h6>
-                            <p class="card-text small">Exploramos cómo el miedo puede ser terapéutico y por qué Stephen
-                                King sigue siendo el maestro del género.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Blog 2 -->
-                <div class="col-md-4">
-                    <div class="card blog-card border-0 shadow-lg text-center">
-                        <div class="circle-img mx-auto mt-3">
-                            <img src="/FINAL/public/img/noticia2.jpg" class="img-fluid rounded-circle" alt="Blog 2">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title text-purple fw-bold">Libros que inspiran series</h6>
-                            <p class="card-text small">De <em>La Torre Oscura</em> a <em>From</em>, cómo las novelas se
-                                transforman en éxitos televisivos.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Blog 3 -->
-                <div class="col-md-4">
-                    <div class="card blog-card border-0 shadow-lg text-center">
-                        <div class="circle-img mx-auto mt-3">
-                            <img src="/FINAL/public/img/noticia3.jpg" class="img-fluid rounded-circle" alt="Blog 3">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title text-purple fw-bold">Recomendaciones para lectores nuevos</h6>
-                            <p class="card-text small">¿Nunca has leído a Stephen King? Aquí te decimos por dónde
-                                empezar según tu estilo.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
 
     <!-- seccion footer final final -->
 
@@ -810,9 +673,3 @@ seccion de actividades recientes -->
         </div>
     </footer>
 
- <!--  Bootstrap JS al final -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>

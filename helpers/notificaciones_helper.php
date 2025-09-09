@@ -8,28 +8,26 @@ function obtenerNotificacionesUsuario($usuarioId) {
     $notificacionesRaw = $notificacionModel->obtenerPorUsuario($usuarioId);
     $notificaciones = [];
     foreach ($notificacionesRaw as $n) {
-        // Asegura que los campos sean los que espera el layout
+        // Asegura que los campos sean los que espera el layout y agrega id, leida, intercambio_id
+        // Si la notificación es de tipo "aceptada/rechazada" y el link apunta a misIntercambios, usar la nueva acción para marcar como leída
+        $link = $n['link'] ?? '';
+        if (strpos($link, 'a=misIntercambios') !== false) {
+            $link = 'index.php?c=IntercambioController&a=marcarNotificacionYRedirigir';
+        } elseif (empty($link)) {
+            $link = 'index.php?c=IntercambioController&a=notificaciones';
+        }
+        // Siempre agregar el parámetro noti=ID
+        $sep = (strpos($link, '?') !== false) ? '&' : '?';
+        $link_final = $link . $sep . 'noti=' . ($n['id'] ?? '');
         $notificaciones[] = [
+            'id' => $n['id'] ?? null,
             'mensaje' => $n['mensaje'] ?? '',
-            'link' => $n['link'] ?? 'index.php?c=IntercambioController&a=notificaciones',
-            'fecha' => !empty($n['fecha']) ? date('d/m/Y H:i', strtotime($n['fecha'])) : ''
+            'link' => $link_final,
+            'fecha' => !empty($n['fecha']) ? date('d/m/Y H:i', strtotime($n['fecha'])) : '',
+            'leida' => $n['leida'] ?? 0,
+            'intercambio_id' => $n['intercambio_id'] ?? null
         ];
     }
 
-    $intercambio = new Intercambio();
-    $libroModel = new Libro();
-    $pendientes = $intercambio->obtenerPendientes($usuarioId);
-    foreach ($pendientes as $notif) {
-        $libroOfrecido = $libroModel->obtenerPorId($notif['libro_id_1']);
-        $libroSolicitado = $libroModel->obtenerPorId($notif['libro_id_2']);
-        $tituloOfrecido = $libroOfrecido && isset($libroOfrecido['titulo']) ? $libroOfrecido['titulo'] : 'Libro ofrecido';
-        $tituloSolicitado = $libroSolicitado && isset($libroSolicitado['titulo']) ? $libroSolicitado['titulo'] : 'Libro solicitado';
-
-        $notificaciones[] = [
-            'mensaje' => "Solicitud de intercambio #{$notif['id']}: \"{$tituloOfrecido}\" por \"{$tituloSolicitado}\"",
-            'link' => "index.php?c=IntercambioController&a=notificaciones",
-            'fecha' => !empty($notif['fecha']) ? date('d/m/Y H:i', strtotime($notif['fecha'])) : ''
-        ];
-    }
     return $notificaciones;
 }
