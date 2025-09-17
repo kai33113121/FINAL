@@ -48,7 +48,7 @@ class MensajeController
         $contenido = __DIR__ . '/../views/usuario/chat.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
+    
     public function enviar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -66,5 +66,25 @@ class MensajeController
             header("Location: index.php?c=MensajeController&a=chat&id=" . $receptor_id);
             exit;
         }
+    }
+
+    // MÉTODO NUEVO - Eliminar conversación
+    public function eliminarChat()
+    {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
+
+        $usuarioActual = $_SESSION['usuario']['id'];
+        $usuarioEliminar = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+        if ($usuarioEliminar > 0) {
+            $mensajeModel = new Mensaje();
+            $mensajeModel->eliminarConversacion($usuarioActual, $usuarioEliminar);
+        }
+
+        header("Location: index.php?c=MensajeController&a=mensajes");
+        exit;
     }
 }

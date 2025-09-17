@@ -87,15 +87,15 @@ class Libro {
     }
 
     public function obtenerPorGenero($genero) {
-        $stmt = $this->conexion->prepare("SELECT * FROM libros WHERE genero = ?");
-        if (!$stmt) return [];
-        $stmt->bind_param("s", $genero);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $libros = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-        $stmt->close();
-        return $libros;
-    }
+    $stmt = $this->conexion->prepare("SELECT l.*, u.nombre FROM libros l LEFT JOIN usuarios u ON l.id_usuario = u.id WHERE l.genero = ?");
+    if (!$stmt) return [];
+    $stmt->bind_param("s", $genero);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $libros = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    $stmt->close();
+    return $libros;
+}
 
     public function contarLibros() {
         $stmt = $this->conexion->prepare("SELECT COUNT(*) FROM libros");

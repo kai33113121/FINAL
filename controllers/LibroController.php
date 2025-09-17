@@ -8,7 +8,7 @@ class LibroController {
 
     public function __construct() {
         $this->catalogoModel = new Libro();
-        $this->ventaModel = new Venta(); // Ya se conecta internamente
+        $this->ventaModel = new Venta();
     }
 
     public function explorar() {
@@ -18,8 +18,18 @@ class LibroController {
             exit;
         }
 
-        $libros = $this->catalogoModel->obtenerTodos();
-        // Falta obtener los libros en venta si quieres mostrar ambos en la vista:
+        // Verificar si hay filtro de género desde la página de géneros
+        $genero_filtro = $_GET['genero'] ?? null;
+        
+        if ($genero_filtro) {
+            // Si hay filtro de género, obtener solo libros de ese género
+            $libros = $this->catalogoModel->obtenerPorGenero($genero_filtro);
+        } else {
+            // Si no hay filtro, obtener todos como antes
+            $libros = $this->catalogoModel->obtenerTodos();
+        }
+        
+        // Mantener tus libros en venta como antes
         $libros_venta = $this->ventaModel->obtenerTodos();
 
         // Notificaciones para el usuario
@@ -29,5 +39,4 @@ class LibroController {
         $contenido = __DIR__ . '/../views/usuario/explorar.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
 }

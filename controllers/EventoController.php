@@ -14,7 +14,7 @@ class EventoController
         include __DIR__ . '/../views/layouts/layout_admin.php';
     }
 
-    // 🧑‍💼 Guardar evento creado por el admin
+    //  Guardar evento creado por el admin
     public function guardar()
     {
         $evento = new Evento();

@@ -330,34 +330,46 @@ class UsuarioController
     }
 
     public function actualizarPerfil()
-    {
-        require_once __DIR__ . '/../models/Usuario.php';
-        $usuarioModel = new Usuario();
+{
+    require_once __DIR__ . '/../models/Usuario.php';
+    $usuarioModel = new Usuario();
 
-        $id = $_SESSION['usuario']['id'];
-        $nombre = $_POST['nombre'];
-        $email = $_POST['email'];
-        $bio = $_POST['bio'] ?? '';
-        $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
+    $id = $_SESSION['usuario']['id'];
+    $nombre = $_POST['nombre'];
+    $email = $_POST['email'];
+    $bio = $_POST['bio'] ?? '';
+    
+    // Nuevos campos agregados
+    $direccion = $_POST['direccion'] ?? '';
+    $genero_preferido = $_POST['genero_preferido'] ?? '';
+    $libro_favorito = $_POST['libro_favorito'] ?? '';
+    
+    $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
 
-        if (!empty($_FILES['foto']['name'])) {
-            $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
-            $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
-            if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
-                $foto = $nombreArchivo;
-            }
+    if (!empty($_FILES['foto']['name'])) {
+        $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
+        $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
+            $foto = $nombreArchivo;
         }
-
-        $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto);
-
-        // Actualizar sesión
-        $_SESSION['usuario']['nombre'] = $nombre;
-        $_SESSION['usuario']['email'] = $email;
-        $_SESSION['usuario']['bio'] = $bio;
-        $_SESSION['usuario']['foto'] = $foto;
-
-        header("Location: index.php?c=UsuarioController&a=perfil");
     }
+
+    // Llamar al modelo con los nuevos parámetros
+    $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito);
+
+    // Actualizar sesión con todos los campos
+    $_SESSION['usuario']['nombre'] = $nombre;
+    $_SESSION['usuario']['email'] = $email;
+    $_SESSION['usuario']['bio'] = $bio;
+    $_SESSION['usuario']['foto'] = $foto;
+    $_SESSION['usuario']['direccion'] = $direccion;
+    $_SESSION['usuario']['genero_preferido'] = $genero_preferido;
+    $_SESSION['usuario']['libro_favorito'] = $libro_favorito;
+
+    header("Location: index.php?c=UsuarioController&a=perfil");
+}
+
+    
     public function obtenerPorId($id)
     {
         $conn = conectar();

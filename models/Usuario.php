@@ -135,14 +135,20 @@ class Usuario {
         return $row[0];
     }
 
-    public function actualizarPerfil($id, $nombre, $email, $bio, $foto) {
-        $stmt = $this->conexion->prepare("UPDATE usuarios SET nombre = ?, email = ?, bio = ?, foto = ? WHERE id = ?");
-        if (!$stmt) return false;
-        $stmt->bind_param("ssssi", $nombre, $email, $bio, $foto, $id);
-        $exito = $stmt->execute();
-        $stmt->close();
-        return $exito;
-    }
+    public function actualizarPerfil($id, $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito) 
+{
+    $stmt = $this->conexion->prepare("UPDATE usuarios SET nombre = ?, email = ?, bio = ?, foto = ?, direccion = ?, genero_preferido = ?, libro_favorito = ? WHERE id = ?");
+    
+    if (!$stmt) return false;
+    
+    // Bind con los nuevos parámetros (7 strings + 1 integer)
+    $stmt->bind_param("sssssssi", $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito, $id);
+    
+    $exito = $stmt->execute();
+    $stmt->close();
+    
+    return $exito;
+}
 
     public function obtenerConfiguracion($idUsuario) {
         $stmt = $this->conexion->prepare("SELECT * FROM config_usuario WHERE id_usuario = ?");

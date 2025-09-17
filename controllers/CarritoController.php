@@ -22,6 +22,17 @@ class CarritoController {
         $carrito = new Carrito();
         $items = $carrito->obtener($_SESSION['usuario']['id']);
 
+        // Sincroniza el carrito de la base de datos a la sesión para MercadoPago
+        $_SESSION['carrito'] = [];
+        foreach ($items as $item) {
+            $_SESSION['carrito'][] = [
+                'id' => $item['id'],
+                'nombre' => $item['titulo'] ?? $item['nombre'] ?? 'Producto',
+                'cantidad' => $item['cantidad'] ?? 1,
+                'precio' => $item['precio'] ?? 1
+            ];
+        }
+
         // Notificaciones para el usuario
         require_once __DIR__ . '/../helpers/notificaciones_helper.php';
         $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);

@@ -57,7 +57,7 @@ class Mensaje
         $stmt->close();
         return $usuarios;
     }
-
+    
     public function obtenerUltimoMensaje($usuario_id, $otro_id)
     {
         $sql = "SELECT mensaje FROM mensajes 
@@ -86,5 +86,25 @@ class Mensaje
         $fila = $resultado ? $resultado->fetch_assoc() : null;
         $stmt->close();
         return $fila ? $fila['total'] : 0;
+    }
+
+    // MÉTODO NUEVO - Eliminar conversación completa
+    public function eliminarConversacion($usuario1, $usuario2)
+    {
+        $sql = "DELETE FROM mensajes 
+                WHERE (emisor_id = ? AND receptor_id = ?) 
+                OR (emisor_id = ? AND receptor_id = ?)";
+                
+        $stmt = $this->db->prepare($sql);
+        
+        if (!$stmt) {
+            return false;
+        }
+        
+        $stmt->bind_param("iiii", $usuario1, $usuario2, $usuario2, $usuario1);
+        $resultado = $stmt->execute();
+        $stmt->close();
+        
+        return $resultado;
     }
 }

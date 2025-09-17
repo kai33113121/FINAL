@@ -393,6 +393,7 @@ class AdminController
         header('Location: index.php?c=AdminController&a=ventas');
         exit;
     }
+    
     public function compras() {
             $compraModel = new Compra();
             $compras = $compraModel->obtenerConDetalles();
