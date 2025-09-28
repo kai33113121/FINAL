@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>LibrosWap - Bienvenido</title>
@@ -9,16 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/FINAL/public/css/landing.css">
+    <link rel="stylesheet" href="public/css/landing.css">
 </head>
-
 <body>
-
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-futuristic sticky-top" id="mainNavbar">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="">
-                <img src="/FINAL/public/img/logow.png" alt="Logo" class="me-3">
+                <img src="public/img/logow.png" alt="Logo" class="me-3">
                 <span>LibrosWap</span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -40,12 +36,9 @@
             </div>
         </div>
     </nav>
-
-    <!-- Hero Section Épico -->
     <section class="hero-epic" id="inicio">
         <div class="hero-background"></div>
         <div class="hero-overlay"></div>
-
         <div class="container hero-content">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -55,8 +48,7 @@
                         <span style="font-size: 0.6em; font-weight: 700;">El futuro de la lectura</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Descubre, intercambia y colecciona los libros más extraordinarios.
-                        Únete a la revolución literaria que está transformando la forma de leer.
+                        Explora, intercambia y colecciona obras extraordinarias en una plataforma pensada para lectores exigentes. Publica tus libros, gestiona intercambios y accede a un catálogo diverso con herramientas seguras y fáciles de usar. LibrosWap transforma la lectura en una experiencia colaborativa, dinámica y personalizada.
                     </p>
                     <div class="hero-cta">
                         <a href="index.php?c=UsuarioController&a=register" class="btn btn-hero-epic">
@@ -65,64 +57,52 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="col-lg-6">
                     <div class="books-carousel-epic">
                         <div class="carousel-container-epic">
-                            <!-- Libro 1 -->
                             <div class="book-slide-epic active">
-                                <img src="/FINAL/public/img/libros/case1.jpg" alt="Stephen King" class="book-image-epic">
+                                <img src="public/img/libros/case1.jpg" alt="Stephen King" class="book-image-epic">
                                 <div class="book-info-epic">
                                     <div class="book-title-epic">Los libros despiertan tu proceso creativo</div>
                                     <div class="book-category-epic">Descúbrelos en Libros WAP</div>
                                 </div>
                             </div>
-
-                            <!-- Libro 2 -->
                             <div class="book-slide-epic next">
-                                <img src="/FINAL/public/img/libros/case2.jpg" alt="Orgullo y Prejuicio"
+                                <img src="public/img/libros/case2.jpg" alt="Orgullo y Prejuicio"
                                     class="book-image-epic">
                                 <div class="book-info-epic">
                                     <div class="book-title-epic">Encuentra tu rincón perfecto de lectura</div>
                                     <div class="book-category-epic"> Libros WAP te acompaña</div>
                                 </div>
                             </div>
-
-                            <!-- Libro 3 -->
                             <div class="book-slide-epic hidden">
-                                <img src="/FINAL/public/img/libros/case3.jpg" alt="Fantasía" class="book-image-epic">
+                                <img src="public/img/libros/case3.jpg" alt="Fantasía" class="book-image-epic">
                                 <div class="book-info-epic">
                                     <div class="book-title-epic">Tu momento de lectura ideal te espera</div>
                                     <div class="book-category-epic">Evocar comodidad y compañía en la lectura</div>
                                 </div>
                             </div>
-
-                            <!-- Libro 4 -->
                             <div class="book-slide-epic hidden">
-                                <img src="/FINAL/public/img/libros/case4.jpg" alt="Recomendado" class="book-image-epic">
+                                <img src="public/img/libros/case4.jpg" alt="Recomendado" class="book-image-epic">
                                 <div class="book-info-epic">
                                     <div class="book-title-epic">Construye tu biblioteca de sueños. Compra e intercambia en Libros WAP</div>
                                     <div class="book-category-epic">Editor's Choice</div>
                                 </div>
                             </div>
-
-                            <!-- Libro 5 -->
                             <div class="book-slide-epic hidden">
-                                <img src="/FINAL/public/img/inicio3.jpg" alt="Popular 2025" class="book-image-epic">
+                                <img src="public/img/libros/art.jpg" alt="Popular 2025" class="book-image-epic">
                                 <div class="book-info-epic">
                                     <div class="book-title-epic">Los libros que marcarán tendencia en 2025</div>
                                     <div class="book-category-epic">Lo Más Viral</div>
                                 </div>
                             </div>
                         </div>
-
                         <button class="carousel-controls-epic carousel-prev-epic" onclick="previousSlideEpic()">
                             <i class="bi bi-chevron-left"></i>
                         </button>
                         <button class="carousel-controls-epic carousel-next-epic" onclick="nextSlideEpic()">
                             <i class="bi bi-chevron-right"></i>
                         </button>
-
                         <div class="carousel-indicators-epic">
                             <span class="indicator-epic active" onclick="currentSlideEpic(0)"></span>
                             <span class="indicator-epic" onclick="currentSlideEpic(1)"></span>
@@ -135,26 +115,20 @@
             </div>
         </div>
     </section>
-
-    <!-- Recomendaciones y Populares Épicas -->
     <section class="section-epic">
         <div class="container">
             <div class="row g-5">
-
-                <!-- Recomendaciones -->
                 <div class="col-lg-6">
                     <div class="recommendation-epic scroll-reveal">
                         <h3 class="carousel-title-epic">⭐ Staff Picks</h3>
                         <div id="sliderRecomendaciones" class="carousel slide" data-bs-ride="carousel"
                             data-bs-interval="5000">
                             <div class="carousel-inner">
-
-                                <!-- Slide 1 -->
                                 <div class="carousel-item active">
                                     <div class="row g-3">
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/recomendado1.jpg" class="card-img-top"
+                                                <img src="public/img/recomendado1.jpg" class="card-img-top"
                                                     alt="Recomendación 1">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">El Susurro de las Páginas</h6>
@@ -164,7 +138,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/recomendado2.jpg" class="card-img-top"
+                                                <img src="public/img/recomendado2.jpg" class="card-img-top"
                                                     alt="Recomendación 2">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Misterios del Corazón</h6>
@@ -174,13 +148,11 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Slide 2 -->
                                 <div class="carousel-item">
                                     <div class="row g-3">
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/recomendado3.jpg" class="card-img-top"
+                                                <img src="public/img/recomendado3.jpg" class="card-img-top"
                                                     alt="Recomendación 3">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Senderos de Sabiduría</h6>
@@ -190,7 +162,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/recomendado4.jpg" class="card-img-top"
+                                                <img src="public/img/recomendado4.jpg" class="card-img-top"
                                                     alt="Recomendación 4">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Voces del Futuro</h6>
@@ -200,13 +172,11 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Slide 3 -->
                                 <div class="carousel-item">
                                     <div class="row g-3">
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/recomendado5.jpg" class="card-img-top"
+                                                <img src="public/img/recomendado5.jpg" class="card-img-top"
                                                     alt="Recomendación 5">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Crónicas Perdidas</h6>
@@ -216,7 +186,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/recomendado6.jpg" class="card-img-top"
+                                                <img src="public/img/recomendado6.jpg" class="card-img-top"
                                                     alt="Recomendación 6">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">El Arte de Vivir</h6>
@@ -226,7 +196,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#sliderRecomendaciones"
                                 data-bs-slide="prev">
@@ -239,21 +208,17 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Populares -->
                 <div class="col-lg-6">
                     <div class="recommendation-epic scroll-reveal">
                         <h3 class="carousel-title-epic">🔥 Trending 2025</h3>
                         <div id="sliderPopulares" class="carousel slide" data-bs-ride="carousel"
                             data-bs-interval="5000">
                             <div class="carousel-inner">
-
-                                <!-- Slide 1 -->
                                 <div class="carousel-item active">
                                     <div class="row g-3">
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/20251.jpg" class="card-img-top"
+                                                <img src="public/img/20251.jpg" class="card-img-top"
                                                     alt="Popular 1">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Revolución Digital</h6>
@@ -263,7 +228,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/20252.jpg" class="card-img-top"
+                                                <img src="public/img/20252.jpg" class="card-img-top"
                                                     alt="Popular 2">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Nuevos Horizontes</h6>
@@ -273,13 +238,11 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Slide 2 -->
                                 <div class="carousel-item">
                                     <div class="row g-3">
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/20254.jpg" class="card-img-top"
+                                                <img src="public/img/20254.jpg" class="card-img-top"
                                                     alt="Popular 3">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Conexiones Humanas</h6>
@@ -289,7 +252,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="card card-epic h-100">
-                                                <img src="/FINAL/public/img/20253.jpg" class="card-img-top"
+                                                <img src="public/img/20253.jpg" class="card-img-top"
                                                     alt="Popular 4">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title fw-bold">Impulso Creativo</h6>
@@ -299,7 +262,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#sliderPopulares"
                                 data-bs-slide="prev">
@@ -312,20 +274,16 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Productos y Ofertas Épicos -->
     <section class="section-epic products-epic" id="productos">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">🛍️ Catálogo Premium</h2>
             <div class="row g-4">
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/oferta1.jpg" class="card-img-top" alt="Harry Potter">
+                        <img src="public/img/oferta1.jpg" class="card-img-top" alt="Harry Potter">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Harry Potter</h5>
                             <span class="category-badge mb-2 d-inline-block">Fantasía</span>
@@ -339,10 +297,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/oferta2.jpg" class="card-img-top" alt="Atomic Habits">
+                        <img src="public/img/oferta2.jpg" class="card-img-top" alt="Atomic Habits">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Atomic Habits</h5>
                             <span class="category-badge mb-2 d-inline-block">Autoayuda</span>
@@ -356,10 +313,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/oferta4.jpg" class="card-img-top" alt="El Alquimista">
+                        <img src="public/img/oferta4.jpg" class="card-img-top" alt="El Alquimista">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">El Alquimista</h5>
                             <span class="category-badge mb-2 d-inline-block">Inspiracional</span>
@@ -373,10 +329,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/oferta5.jpg" class="card-img-top" alt="Los Juegos del Hambre">
+                        <img src="public/img/oferta5.jpg" class="card-img-top" alt="Los Juegos del Hambre">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Los Juegos del Hambre</h5>
                             <span class="category-badge mb-2 d-inline-block">Distopía</span>
@@ -390,10 +345,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/oferta6.jpg" class="card-img-top" alt="Dune">
+                        <img src="public/img/oferta6.jpg" class="card-img-top" alt="Dune">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Dune</h5>
                             <span class="category-badge mb-2 d-inline-block">Sci-Fi</span>
@@ -407,10 +361,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/libros/oferta7.jpg" class="card-img-top" alt="El Código Da Vinci">
+                        <img src="public/img/libros/oferta7.jpg" class="card-img-top" alt="El Código Da Vinci">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">El Código Da Vinci</h5>
                             <span class="category-badge mb-2 d-inline-block">Thriller</span>
@@ -424,10 +377,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="The many lives of cats">
+                        <img src="public/img/4.jpg" class="card-img-top" alt="The many lives of cats">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">The Many Lives of Cats</h5>
                             <span class="category-badge mb-2 d-inline-block">Aventura</span>
@@ -441,10 +393,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card-epic card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="Título especial">
+                        <img src="public/img/4.jpg" class="card-img-top" alt="Título especial">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Universos Paralelos</h5>
                             <span class="category-badge mb-2 d-inline-block">Ciencia</span>
@@ -458,93 +409,79 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Categorías Épicas -->
     <section class="section-epic categories-epic" id="categorias">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">📚 Universos Literarios</h2>
             <div class="row g-5 justify-content-center">
-
-                <!-- Fantasía -->
                 <div class="col-lg-6 col-xl-3">
                     <div class="card genre-card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/categoria1.jpg" class="card-img-top"
+                        <img src="public/img/categoria1.jpg" class="card-img-top"
                             alt="Fantasía y Ciencia Ficción">
                         <div class="card-body text-center">
                             <div class="icon-epic mb-3">🧙‍♂️</div>
                             <h5 class="card-title">Fantasía & Sci-Fi</h5>
                             <p class="card-text">Universos épicos, magia ancestral, tecnología futurista y mundos que
                                 desafían la realidad conocida.</p>
-                            <a href="/genero/fantasia" class="btn">
+                            <a href="index.php?c=UsuarioController&a=login" class="btn">
                                 <i class="bi bi-arrow-right me-2"></i>Explorar Mundos
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Thriller -->
                 <div class="col-lg-6 col-xl-3">
                     <div class="card genre-card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/categoria2.jpg" class="card-img-top" alt="Thriller y Misterio">
+                        <img src="public/img/categoria2.jpg" class="card-img-top" alt="Thriller y Misterio">
                         <div class="card-body text-center">
                             <div class="icon-epic mb-3">🕵️‍♀️</div>
                             <h5 class="card-title">Thriller & Misterio</h5>
                             <p class="card-text">Suspenso que acelera el pulso, investigaciones fascinantes y giros que
                                 te mantendrán despierto.</p>
-                            <a href="/genero/thriller" class="btn">
+                            <a href="index.php?c=UsuarioController&a=login" class="btn">
                                 <i class="bi bi-arrow-right me-2"></i>Resolver Misterios
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Romance -->
                 <div class="col-lg-6 col-xl-3">
                     <div class="card genre-card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/categoria3.jpg" class="card-img-top" alt="Romance">
+                        <img src="public/img/categoria3.jpg" class="card-img-top" alt="Romance">
                         <div class="card-body text-center">
                             <div class="icon-epic mb-3">💖</div>
                             <h5 class="card-title">Romance</h5>
                             <p class="card-text">Historias de amor que trascienden el tiempo, emociones intensas y
                                 conexiones que transforman vidas.</p>
-                            <a href="/genero/romance" class="btn">
+                            <a href="index.php?c=UsuarioController&a=login" class="btn">
                                 <i class="bi bi-arrow-right me-2"></i>Vivir el Amor
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Clásicos -->
                 <div class="col-lg-6 col-xl-3">
                     <div class="card genre-card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/categoria4.jpg" class="card-img-top" alt="Literatura Clásica">
+                        <img src="public/img/categoria4.jpg" class="card-img-top" alt="Literatura Clásica">
                         <div class="card-body text-center">
                             <div class="icon-epic mb-3">📜</div>
                             <h5 class="card-title">Literatura Clásica</h5>
                             <p class="card-text">Obras inmortales que definieron épocas, sabiduría atemporal que sigue
                                 inspirando generaciones.</p>
-                            <a href="/genero/clasicos" class="btn">
+                            <a href="index.php?c=UsuarioController&a=login" class="btn">
                                 <i class="bi bi-arrow-right me-2"></i>Descubrir Clásicos
                             </a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Lanzamiento Exclusivo Épico -->
     <section class="section-epic">
         <div class="container">
             <div class="exclusive-epic scroll-reveal">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
-                        <img src="/FINAL/public/img/6.jpg" class="img-fluid rounded-4 shadow-lg"
+                        <img src="public/img/6.jpg" class="img-fluid rounded-4 shadow-lg"
                             alt="Lanzamiento Exclusivo">
                     </div>
                     <div class="col-lg-6">
@@ -573,16 +510,13 @@
             </div>
         </div>
     </section>
-
-    <!-- Nuestra Selección Épica -->
     <section class="section-epic" id="seleccion">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">🌟 Colección Exclusiva</h2>
             <div class="row g-4">
-
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top" alt="El Principito">
+                        <img src="public/img/intercambia1.jpg" class="card-img-top" alt="El Principito">
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold">El Principito</h5>
                             <p class="text-muted mb-3">Edición Pop-Up Limitada</p>
@@ -601,10 +535,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top" alt="Alice's Adventures">
+                        <img src="public/img/intercambia2.jpg" class="card-img-top" alt="Alice's Adventures">
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold">Alice's Adventures in Wonderland</h5>
                             <p class="text-muted mb-3">Edición Taschen de Lujo</p>
@@ -623,10 +556,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/intercambia3.jpg" class="card-img-top" alt="The Raven">
+                        <img src="public/img/intercambia3.jpg" class="card-img-top" alt="The Raven">
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold">The Raven</h5>
                             <p class="text-muted mb-3">Ilustrada por Édouard Manet</p>
@@ -645,10 +577,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/intercambia4.jpg" class="card-img-top" alt="Moby Dick">
+                        <img src="public/img/intercambia4.jpg" class="card-img-top" alt="Moby Dick">
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold">Moby Dick</h5>
                             <p class="text-muted mb-3">Edición Rockwell Kent</p>
@@ -667,10 +598,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/intercambia5.jpg" class="card-img-top" alt="The Hobbit">
+                        <img src="public/img/intercambia5.jpg" class="card-img-top" alt="The Hobbit">
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold">The Hobbit</h5>
                             <p class="text-muted mb-3">Edición Aniversario con ilustraciones de Tolkien</p>
@@ -689,10 +619,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-epic h-100 scroll-reveal">
-                        <img src="/FINAL/public/img/intercambia6.jpg" class="card-img-top"
+                        <img src="public/img/intercambia6.jpg" class="card-img-top"
                             alt="Where the Wild Things Are">
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold">Where the Wild Things Are</h5>
@@ -712,22 +641,17 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Universo Stephen King Épico -->
     <section class="section-epic" style="background: var(--gradient-dark); color: white;" id="comunidad">
         <div class="container">
             <h2 class="section-title-epic text-white scroll-reveal">🧠 Universo Stephen King</h2>
             <div class="row g-5">
-
-                <!-- Obras destacadas -->
                 <div class="col-lg-6">
                     <div class="card card-epic h-100 scroll-reveal"
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
-                        <img src="/FINAL/public/img/seccionk2.jpg" class="card-img-top" alt="Obras de Stephen King">
+                        <img src="public/img/seccionk2.jpg" class="card-img-top" alt="Obras de Stephen King">
                         <div class="card-body">
                             <h5 class="card-title text-white fw-bold mb-4">
                                 <i class="bi bi-book-fill me-2"></i>Obras Maestras del Terror
@@ -778,12 +702,10 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Noticias recientes -->
                 <div class="col-lg-6">
                     <div class="card card-epic h-100 scroll-reveal"
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
-                        <img src="/FINAL/public/img/seccionk1.jpg" class="card-img-top" alt="Noticias Stephen King">
+                        <img src="public/img/seccionk1.jpg" class="card-img-top" alt="Noticias Stephen King">
                         <div class="card-body">
                             <h5 class="card-title text-white fw-bold mb-4">
                                 <i class="bi bi-lightning me-2"></i>Últimas Noticias
@@ -825,24 +747,18 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Testimonios Épicos -->
     <section class="section-epic">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">💬 Voces de Nuestra Comunidad</h2>
-
             <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-
-                    <!-- Testimonio 1 -->
                     <div class="carousel-item active">
                         <div class="card card-epic mx-auto scroll-reveal" style="max-width: 800px;">
                             <div class="card-body text-center">
-                                <img src="/FINAL/public/img/client1.jpg" class="rounded-circle mb-4 shadow-lg"
+                                <img src="public/img/client1.jpg" class="rounded-circle mb-4 shadow-lg"
                                     width="120" alt="María Gómez">
                                 <h5 class="fw-bold"
                                     style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
@@ -857,12 +773,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Testimonio 2 -->
                     <div class="carousel-item">
                         <div class="card card-epic mx-auto scroll-reveal" style="max-width: 800px;">
                             <div class="card-body text-center">
-                                <img src="/FINAL/public/img/client2.jpg" class="rounded-circle mb-4 shadow-lg"
+                                <img src="public/img/client2.jpg" class="rounded-circle mb-4 shadow-lg"
                                     width="120" alt="Carlos Ruiz">
                                 <h5 class="fw-bold"
                                     style="background: var(--gradient-secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
@@ -877,12 +791,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Testimonio 3 -->
                     <div class="carousel-item">
                         <div class="card card-epic mx-auto scroll-reveal" style="max-width: 800px;">
                             <div class="card-body text-center">
-                                <img src="/FINAL/public/img/client3.jpg" class="rounded-circle mb-4 shadow-lg"
+                                <img src="public/img/client3.jpg" class="rounded-circle mb-4 shadow-lg"
                                     width="120" alt="Laura Méndez">
                                 <h5 class="fw-bold"
                                     style="background: var(--gradient-tertiary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
@@ -896,10 +808,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-                <!-- Controles del carrusel -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
                     data-bs-slide="prev">
                     <div style="background: var(--gradient-primary); border-radius: 50%; padding: 15px;">
@@ -912,8 +821,6 @@
                         <i class="bi bi-chevron-right text-white fs-4"></i>
                     </div>
                 </button>
-
-                <!-- Indicadores -->
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"
                         style="background: var(--gradient-primary); border-radius: 50%; width: 15px; height: 15px;"></button>
@@ -925,7 +832,6 @@
             </div>
         </div>
     </section>
-    <!-- Sección de Contacto -->
     <section class="py-5" style="background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%); margin-top: 100px;"
         id="contacto">
         <div class="container">
@@ -939,8 +845,7 @@
                                 <p class="text-muted">¿Tienes preguntas, sugerencias o necesitas ayuda? Estamos aquí
                                     para ti</p>
                             </div>
-
-                            <form method="POST" action="procesar_contacto.php">
+                            <form method="POST" action="../../procesar_contacto.php">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label for="nombre" class="form-label fw-semibold">Nombre</label>
@@ -978,6 +883,7 @@
                                         </button>
                                     </div>
                                 </div>
+                                <div id="respuestaContacto" class="mt-4 text-center"></div>
                             </form>
                         </div>
                     </div>
@@ -985,15 +891,10 @@
             </div>
         </div>
     </section>
-
-
-<!-- Footer Épico Mejorado -->
     <footer
         style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 60px 0 30px; margin-top: 0;">
         <div class="container">
             <div class="row g-5">
-
-                <!-- Información Principal -->
                 <div class="col-lg-4">
                     <div class="mb-4">
                         <img src="public/img/logow.png" alt="LibrosWap" style="height: 60px;" class="mb-3">
@@ -1001,8 +902,6 @@
                         <p class="mb-3">Plataforma web para comprar, vender e intercambiar libros entre usuarios.
                             Fomentamos la lectura, conectamos personas y promovemos el conocimiento compartido.</p>
                     </div>
-
-                    <!-- Redes Sociales -->
                     <div>
                         <h6 class="fw-bold mb-3">Síguenos</h6>
                         <div class="d-flex gap-3">
@@ -1021,9 +920,6 @@
                         </div>
                     </div>
                 </div>
-
-                
-                <!-- Enlaces Útiles -->
                 <div class="col-lg-4">
                     <h6 class="fw-bold mb-3">Enlaces Útiles</h6>
                     <div class="row">
@@ -1068,8 +964,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Contacto -->
                 <div class="col-lg-4">
                     <h6 class="fw-bold mb-3">Contacto</h6>
                     <div class="mb-3">
@@ -1088,7 +982,6 @@
                             <span>Soporte 24/7</span>
                         </div>
                     </div>
-
                     <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px;">
                         <h6 class="fw-bold mb-2">¿Necesitas ayuda?</h6>
                         <p class="small mb-0">Nuestro equipo está listo para ayudarte con cualquier pregunta o problema
@@ -1096,11 +989,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Separador -->
             <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
-
-            <!-- Footer Bottom -->
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <p class="mb-0">© 2025 LibrosWap. Todos los derechos reservados. | Diseñado con 💜 por el equipo
@@ -1117,21 +1006,15 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Variables del carousel del hero
         let currentSlideIndexEpic = 0;
         const slidesEpic = document.querySelectorAll('.book-slide-epic');
         const indicatorsEpic = document.querySelectorAll('.indicator-epic');
         const totalSlidesEpic = slidesEpic.length;
-
-        // Funciones del carousel del hero
         function updateSlidesEpic() {
             slidesEpic.forEach((slide, index) => {
                 slide.className = 'book-slide-epic';
-
                 if (index === currentSlideIndexEpic) {
                     slide.classList.add('active');
                 } else if (index === (currentSlideIndexEpic - 1 + totalSlidesEpic) % totalSlidesEpic) {
@@ -1142,31 +1025,23 @@
                     slide.classList.add('hidden');
                 }
             });
-
             indicatorsEpic.forEach((indicator, index) => {
                 indicator.classList.toggle('active', index === currentSlideIndexEpic);
             });
         }
-
         function nextSlideEpic() {
             currentSlideIndexEpic = (currentSlideIndexEpic + 1) % totalSlidesEpic;
             updateSlidesEpic();
         }
-
         function previousSlideEpic() {
             currentSlideIndexEpic = (currentSlideIndexEpic - 1 + totalSlidesEpic) % totalSlidesEpic;
             updateSlidesEpic();
         }
-
         function currentSlideEpic(index) {
             currentSlideIndexEpic = index;
             updateSlidesEpic();
         }
-
-        // Auto-play del carousel del hero
         setInterval(nextSlideEpic, 5000);
-
-        // Interacción con clicks en las slides
         slidesEpic.forEach((slide, index) => {
             slide.addEventListener('click', () => {
                 if (index !== currentSlideIndexEpic) {
@@ -1175,11 +1050,7 @@
                 }
             });
         });
-
-        // Inicializar carousel del hero
         updateSlidesEpic();
-
-        // Efecto de scroll para navbar
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('mainNavbar');
             if (window.scrollY > 100) {
@@ -1188,13 +1059,10 @@
                 navbar.classList.remove('scrolled');
             }
         });
-
-        // Animaciones de scroll reveal
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1202,13 +1070,9 @@
                 }
             });
         }, observerOptions);
-
-        // Observar todos los elementos con la clase scroll-reveal
         document.querySelectorAll('.scroll-reveal').forEach(el => {
             observer.observe(el);
         });
-
-        // Efecto de paralaje suave en el hero
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const background = document.querySelector('.hero-background');
@@ -1217,8 +1081,6 @@
                 background.style.transform = `translateY(${rate}px)`;
             }
         });
-
-        // Smooth scrolling para links internos
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1232,7 +1094,34 @@
             });
         });
     </script>
-
+    <script>
+document.querySelector("form").addEventListener("submit", function(e) {
+    e.preventDefault(); 
+    const form = e.target;
+    const datos = new FormData(form);
+    const respuesta = document.getElementById("respuestaContacto");
+    fetch("../../procesar_contacto.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(res => res.text())
+    .then(mensaje => {
+        respuesta.innerHTML = `
+            <div style="background: #e6ffed; border: 1px solid #b2f5ea; padding: 15px; border-radius: 10px; color: #2f855a; font-weight: 500;">
+                ${mensaje}
+            </div>
+        `;
+        form.reset(); 
+    })
+    .catch(error => {
+        respuesta.innerHTML = `
+            <div style="background: #ffe6e6; border: 1px solid #feb2b2; padding: 15px; border-radius: 10px; color: #c53030; font-weight: 500;">
+                ❌ Error al enviar el mensaje. Intenta nuevamente.
+            </div>
+        `;
+        console.error("Error:", error);
+    });
+});
+</script>
 </body>
-
 </html>
