@@ -1431,29 +1431,4 @@ p {
     }
 }
 
-@media (hover: none) and (pointer: coarse) {
-    .card-epic:hover,
-    .product-card-epic:hover,
-    .genre-card-epic:hover {
-        transform: none;
-    }
-
-    .book-slide-epic:hover .book-image-epic,
-    .card-epic:hover .card-img-top {
-        transform: none;
-    }
-
-    .carousel-controls-epic:hover {
-        transform: translateY(-50%);
-    }
-
-    .btn-futuristic:hover,
-    .btn-outline-futuristic:hover,
-    .btn-hero-epic:hover {
-        transform: none;
-    }
-
-    .navbar-futuristic .nav-link:hover {
-        transform: none;
-    }
 }

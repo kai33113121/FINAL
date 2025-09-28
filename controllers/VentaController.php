@@ -13,25 +13,6 @@ class VentaController
         $contenido = __DIR__ . '/../views/usuario/crear_venta.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
-    public function crear()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (!isset($_SESSION['usuario']['id'])) {
-            header("Location: index.php?c=UsuarioController&a=login");
-            exit;
-        }
-
-        require_once __DIR__ . '/../models/Venta.php';
-        $venta = new Venta();
-
-        // Validar que los campos requeridos no estén vacíos
-    if (empty($_POST['titulo']) || empty($_POST['autor']) || empty($_POST['descripcion']) || empty($_POST['precio']) || empty($_POST['estado']) || empty($_POST['genero'])) {
-            $_SESSION['error'] = "Todos los campos son obligatorios.";
-            header("Location: index.php?c=VentaController&a=crearVista");
-            exit;
         }
 
         // Sanear y validar datos

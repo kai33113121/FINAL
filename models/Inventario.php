@@ -5,24 +5,6 @@ class Venta
 {
     private $db;
 
-    public function __construct()
-    {
-        $this->db = conectar();
-        if (!$this->db) {
-            throw new Exception("No se pudo conectar a la base de datos.");
-        }
-    }
-
-    // Crear libro en venta
-    public function crear($id_usuario, $titulo, $autor, $descripcion, $genero, $precio, $estado, $imagen)
-    {
-        $stmt = $this->db->prepare("
-            INSERT INTO libros 
-            (id_usuario, titulo, autor, descripcion, genero, precio, estado, imagen) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        if (!$stmt) return false;
-        $stmt->bind_param("isssssds", 
             $id_usuario, 
             $titulo, 
             $autor, 

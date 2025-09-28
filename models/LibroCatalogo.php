@@ -78,20 +78,4 @@ class LibroCatalogo
             $id
         );
         $exito = $stmt->execute();
-        $stmt->close();
-        return $exito;
-    }
-
-    public function eliminar($id)
-    {
-        $sql = "DELETE FROM libros_catalogo WHERE id=?";
-        $stmt = $this->db->prepare($sql);
-        if (!$stmt) return false;
-        $stmt->bind_param("i", $id);
-        $exito = $stmt->execute();
-        $stmt->close();
-        return $exito;
-    }
-}
-
-andif 
+ 

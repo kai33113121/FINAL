@@ -128,26 +128,7 @@ class Usuario {
     public function contarUsuarios() {
         $stmt = $this->conexion->prepare("SELECT COUNT(*) FROM usuarios");
         if (!$stmt) return 0;
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-        $row = $resultado ? $resultado->fetch_row() : [0];
-        $stmt->close();
-        return $row[0];
-    }
 
-    public function actualizarPerfil($id, $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito) 
-{
-    $stmt = $this->conexion->prepare("UPDATE usuarios SET nombre = ?, email = ?, bio = ?, foto = ?, direccion = ?, genero_preferido = ?, libro_favorito = ? WHERE id = ?");
-    
-    if (!$stmt) return false;
-    
-    // Bind con los nuevos parámetros (7 strings + 1 integer)
-    $stmt->bind_param("sssssssi", $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito, $id);
-    
-    $exito = $stmt->execute();
-    $stmt->close();
-    
-    return $exito;
 }
 
     public function obtenerConfiguracion($idUsuario) {

@@ -6,29 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reseñas - Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-image:
-                linear-gradient(135deg, rgba(87, 87, 87, 0.65) 0%, rgba(120, 107, 132, 0.85) 100%),
-                url('/FINAL/public/img/sideadmin.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-        }
-
-        .bg-overlay {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .reviews-container {
-            padding: 2rem 0;
-        }
-
-        .reviews-card {
-            border: none;
+   
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
