@@ -7,283 +7,309 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(to bottom, #ede7f6, #f3e5f5);
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .navbar-purple {
-            background: linear-gradient(to right, #6a1b9a, #8e24aa);
-        }
-
-        .navbar-purple .nav-link,
-        .navbar-purple .navbar-brand {
-            color: white;
-        }
-
-        .navbar-purple .nav-link:hover {
-            color: #d1c4e9;
-        }
-
-        .btn-purple {
-            background-color: #8e24aa;
-            color: white;
-        }
-
-        .btn-purple:hover {
-            background-color: #6a1b9a;
-        }
-
-        .section {
-            padding: 60px 0;
-        }
-
-        .bg-purple-light {
-            background-color: #f3e5f5;
-        }
-
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        footer {
-            background-color: #4a148c;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/FINAL/public/css/landing.css">
 </head>
 
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-purple shadow-sm sticky-top py-3">
+    <nav class="navbar navbar-expand-lg navbar-futuristic sticky-top" id="mainNavbar">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-                <img src="/FINAL/public/img/logow.png" alt="Logo" style="height:40px;" class="me-2">
-                <span class="text-white text-shadow">LibrosWap</span>
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="">
+                <img src="/FINAL/public/img/logow.png" alt="Logo" class="me-3">
+                <span>LibrosWap</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list text-white fs-3"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav gap-4">
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#productos">Productos y Ofertas</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#categorias">Categorías</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#seleccion">Nuestra Selección</a></li>
-                    <li class="nav-item"><a class="nav-link text-shadow" href="#contacto">Contáctanos</a></li>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#productos">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#categorias">Géneros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#seleccion">Intercambios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                 </ul>
             </div>
-            <div class="d-flex">
-                <a class="btn btn-outline-light me-2" href="index.php?c=UsuarioController&a=login">Ingresar</a>
-                <a class="btn btn-light text-purple fw-bold"
-                    href="index.php?c=UsuarioController&a=register">Registrarse</a>
+            <div class="d-flex gap-3">
+                <a class="btn btn-outline-futuristic" href="index.php?c=UsuarioController&a=login">Ingresar</a>
+                <a class="btn btn-futuristic" href="index.php?c=UsuarioController&a=register">Crear cuenta</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero-section position-relative text-center text-white"
-        style="position: relative; overflow: hidden; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <!-- Hero Section Épico -->
+    <section class="hero-epic" id="inicio">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
 
-        <!-- Fondo con imagen traslúcida -->
-        <div style="
-    position: absolute;
-    inset: 0;
-    background-image: url('/FINAL/public/img/adminside.png'); /* tu imagen */
-    background-size: cover;
-    background-position: center;
-    opacity: 0.7; /* controla la transparencia */
-    z-index: 0;
-  "></div>
-
-        <!-- Overlay opcional para oscurecer más -->
-        <div style="
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4); /* más contraste para el texto */
-    z-index: 1;
-  "></div>
-
-        <!-- Contenido principal -->
-        <div class="container position-relative py-5" style="z-index: 2;">
-            <h1 class="display-4 fw-bold" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">Intercambia, compra y
-                comparte libros</h1>
-            <p class="lead" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">Explora miles de títulos y conecta con
-                lectores apasionados.</p>
-            <a href="index.php?c=UsuarioController&a=register"
-                class="btn btn-light text-purple fw-bold btn-lg mt-3">Comienza ahora</a>
-
-            <div class="row mt-5">
-                <div class="col-md-4">
-                    <img src="/FINAL/public/img/loco.jpg" class="img-fluid rounded shadow-sm" alt="Libros 1">
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">
+                        LibrosWap
+                        <br>
+                        <span style="font-size: 0.6em; font-weight: 700;">El futuro de la lectura</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Descubre, intercambia y colecciona los libros más extraordinarios.
+                        Únete a la revolución literaria que está transformando la forma de leer.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="index.php?c=UsuarioController&a=register" class="btn btn-hero-epic">
+                            <i class="bi bi-rocket-takeoff me-3"></i>
+                            Explorar ahora
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <img src="/FINAL/public/img/orgullo.jpg" class="img-fluid rounded shadow-sm" alt="Libros 2">
-                </div>
-                <div class="col-md-4">
-                    <img src="/FINAL/public/img/seccionk5.jpg" class="img-fluid rounded shadow-sm" alt="Libros 3">
+
+                <div class="col-lg-6">
+                    <div class="books-carousel-epic">
+                        <div class="carousel-container-epic">
+                            <!-- Libro 1 -->
+                            <div class="book-slide-epic active">
+                                <img src="/FINAL/public/img/libros/case1.jpg" alt="Stephen King" class="book-image-epic">
+                                <div class="book-info-epic">
+                                    <div class="book-title-epic">Los libros despiertan tu proceso creativo</div>
+                                    <div class="book-category-epic">Descúbrelos en Libros WAP</div>
+                                </div>
+                            </div>
+
+                            <!-- Libro 2 -->
+                            <div class="book-slide-epic next">
+                                <img src="/FINAL/public/img/libros/case2.jpg" alt="Orgullo y Prejuicio"
+                                    class="book-image-epic">
+                                <div class="book-info-epic">
+                                    <div class="book-title-epic">Encuentra tu rincón perfecto de lectura</div>
+                                    <div class="book-category-epic"> Libros WAP te acompaña</div>
+                                </div>
+                            </div>
+
+                            <!-- Libro 3 -->
+                            <div class="book-slide-epic hidden">
+                                <img src="/FINAL/public/img/libros/case3.jpg" alt="Fantasía" class="book-image-epic">
+                                <div class="book-info-epic">
+                                    <div class="book-title-epic">Tu momento de lectura ideal te espera</div>
+                                    <div class="book-category-epic">Evocar comodidad y compañía en la lectura</div>
+                                </div>
+                            </div>
+
+                            <!-- Libro 4 -->
+                            <div class="book-slide-epic hidden">
+                                <img src="/FINAL/public/img/libros/case4.jpg" alt="Recomendado" class="book-image-epic">
+                                <div class="book-info-epic">
+                                    <div class="book-title-epic">Construye tu biblioteca de sueños. Compra e intercambia en Libros WAP</div>
+                                    <div class="book-category-epic">Editor's Choice</div>
+                                </div>
+                            </div>
+
+                            <!-- Libro 5 -->
+                            <div class="book-slide-epic hidden">
+                                <img src="/FINAL/public/img/inicio3.jpg" alt="Popular 2025" class="book-image-epic">
+                                <div class="book-info-epic">
+                                    <div class="book-title-epic">Los libros que marcarán tendencia en 2025</div>
+                                    <div class="book-category-epic">Lo Más Viral</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="carousel-controls-epic carousel-prev-epic" onclick="previousSlideEpic()">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button class="carousel-controls-epic carousel-next-epic" onclick="nextSlideEpic()">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+
+                        <div class="carousel-indicators-epic">
+                            <span class="indicator-epic active" onclick="currentSlideEpic(0)"></span>
+                            <span class="indicator-epic" onclick="currentSlideEpic(1)"></span>
+                            <span class="indicator-epic" onclick="currentSlideEpic(2)"></span>
+                            <span class="indicator-epic" onclick="currentSlideEpic(3)"></span>
+                            <span class="indicator-epic" onclick="currentSlideEpic(4)"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Recomendaciones y Populares -->
-    <section class="section bg-white py-5">
+    <!-- Recomendaciones y Populares Épicas -->
+    <section class="section-epic">
         <div class="container">
-            <div class="row">
+            <div class="row g-5">
 
                 <!-- Recomendaciones -->
-                <div class="col-md-6 mb-4">
-                    <h3 class="text-center text-purple">⭐ Recomendaciones</h3>
-                    <div id="sliderRecomendaciones" class="carousel slide" data-bs-ride="carousel"
-                        data-bs-interval="5000">
-                        <div class="carousel-inner">
+                <div class="col-lg-6">
+                    <div class="recommendation-epic scroll-reveal">
+                        <h3 class="carousel-title-epic">⭐ Staff Picks</h3>
+                        <div id="sliderRecomendaciones" class="carousel slide" data-bs-ride="carousel"
+                            data-bs-interval="5000">
+                            <div class="carousel-inner">
 
-                            <!-- Slide 1 -->
-                            <div class="carousel-item active">
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/recomendado1.jpg" class="card-img-top"
-                                                alt="Recomendación 1">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Recomendación 1</h6>
+                                <!-- Slide 1 -->
+                                <div class="carousel-item active">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/recomendado1.jpg" class="card-img-top"
+                                                    alt="Recomendación 1">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">El Susurro de las Páginas</h6>
+                                                    <p class="text-muted small">Drama Contemporáneo</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/recomendado2.jpg" class="card-img-top"
-                                                alt="Recomendación 2">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Recomendación 2</h6>
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/recomendado2.jpg" class="card-img-top"
+                                                    alt="Recomendación 2">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Misterios del Corazón</h6>
+                                                    <p class="text-muted small">Romance & Misterio</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Slide 2 -->
-                            <div class="carousel-item">
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/recomendado3.jpg" class="card-img-top"
-                                                alt="Recomendación 3">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Recomendación 3</h6>
+                                <!-- Slide 2 -->
+                                <div class="carousel-item">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/recomendado3.jpg" class="card-img-top"
+                                                    alt="Recomendación 3">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Senderos de Sabiduría</h6>
+                                                    <p class="text-muted small">Filosofía Moderna</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/recomendado4.jpg" class="card-img-top"
-                                                alt="Recomendación 4">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Recomendación 4</h6>
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/recomendado4.jpg" class="card-img-top"
+                                                    alt="Recomendación 4">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Voces del Futuro</h6>
+                                                    <p class="text-muted small">Ciencia Ficción</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Slide 3 -->
-                            <div class="carousel-item">
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/recomendado5.jpg" class="card-img-top"
-                                                alt="Recomendación 5">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Recomendación 5</h6>
+                                <!-- Slide 3 -->
+                                <div class="carousel-item">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/recomendado5.jpg" class="card-img-top"
+                                                    alt="Recomendación 5">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Crónicas Perdidas</h6>
+                                                    <p class="text-muted small">Historia Épica</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/recomendado6.jpg" class="card-img-top"
-                                                alt="Recomendación 6">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Recomendación 6</h6>
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/recomendado6.jpg" class="card-img-top"
+                                                    alt="Recomendación 6">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">El Arte de Vivir</h6>
+                                                    <p class="text-muted small">Desarrollo Personal</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#sliderRecomendaciones"
+                                data-bs-slide="prev">
+                                <i class="bi bi-chevron-left text-primary fs-4"></i>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#sliderRecomendaciones"
+                                data-bs-slide="next">
+                                <i class="bi bi-chevron-right text-primary fs-4"></i>
+                            </button>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#sliderRecomendaciones"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#sliderRecomendaciones"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
                     </div>
                 </div>
 
                 <!-- Populares -->
-                <div class="col-md-6 mb-4">
-                    <h3 class="text-center text-purple">🔥 Populares 2025</h3>
-                    <div id="sliderPopulares" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-                        <div class="carousel-inner">
+                <div class="col-lg-6">
+                    <div class="recommendation-epic scroll-reveal">
+                        <h3 class="carousel-title-epic">🔥 Trending 2025</h3>
+                        <div id="sliderPopulares" class="carousel slide" data-bs-ride="carousel"
+                            data-bs-interval="5000">
+                            <div class="carousel-inner">
 
-                            <!-- Slide 1 -->
-                            <div class="carousel-item active">
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/20251.jpg" class="card-img-top" alt="Popular 1">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Popular 1</h6>
+                                <!-- Slide 1 -->
+                                <div class="carousel-item active">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/20251.jpg" class="card-img-top"
+                                                    alt="Popular 1">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Revolución Digital</h6>
+                                                    <p class="text-muted small">Tech & Sociedad</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/20252.jpg" class="card-img-top" alt="Popular 2">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Popular 2</h6>
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/20252.jpg" class="card-img-top"
+                                                    alt="Popular 2">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Nuevos Horizontes</h6>
+                                                    <p class="text-muted small">Aventura Moderna</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Slide 2 -->
-                            <div class="carousel-item">
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/20254.jpg" class="card-img-top" alt="Popular 3">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Popular 3</h6>
+                                <!-- Slide 2 -->
+                                <div class="carousel-item">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/20254.jpg" class="card-img-top"
+                                                    alt="Popular 3">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Conexiones Humanas</h6>
+                                                    <p class="text-muted small">Psicología Social</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="/FINAL/public/img/20253.jpg" class="card-img-top" alt="Popular 4">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-title">Popular 4</h6>
+                                        <div class="col-6">
+                                            <div class="card card-epic h-100">
+                                                <img src="/FINAL/public/img/20253.jpg" class="card-img-top"
+                                                    alt="Popular 4">
+                                                <div class="card-body text-center">
+                                                    <h6 class="card-title fw-bold">Impulso Creativo</h6>
+                                                    <p class="text-muted small">Arte & Inspiración</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#sliderPopulares"
+                                data-bs-slide="prev">
+                                <i class="bi bi-chevron-left text-primary fs-4"></i>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#sliderPopulares"
+                                data-bs-slide="next">
+                                <i class="bi bi-chevron-right text-primary fs-4"></i>
+                            </button>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#sliderPopulares"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#sliderPopulares"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
                     </div>
                 </div>
 
@@ -291,155 +317,219 @@
         </div>
     </section>
 
-    <!-- Productos y Ofertas -->
-    <section class="section bg-white" id="productos">
+    <!-- Productos y Ofertas Épicos -->
+    <section class="section-epic products-epic" id="productos">
         <div class="container">
-            <h2 class="text-center mb-5 text-purple">🎁 Productos y Ofertas</h2>
+            <h2 class="section-title-epic scroll-reveal">🛍️ Catálogo Premium</h2>
             <div class="row g-4">
-                <!-- Aquí puedes cargar libros por género -->
-                <!-- Ejemplo -->
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta1.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/oferta1.jpg" class="card-img-top" alt="Harry Potter">
                         <div class="card-body">
-                            <h5 class="card-title">Harry Potter</h5>
-                            <p class="text-muted">Fantasía</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">Harry Potter</h5>
+                            <span class="category-badge mb-2 d-inline-block">Fantasía</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$25.99</span>
+                                <span class="badge bg-warning text-dark">Bestseller</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta2.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/oferta2.jpg" class="card-img-top" alt="Atomic Habits">
                         <div class="card-body">
-                            <h5 class="card-title">Atomic Habits</h5>
-                            <p class="text-muted">Autoayuda</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">Atomic Habits</h5>
+                            <span class="category-badge mb-2 d-inline-block">Autoayuda</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$19.99</span>
+                                <span class="badge bg-info text-white">Popular</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta4.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/oferta4.jpg" class="card-img-top" alt="El Alquimista">
                         <div class="card-body">
-                            <h5 class="card-title">El Alquimista" (Paulo Coelho)</h5>
-                            <p class="text-muted">Ficción inspiracional</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">El Alquimista</h5>
+                            <span class="category-badge mb-2 d-inline-block">Inspiracional</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$22.50</span>
+                                <span class="badge bg-success text-white">Oferta</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta5.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/oferta5.jpg" class="card-img-top" alt="Los Juegos del Hambre">
                         <div class="card-body">
-                            <h5 class="card-title">Los Juegos del Hambre</h5>
-                            <p class="text-muted">Distopía</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">Los Juegos del Hambre</h5>
+                            <span class="category-badge mb-2 d-inline-block">Distopía</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$18.75</span>
+                                <span class="badge bg-danger text-white">Nuevo</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta6.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/oferta6.jpg" class="card-img-top" alt="Dune">
                         <div class="card-body">
-                            <h5 class="card-title">Dune" (Frank Herbert)</h5>
-                            <p class="text-muted">Ciencia Ficción</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">Dune</h5>
+                            <span class="category-badge mb-2 d-inline-block">Sci-Fi</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$29.99</span>
+                                <span class="badge bg-primary text-white">Clásico</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/oferta7.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/libros/oferta7.jpg" class="card-img-top" alt="El Código Da Vinci">
                         <div class="card-body">
-                            <h5 class="card-title">El Código Da Vinci" (Dan Brown)</h5>
-                            <p class="text-muted">Thriller,Comics</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">El Código Da Vinci</h5>
+                            <span class="category-badge mb-2 d-inline-block">Thriller</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$24.99</span>
+                                <span class="badge bg-warning text-dark">Trending</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="The many lives of cats">
                         <div class="card-body">
-                            <h5 class="card-title">The many lives of cats</h5>
-                            <p class="text-muted">action</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">The Many Lives of Cats</h5>
+                            <span class="category-badge mb-2 d-inline-block">Aventura</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$16.50</span>
+                                <span class="badge bg-info text-white">Juvenil</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="Libro">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card product-card-epic card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/4.jpg" class="card-img-top" alt="Título especial">
                         <div class="card-body">
-                            <h5 class="card-title">Título</h5>
-                            <p class="text-muted">Género</p>
-                            <a href="#" class="btn btn-purple">Ver más</a>
+                            <h5 class="card-title fw-bold">Universos Paralelos</h5>
+                            <span class="category-badge mb-2 d-inline-block">Ciencia</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-badge">$31.99</span>
+                                <span class="badge bg-secondary text-white">Exclusivo</span>
+                            </div>
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic w-100">
+                                <i class="bi bi-eye me-2"></i>Explorar
+                            </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Categorías -->
-    <section class="py-5" id="categorias" style="
-  background: linear-gradient(135deg, #6a0dad, #c084fc);
-  color: white;
-">
+    <!-- Categorías Épicas -->
+    <section class="section-epic categories-epic" id="categorias">
         <div class="container">
-            <h2 class="text-center fw-bold mb-5 text-white">📚 Explora por Categorías</h2>
-            <div class="row g-4 justify-content-center">
+            <h2 class="section-title-epic scroll-reveal">📚 Universos Literarios</h2>
+            <div class="row g-5 justify-content-center">
 
                 <!-- Fantasía -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card genre-card h-100 shadow-sm border-0">
+                <div class="col-lg-6 col-xl-3">
+                    <div class="card genre-card-epic h-100 scroll-reveal">
                         <img src="/FINAL/public/img/categoria1.jpg" class="card-img-top"
                             alt="Fantasía y Ciencia Ficción">
                         <div class="card-body text-center">
-                            <div class="icon mb-2">🧙‍♂️</div>
-                            <h5 class="card-title text-purple">Fantasía y Ciencia Ficción</h5>
-                            <p class="card-text">Universos épicos, magia, tecnología futurista y mundos imposibles.</p>
-                            <a href="/genero/fantasia" class="btn btn-light btn-sm fw-bold">Ver más del género</a>
+                            <div class="icon-epic mb-3">🧙‍♂️</div>
+                            <h5 class="card-title">Fantasía & Sci-Fi</h5>
+                            <p class="card-text">Universos épicos, magia ancestral, tecnología futurista y mundos que
+                                desafían la realidad conocida.</p>
+                            <a href="/genero/fantasia" class="btn">
+                                <i class="bi bi-arrow-right me-2"></i>Explorar Mundos
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Thriller -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card genre-card h-100 shadow-sm border-0">
+                <div class="col-lg-6 col-xl-3">
+                    <div class="card genre-card-epic h-100 scroll-reveal">
                         <img src="/FINAL/public/img/categoria2.jpg" class="card-img-top" alt="Thriller y Misterio">
                         <div class="card-body text-center">
-                            <div class="icon mb-2">🕵️‍♀️</div>
-                            <h5 class="card-title text-purple">Thriller y Misterio</h5>
-                            <p class="card-text">Suspenso, investigaciones, giros inesperados y tensión constante.</p>
-                            <a href="/genero/thriller" class="btn btn-light btn-sm fw-bold">Ver más del género</a>
+                            <div class="icon-epic mb-3">🕵️‍♀️</div>
+                            <h5 class="card-title">Thriller & Misterio</h5>
+                            <p class="card-text">Suspenso que acelera el pulso, investigaciones fascinantes y giros que
+                                te mantendrán despierto.</p>
+                            <a href="/genero/thriller" class="btn">
+                                <i class="bi bi-arrow-right me-2"></i>Resolver Misterios
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Romance -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card genre-card h-100 shadow-sm border-0">
+                <div class="col-lg-6 col-xl-3">
+                    <div class="card genre-card-epic h-100 scroll-reveal">
                         <img src="/FINAL/public/img/categoria3.jpg" class="card-img-top" alt="Romance">
                         <div class="card-body text-center">
-                            <div class="icon mb-2">💖</div>
-                            <h5 class="card-title text-purple">Romance</h5>
-                            <p class="card-text">Historias de amor, emociones intensas y conexiones inolvidables.</p>
-                            <a href="/genero/romance" class="btn btn-light btn-sm fw-bold">Ver más del género</a>
+                            <div class="icon-epic mb-3">💖</div>
+                            <h5 class="card-title">Romance</h5>
+                            <p class="card-text">Historias de amor que trascienden el tiempo, emociones intensas y
+                                conexiones que transforman vidas.</p>
+                            <a href="/genero/romance" class="btn">
+                                <i class="bi bi-arrow-right me-2"></i>Vivir el Amor
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Clásicos -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card genre-card h-100 shadow-sm border-0">
+                <div class="col-lg-6 col-xl-3">
+                    <div class="card genre-card-epic h-100 scroll-reveal">
                         <img src="/FINAL/public/img/categoria4.jpg" class="card-img-top" alt="Literatura Clásica">
                         <div class="card-body text-center">
-                            <div class="icon mb-2">📜</div>
-                            <h5 class="card-title text-purple">Literatura Clásica</h5>
-                            <p class="card-text">Obras atemporales que marcaron la historia de la literatura.</p>
-                            <a href="/genero/clasicos" class="btn btn-light btn-sm fw-bold">Ver más del género</a>
+                            <div class="icon-epic mb-3">📜</div>
+                            <h5 class="card-title">Literatura Clásica</h5>
+                            <p class="card-text">Obras inmortales que definieron épocas, sabiduría atemporal que sigue
+                                inspirando generaciones.</p>
+                            <a href="/genero/clasicos" class="btn">
+                                <i class="bi bi-arrow-right me-2"></i>Descubrir Clásicos
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -448,145 +538,290 @@
         </div>
     </section>
 
-    <!-- Foro / Noticia destacada -->
-    <section class="section bg-white">
+    <!-- Lanzamiento Exclusivo Épico -->
+    <section class="section-epic">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <img src="/FINAL/public/img/6.jpg" class="img-fluid rounded" alt="Foro">
-                </div>
-                <div class="col-md-6">
-                    <h1>LANZAMIENTO EXCLUSIVO: LA JOYA LITERARIA DEL AÑO</h1>
-                    <h1>Una memoria cruda y poética sobre viajes, identidad y los encuentros que nos marcan para siempre
-                    </h1>
-
-                    <p>En las paredes desconchadas de un hostel perdido en Marruecos, cada huésped esconde una historia.
-                        Esta es la crónica de Alina K., quien documentó 3 años de viajes en cuadernos manchados de té y
-                        polvo del desierto. Un libro que desarma el alma y rearma el significado de 'pertenecer</p>
-                    <button class="buy-now">Buy Now</button>
-                </div>
-
-
-            </div>
-        </div>
-        </div>
-    </section>
-
-    <!-- Nuestra Selección -->
-    <section class="section bg-purple-light" id="seleccion">
-        <div class="container">
-            <h2 class="text-center mb-5">🌟 Nuestra Selección</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top" alt="Libro destacado">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">"El Principito" (Edición Pop-Up)</h5>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple me-2">Intercambiar</a>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-dark">Comprar</a>
-                        </div>
-
+            <div class="exclusive-epic scroll-reveal">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <img src="/FINAL/public/img/6.jpg" class="img-fluid rounded-4 shadow-lg"
+                            alt="Lanzamiento Exclusivo">
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top" alt="Libro destacado">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">"Alice’s Adventures in Wonderland" (Ed. Taschen)</h5>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple me-2">Intercambiar</a>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-dark">Comprar</a>
+                    <div class="col-lg-6">
+                        <div class="badge bg-warning text-dark mb-3 px-4 py-2 fs-6">
+                            <i class="bi bi-star-fill me-2"></i>LANZAMIENTO EXCLUSIVO
                         </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/intercambia3.jpg" class="card-img-top" alt="Libro destacado">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">"The Raven" (Ed. Ilustrada por Édouard Manet)</h5>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple me-2">Intercambiar</a>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-dark">Comprar</a>
+                        <h1 class="display-5 fw-bold mb-4"
+                            style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            LA REVOLUCIÓN LITERARIA DEL AÑO</h1>
+                        <h2 class="h4 text-secondary mb-4">Una experiencia inmersiva que redefine el concepto de lectura
+                            y conexión humana</h2>
+                        <p class="lead text-muted mb-4">En los confines digitales de un mundo hiperconectado, una nueva
+                            forma de literatura emerge. Esta es la crónica de una generación que documentó sus
+                            experiencias en fragmentos de código y realidad virtual. Un libro que deconstruye la
+                            narrativa tradicional y reconstruye el futuro de contar historias.</p>
+                        <div class="d-flex gap-3">
+                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic btn-lg">
+                                <i class="bi bi-rocket-takeoff me-2"></i>Pre-ordenar ahora
+                            </a>
+                            <a href="#" class="btn btn-outline-futuristic btn-lg">
+                                <i class="bi bi-play-circle me-2"></i>Vista previa
+                            </a>
                         </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/intercambia4.jpg" class="card-img-top" alt="Libro destacado">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">"Moby Dick" (Ed. Rockwell Kent)</h5>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple me-2">Intercambiar</a>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-dark">Comprar</a>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/intercambia5.jpg" class="card-img-top" alt="Libro destacado">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">"The Hobbit" (Ed. Aniversario con ilustraciones de Tolkien</h5>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple me-2">Intercambiar</a>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-dark">Comprar</a>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/intercambia6.jpg" class="card-img-top" alt="Libro destacado">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">"Where the Wild Things Are" (Ed. Pop-Up de Robert Sabuda)</h5>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-purple me-2">Intercambiar</a>
-                            <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-dark">Comprar</a>
-                        </div>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-
     </section>
 
-    <section class="section bg-light py-5">
+    <!-- Nuestra Selección Épica -->
+    <section class="section-epic" id="seleccion">
         <div class="container">
-            <h2 class="text-center text-purple mb-4">🧠 Universo Stephen King</h2>
+            <h2 class="section-title-epic scroll-reveal">🌟 Colección Exclusiva</h2>
             <div class="row g-4">
 
-                <!-- Obra destacada -->
-                <div class="col-md-6">
-                    <div class="card h-100 shadow-sm">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/intercambia1.jpg" class="card-img-top" alt="El Principito">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">El Principito</h5>
+                            <p class="text-muted mb-3">Edición Pop-Up Limitada</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <span class="badge bg-success">Disponible</span>
+                                <span class="badge bg-info">Edición Especial</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Intercambiar
+                                </a>
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-futuristic">
+                                    <i class="bi bi-cart me-2"></i>Comprar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/intercambia2.jpg" class="card-img-top" alt="Alice's Adventures">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">Alice's Adventures in Wonderland</h5>
+                            <p class="text-muted mb-3">Edición Taschen de Lujo</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <span class="badge bg-warning text-dark">Premium</span>
+                                <span class="badge bg-danger">Limitado</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Intercambiar
+                                </a>
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-futuristic">
+                                    <i class="bi bi-cart me-2"></i>Comprar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/intercambia3.jpg" class="card-img-top" alt="The Raven">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">The Raven</h5>
+                            <p class="text-muted mb-3">Ilustrada por Édouard Manet</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <span class="badge bg-dark text-white">Clásico</span>
+                                <span class="badge bg-secondary">Arte</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Intercambiar
+                                </a>
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-futuristic">
+                                    <i class="bi bi-cart me-2"></i>Comprar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/intercambia4.jpg" class="card-img-top" alt="Moby Dick">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">Moby Dick</h5>
+                            <p class="text-muted mb-3">Edición Rockwell Kent</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <span class="badge bg-primary">Aventura</span>
+                                <span class="badge bg-success">Disponible</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Intercambiar
+                                </a>
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-futuristic">
+                                    <i class="bi bi-cart me-2"></i>Comprar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/intercambia5.jpg" class="card-img-top" alt="The Hobbit">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">The Hobbit</h5>
+                            <p class="text-muted mb-3">Edición Aniversario con ilustraciones de Tolkien</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <span class="badge bg-warning text-dark">Aniversario</span>
+                                <span class="badge bg-success">Ilustrado</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Intercambiar
+                                </a>
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-futuristic">
+                                    <i class="bi bi-cart me-2"></i>Comprar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-epic h-100 scroll-reveal">
+                        <img src="/FINAL/public/img/intercambia6.jpg" class="card-img-top"
+                            alt="Where the Wild Things Are">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">Where the Wild Things Are</h5>
+                            <p class="text-muted mb-3">Edición Pop-Up de Robert Sabuda</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <span class="badge bg-info">Infantil</span>
+                                <span class="badge bg-danger">Pop-Up</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-futuristic">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Intercambiar
+                                </a>
+                                <a href="index.php?c=UsuarioController&a=login" class="btn btn-outline-futuristic">
+                                    <i class="bi bi-cart me-2"></i>Comprar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Universo Stephen King Épico -->
+    <section class="section-epic" style="background: var(--gradient-dark); color: white;" id="comunidad">
+        <div class="container">
+            <h2 class="section-title-epic text-white scroll-reveal">🧠 Universo Stephen King</h2>
+            <div class="row g-5">
+
+                <!-- Obras destacadas -->
+                <div class="col-lg-6">
+                    <div class="card card-epic h-100 scroll-reveal"
+                        style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
                         <img src="/FINAL/public/img/seccionk2.jpg" class="card-img-top" alt="Obras de Stephen King">
                         <div class="card-body">
-                            <h5 class="card-title text-purple">Obras más importantes</h5>
-                            <ul class="list-unstyled">
-                                <li>📘 <strong>It</strong> – El terror de Derry y el payaso Pennywise</li>
-                                <li>🏨 <strong>El Resplandor</strong> – Horror psicológico en el Hotel Overlook</li>
-                                <li>🖋️ <strong>Misery</strong> – Obsesión y encierro con Annie Wilkes</li>
-                                <li>⚰️ <strong>Cementerio de animales</strong> – El precio de desafiar la muerte</li>
-                                <li>🕰️ <strong>22/11/63</strong> – Viaje en el tiempo para salvar a Kennedy</li>
-                                <li>🧙 <strong>La Torre Oscura</strong> – Saga épica que conecta todo su universo</li>
-                            </ul>
+                            <h5 class="card-title text-white fw-bold mb-4">
+                                <i class="bi bi-book-fill me-2"></i>Obras Maestras del Terror
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-3 rounded"
+                                        style="background: rgba(255, 255, 255, 0.1);">
+                                        <span class="fs-4 me-3">📘</span>
+                                        <div>
+                                            <strong class="text-white">It</strong>
+                                            <p class="text-light mb-0 small">El terror ancestral de Derry y Pennywise
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-3 rounded"
+                                        style="background: rgba(255, 255, 255, 0.1);">
+                                        <span class="fs-4 me-3">🏨</span>
+                                        <div>
+                                            <strong class="text-white">El Resplandor</strong>
+                                            <p class="text-light mb-0 small">Horror psicológico en el Hotel Overlook</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-3 rounded"
+                                        style="background: rgba(255, 255, 255, 0.1);">
+                                        <span class="fs-4 me-3">🖋️</span>
+                                        <div>
+                                            <strong class="text-white">Misery</strong>
+                                            <p class="text-light mb-0 small">Obsesión y encierro con Annie Wilkes</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-3 rounded"
+                                        style="background: rgba(255, 255, 255, 0.1);">
+                                        <span class="fs-4 me-3">🧙</span>
+                                        <div>
+                                            <strong class="text-white">La Torre Oscura</strong>
+                                            <p class="text-light mb-0 small">Saga épica que conecta todo su universo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Noticias recientes -->
-                <div class="col-md-6">
-                    <div class="card h-100 shadow-sm">
+                <div class="col-lg-6">
+                    <div class="card card-epic h-100 scroll-reveal"
+                        style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
                         <img src="/FINAL/public/img/seccionk1.jpg" class="card-img-top" alt="Noticias Stephen King">
                         <div class="card-body">
-                            <h5 class="card-title text-purple">📰 Noticias recientes</h5>
-                            <ul class="list-unstyled">
-                                <li>📖 Nueva novela: <em>No tengas miedo</em>, protagonizada por Holly Gibney</li>
-                                <li>🎬 Próxima película: <em>The Life of Chuck</em> con Tom Hiddleston</li>
-                                <li>📺 Serie precuela de <em>It</em>: <strong>Welcome to Derry</strong> en HBO Max</li>
-                                <li>📚 <em>The Talisman 3</em> casi listo para publicación</li>
-                                <li>🎧 Audiolibro narrado por King: <em>Hansel and Gretel</em></li>
-                            </ul>
+                            <h5 class="card-title text-white fw-bold mb-4">
+                                <i class="bi bi-lightning me-2"></i>Últimas Noticias
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="border-start border-4 border-primary ps-3 py-2">
+                                        <strong class="text-white d-block">📖 Nueva novela disponible</strong>
+                                        <p class="text-light mb-0 small">
+                                            <em>No tengas miedo</em>, protagonizada por Holly Gibney
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="border-start border-4 border-warning ps-3 py-2">
+                                        <strong class="text-white d-block">🎬 Próxima película</strong>
+                                        <p class="text-light mb-0 small">
+                                            <em>The Life of Chuck</em> con Tom Hiddleston
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="border-start border-4 border-success ps-3 py-2">
+                                        <strong class="text-white d-block">📺 Serie precuela de <em>It</em></strong>
+                                        <p class="text-light mb-0 small">
+                                            <strong>Welcome to Derry</strong> en HBO Max
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="border-start border-4 border-danger ps-3 py-2">
+                                        <strong class="text-white d-block">🎧 Audiolibro especial</strong>
+                                        <p class="text-light mb-0 small">
+                                            <em>Hansel and Gretel</em> narrado por King
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -595,138 +830,409 @@
         </div>
     </section>
 
-    <!-- Testimonios -->
-    <section class="bg-light py-5">
+    <!-- Testimonios Épicos -->
+    <section class="section-epic">
         <div class="container">
-            <h2 class="text-center fw-bold mb-4 text-purple">Testimonios de lectores</h2>
+            <h2 class="section-title-epic scroll-reveal">💬 Voces de Nuestra Comunidad</h2>
 
             <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
 
                     <!-- Testimonio 1 -->
                     <div class="carousel-item active">
-                        <div class="card mx-auto" style="max-width: 600px;">
+                        <div class="card card-epic mx-auto scroll-reveal" style="max-width: 800px;">
                             <div class="card-body text-center">
-                                <img src="/FINAL/public/img/client1.jpg" class="rounded-circle mb-3" width="80"
-                                    alt="Usuario 1">
-                                <h5 class="card-title fw-bold">María Gómez</h5>
-                                <p class="text-muted">"Encontré libros que llevaba años buscando. ¡La comunidad es
-                                    increíble!"</p>
-                                <div class="text-warning">★★★★★</div>
+                                <img src="/FINAL/public/img/client1.jpg" class="rounded-circle mb-4 shadow-lg"
+                                    width="120" alt="María Gómez">
+                                <h5 class="fw-bold"
+                                    style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                    María Gómez</h5>
+                                <p class="text-muted mb-3">Lectora apasionada • Barcelona</p>
+                                <blockquote class="blockquote">
+                                    <p class="fs-5 text-dark">"LibrosWap revolucionó mi experiencia lectora. He
+                                        descubierto autores increíbles y la comunidad es extraordinaria. El sistema de
+                                        intercambio es perfecto."</p>
+                                </blockquote>
+                                <div class="text-warning fs-4">★★★★★</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Testimonio 2 -->
                     <div class="carousel-item">
-                        <div class="card mx-auto" style="max-width: 600px;">
+                        <div class="card card-epic mx-auto scroll-reveal" style="max-width: 800px;">
                             <div class="card-body text-center">
-                                <img src="/FINAL/public/img/client2.jpg" class="rounded-circle mb-3" width="80"
-                                    alt="Usuario 2">
-                                <h5 class="card-title fw-bold">Carlos Ruiz</h5>
-                                <p class="text-muted">"Intercambié libros con personas de todo el país. ¡Muy
-                                    recomendado!"</p>
-                                <div class="text-warning">★★★★☆</div>
+                                <img src="/FINAL/public/img/client2.jpg" class="rounded-circle mb-4 shadow-lg"
+                                    width="120" alt="Carlos Ruiz">
+                                <h5 class="fw-bold"
+                                    style="background: var(--gradient-secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                    Carlos Ruiz</h5>
+                                <p class="text-muted mb-3">Profesor Universitario • Madrid</p>
+                                <blockquote class="blockquote">
+                                    <p class="fs-5 text-dark">"Como educador, valoro enormemente esta plataforma. Mis
+                                        estudiantes han encontrado recursos increíbles y el intercambio cultural es
+                                        invaluable."</p>
+                                </blockquote>
+                                <div class="text-warning fs-4">★★★★★</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Testimonio 3 -->
                     <div class="carousel-item">
-                        <div class="card mx-auto" style="max-width: 600px;">
+                        <div class="card card-epic mx-auto scroll-reveal" style="max-width: 800px;">
                             <div class="card-body text-center">
-                                <img src="/FINAL/public/img/client3.jpg" class="rounded-circle mb-3" width="80"
-                                    alt="Usuario 3">
-                                <h5 class="card-title fw-bold">Laura Méndez</h5>
-                                <p class="text-muted">"Me encanta cómo se ve la plataforma y lo fácil que es usarla."
-                                </p>
-                                <div class="text-warning">★★★★★</div>
+                                <img src="/FINAL/public/img/client3.jpg" class="rounded-circle mb-4 shadow-lg"
+                                    width="120" alt="Laura Méndez">
+                                <h5 class="fw-bold"
+                                    style="background: var(--gradient-tertiary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                    Laura Méndez</h5>
+                                <p class="text-muted mb-3">Estudiante de Literatura • Valencia</p>
+                                <blockquote class="blockquote">
+                                    <p class="fs-5 text-dark">"La interfaz es intuitiva y hermosa. He ahorrado tanto
+                                        dinero y conocido lectores con gustos similares. Es mi plataforma favorita."</p>
+                                </blockquote>
+                                <div class="text-warning fs-4">★★★★★</div>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Controles dentro del carrusel -->
+                <!-- Controles del carrusel -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
                     data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
+                    <div style="background: var(--gradient-primary); border-radius: 50%; padding: 15px;">
+                        <i class="bi bi-chevron-left text-white fs-4"></i>
+                    </div>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
                     data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
+                    <div style="background: var(--gradient-primary); border-radius: 50%; padding: 15px;">
+                        <i class="bi bi-chevron-right text-white fs-4"></i>
+                    </div>
                 </button>
+
+                <!-- Indicadores -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"
+                        style="background: var(--gradient-primary); border-radius: 50%; width: 15px; height: 15px;"></button>
+                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"
+                        style="background: var(--gradient-secondary); border-radius: 50%; width: 15px; height: 15px;"></button>
+                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"
+                        style="background: var(--gradient-tertiary); border-radius: 50%; width: 15px; height: 15px;"></button>
+                </div>
             </div>
         </div>
     </section>
-    <section class="section bg-white py-5">
+    <!-- Sección de Contacto -->
+    <section class="py-5" style="background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%); margin-top: 100px;"
+        id="contacto">
         <div class="container">
-            <h2 class="text-center text-purple mb-4">📝 Blogs y Noticias Literarias</h2>
-            <div class="row g-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card"
+                        style="border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold mb-3" style="color: #6a11cb;">📞 Contáctanos</h2>
+                                <p class="text-muted">¿Tienes preguntas, sugerencias o necesitas ayuda? Estamos aquí
+                                    para ti</p>
+                            </div>
 
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/noticia1.jpg" class="card-img-top" alt="Blog 1">
-                        <div class="card-body">
-                            <h6 class="card-title text-purple">¿Por qué leemos terror?</h6>
-                            <p class="card-text">Exploramos cómo el miedo puede ser terapéutico y por qué Stephen King
-                                sigue
-                                siendo el maestro del género.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
+                            <form method="POST" action="procesar_contacto.php">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" required
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label fw-semibold">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="asunto" class="form-label fw-semibold">Asunto</label>
+                                        <select class="form-select" id="asunto" name="asunto" required
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                                            <option value="">Selecciona un asunto</option>
+                                            <option value="soporte">Soporte Técnico</option>
+                                            <option value="sugerencia">Sugerencia</option>
+                                            <option value="problema">Reportar Problema</option>
+                                            <option value="cuenta">Problemas con mi cuenta</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="mensaje" class="form-label fw-semibold">Mensaje</label>
+                                        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required
+                                            placeholder="Cuéntanos en qué podemos ayudarte..."
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;"></textarea>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-lg px-5"
+                                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                                       border: none; color: white; border-radius: 25px; font-weight: 600;">
+                                            Enviar Mensaje
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/noticia2.jpg" class="card-img-top" alt="Blog 2">
-                        <div class="card-body">
-                            <h6 class="card-title text-purple">Libros que inspiran series</h6>
-                            <p class="card-text">De <em>La Torre Oscura</em> a <em>From</em>, cómo las novelas de King
-                                se
-                                transforman en éxitos televisivos.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="/FINAL/public/img/noticia3.jpg" class="card-img-top" alt="Blog 3">
-                        <div class="card-body">
-                            <h6 class="card-title text-purple">Recomendaciones para lectores nuevos</h6>
-                            <p class="card-text">¿Nunca has leído a Stephen King? Aquí te decimos por dónde empezar
-                                según tu
-                                estilo.</p>
-                            <a href="#" class="btn btn-outline-purple btn-sm">Leer más</a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p class="mb-1">📚 LibrosWap — Compartiendo conocimiento desde 2025</p>
-            <p class="mb-1">Diseñado con 💜 por Ángel </p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#" class="text-white text-decoration-none">Inicio</a>
-                <a href="#" class="text-white text-decoration-none">Libros</a>
-                <a href="#" class="text-white text-decoration-none">Blog</a>
-                <a href="#" class="text-white text-decoration-none">Contacto</a>
+
+<!-- Footer Épico Mejorado -->
+    <footer
+        style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 60px 0 30px; margin-top: 0;">
+        <div class="container">
+            <div class="row g-5">
+
+                <!-- Información Principal -->
+                <div class="col-lg-4">
+                    <div class="mb-4">
+                        <img src="public/img/logow.png" alt="LibrosWap" style="height: 60px;" class="mb-3">
+                        <h4 class="fw-bold">LibrosWap</h4>
+                        <p class="mb-3">Plataforma web para comprar, vender e intercambiar libros entre usuarios.
+                            Fomentamos la lectura, conectamos personas y promovemos el conocimiento compartido.</p>
+                    </div>
+
+                    <!-- Redes Sociales -->
+                    <div>
+                        <h6 class="fw-bold mb-3">Síguenos</h6>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-twitter"></i>
+                            </a>
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Enlaces Útiles -->
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Enlaces Útiles</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="inicio"
+                                        class="text-white text-decoration-none">Regresar al Inicio</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#productos"
+                                        class="text-white text-decoration-none">Revisar los productos</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#categorias"
+                                        class="text-white text-decoration-none">Generos a tu alcance</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#comunidad"
+                                        class="text-white text-decoration-none">Comunidad</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="index.php?c=EventoController&a=index"
+                                        class="text-white text-decoration-none">Foros</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#contacto" class="text-white text-decoration-none">Contacto</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="politicas/privacidad.pdf" target="_blank"
+                                        class="text-white text-decoration-none">Privacidad</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="politicas/terminos.pdf" target="_blank"
+                                        class="text-white text-decoration-none">Términos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contacto -->
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Contacto</h6>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-envelope me-2"></i>
+                            <a href="mailto:libroswapgroup@gmail.com" class="text-white text-decoration-none">
+                                libroswapgroup@gmail.com
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            <span>Colombia</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock me-2"></i>
+                            <span>Soporte 24/7</span>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px;">
+                        <h6 class="fw-bold mb-2">¿Necesitas ayuda?</h6>
+                        <p class="small mb-0">Nuestro equipo está listo para ayudarte con cualquier pregunta o problema
+                            que tengas.</p>
+                    </div>
+                </div>
             </div>
-            <p class="mt-3 small">© 2025 LibrosWap. Todos los derechos reservados.</p>
+
+            <!-- Separador -->
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+
+            <!-- Footer Bottom -->
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p class="mb-0">© 2025 LibrosWap. Todos los derechos reservados. | Diseñado con 💜 por el equipo
+                        LibrosWap</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex justify-content-md-end gap-3">
+                        <a href="politicas/privacidad.pdf" target="_blank"
+                            class="text-white text-decoration-none small">Privacidad</a>
+                        <a href="politicas/terminos.pdf" target="_blank"
+                            class="text-white text-decoration-none small">Términos</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js"
-        integrity="sha512-j12pXc2gXZL/JZw5Mhi6LC7lkiXL0e2h+9ZWpqhniz0DkDrO01VNlBrG3LkPBn6DgG2b8CDjzJT+lxfocsS1Vw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="../assets/js/script.js"></script>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables del carousel del hero
+        let currentSlideIndexEpic = 0;
+        const slidesEpic = document.querySelectorAll('.book-slide-epic');
+        const indicatorsEpic = document.querySelectorAll('.indicator-epic');
+        const totalSlidesEpic = slidesEpic.length;
+
+        // Funciones del carousel del hero
+        function updateSlidesEpic() {
+            slidesEpic.forEach((slide, index) => {
+                slide.className = 'book-slide-epic';
+
+                if (index === currentSlideIndexEpic) {
+                    slide.classList.add('active');
+                } else if (index === (currentSlideIndexEpic - 1 + totalSlidesEpic) % totalSlidesEpic) {
+                    slide.classList.add('prev');
+                } else if (index === (currentSlideIndexEpic + 1) % totalSlidesEpic) {
+                    slide.classList.add('next');
+                } else {
+                    slide.classList.add('hidden');
+                }
+            });
+
+            indicatorsEpic.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlideIndexEpic);
+            });
+        }
+
+        function nextSlideEpic() {
+            currentSlideIndexEpic = (currentSlideIndexEpic + 1) % totalSlidesEpic;
+            updateSlidesEpic();
+        }
+
+        function previousSlideEpic() {
+            currentSlideIndexEpic = (currentSlideIndexEpic - 1 + totalSlidesEpic) % totalSlidesEpic;
+            updateSlidesEpic();
+        }
+
+        function currentSlideEpic(index) {
+            currentSlideIndexEpic = index;
+            updateSlidesEpic();
+        }
+
+        // Auto-play del carousel del hero
+        setInterval(nextSlideEpic, 5000);
+
+        // Interacción con clicks en las slides
+        slidesEpic.forEach((slide, index) => {
+            slide.addEventListener('click', () => {
+                if (index !== currentSlideIndexEpic) {
+                    currentSlideIndexEpic = index;
+                    updateSlidesEpic();
+                }
+            });
+        });
+
+        // Inicializar carousel del hero
+        updateSlidesEpic();
+
+        // Efecto de scroll para navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('mainNavbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animaciones de scroll reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos los elementos con la clase scroll-reveal
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Efecto de paralaje suave en el hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const background = document.querySelector('.hero-background');
+            if (background) {
+                const rate = scrolled * -0.2;
+                background.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Smooth scrolling para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

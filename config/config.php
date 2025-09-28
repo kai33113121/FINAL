@@ -1,5 +1,5 @@
 <?php
-const HOST = "localhost";
+const HOST = "";
 const USER = "root";
 const PASS = "";
 const DB = "final"; // nombre exacto de tu base de datos

@@ -7,11 +7,36 @@ use PHPMailer\PHPMailer\Exception;
 
 class UsuarioController
 {
+    // Mostrar notificaciones del usuario
+    public function notificaciones()
+    {
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
+        require_once __DIR__ . '/../models/Notificacion.php';
+        $notificacion = new Notificacion();
+        $usuario_id = $_SESSION['usuario']['id'];
+        // Marcar todas como leídas al abrir la vista
+        $notificaciones = $notificacion->obtenerPorUsuario($usuario_id);
+        // Si viene ?noti= en la URL, marcar como leída
+        if (isset($_GET['noti'])) {
+            $noti_id = intval($_GET['noti']);
+            if ($noti_id > 0) {
+                $notificacion->marcarComoLeida($noti_id, $usuario_id);
+                // Refrescar lista para reflejar el cambio
+                $notificaciones = $notificacion->obtenerPorUsuario($usuario_id);
+            }
+        }
+        $contenido = __DIR__ . '/../views/usuario/notificaciones.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
     public function landing()
     {
         include __DIR__ . '/../views/auth/landing.php';
     }
     public function register()
+
     {
         $mensaje = null;
 
@@ -23,7 +48,12 @@ class UsuarioController
             if ($exito) {
                 $mensaje = "✅ Usuario registrado correctamente.";
             } else {
-                $mensaje = "❌ Error al registrar usuario: " . $usuario->getError();
+                $error = $usuario->getError();
+                if (strpos($error, 'correo ya está en uso') !== false || strpos($error, 'correo ya está en uso') !== false) {
+                    $mensaje = "❌ El correo ya está en uso, por favor verifique o inicie sesión.";
+                } else {
+                    $mensaje = "❌ Error al registrar usuario: " . $error;
+                }
             }
         }
 
@@ -51,9 +81,9 @@ class UsuarioController
             } else {
                 $mensaje = "❌ Credenciales incorrectas.";
             }
-        }
 
-        include __DIR__ . '/../views/auth/login.php';
+        }
+        include_once __DIR__ . '/../views/auth/login.php';
     }
     public function dashboard()
     {
@@ -64,16 +94,41 @@ class UsuarioController
 
         require_once __DIR__ . '/../models/Resena.php';
         $resena = new Resena();
-
         $idUsuario = $_SESSION['usuario']['id'];
         $mis_reseñas = $resena->obtenerPorUsuario($idUsuario);
 
-        // 🔔 Cargar notificaciones
-        require_once __DIR__ . '/../models/Notificacion.php';
-        $notificacion = new Notificacion();
-        $notificaciones = $notificacion->obtenerPorUsuario($_SESSION['usuario']['id']);
+        // Obtener libros de la tabla libros
+        require_once __DIR__ . '/../models/Libro.php';
+        $libroModel = new Libro();
+        $libros = $libroModel->obtenerTodos();
 
-        // 📦 Pasar datos a la vista
+        // Si quieres mostrar libros en venta también:
+        require_once __DIR__ . '/../models/Venta.php';
+        $ventaModel = new Venta();
+        $libros_venta = $ventaModel->obtenerTodos();
+
+        // Actividad reciente: libros subidos, intercambios, compras (últimos 5 de cada uno)
+        require_once __DIR__ . '/../models/Intercambio.php';
+        $intercambioModel = new Intercambio();
+        $intercambios_recientes = $intercambioModel->obtenerTodosDetallado();
+        $intercambios_recientes = array_slice($intercambios_recientes, 0, 5);
+
+        require_once __DIR__ . '/../models/Compra.php';
+        $compraModel = new Compra();
+        $compras_recientes = $compraModel->obtenerConDetalles();
+        $compras_recientes = array_slice($compras_recientes, 0, 5);
+
+        // Libros subidos recientemente (últimos 5)
+        $libros_recientes = $libroModel->obtenerTodosConUsuario();
+        usort($libros_recientes, function($a, $b) {
+            return strtotime($b['fecha_subida'] ?? $b['fecha'] ?? '1970-01-01') - strtotime($a['fecha_subida'] ?? $a['fecha'] ?? '1970-01-01');
+        });
+        $libros_recientes = array_slice($libros_recientes, 0, 5);
+
+        // Notificaciones (usar helper para mantener consistencia de campos)
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($idUsuario);
+
         $contenido = __DIR__ . '/../views/usuario/dashboard.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
@@ -108,30 +163,37 @@ class UsuarioController
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'angelvanegas944@gmail.com';
-                $mail->Password = 'icae zsuz fdws svoq'; // Usa contraseña de aplicación si es Gmail
+                $mail->Username = 'libroswapgroup@gmail.com';
+                $mail->Password = 'abrc kttg dzrx rnhr'; // Usa contraseña de aplicación si es Gmail
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
+                $mail->CharSet = 'UTF-8';
 
-                $mail->setFrom('tu_correo@gmail.com', 'LibrosWap');
+                $mail->setFrom('libroswapgroup@gmail.com', 'LibrosWap');
                 $mail->addAddress($email, $datos['nombre']);
 
                 $mail->isHTML(true);
                 $mail->Subject = $asunto;
                 $mail->Body = "
-            <div style='font-family:sans-serif;padding:20px;background:#f3f3f3;border-radius:10px;'>
+                <div style='font-family:sans-serif;padding:20px;background:#f3f3f3;border-radius:10px;'>
                 <h2 style='color:#6a1b9a;'>Hola {$datos['nombre']},</h2>
                 <p>Haz clic en el siguiente botón para recuperar tu contraseña:</p>
                 <a href='$link' style='display:inline-block;padding:10px 20px;background:#6a1b9a;color:white;text-decoration:none;border-radius:5px;'>Recuperar contraseña</a>
                 <p style='margin-top:20px;font-size:12px;color:#555;'>Si no solicitaste esto, puedes ignorar este mensaje.</p>
-            </div>
-        ";
+                </div>";
 
                 $mail->send();
-                echo "✅ Enlace de recuperación enviado a tu correo.";
+                header("Location: index.php?c=UsuarioController&a=forgotPassword&status=ok");
+                exit;
             } catch (Exception $e) {
-                echo "❌ Error al enviar el correo: {$mail->ErrorInfo}";
+                $msg = urlencode($mail->ErrorInfo);
+                header("Location: index.php?c=UsuarioController&a=forgotPassword&status=error&msg=$msg");
+                exit;
             }
+        } else {
+            $msg = urlencode('No se encontró el correo.');
+            header("Location: index.php?c=UsuarioController&a=forgotPassword&status=error&msg=$msg");
+            exit;
         }
     }
 
@@ -236,52 +298,78 @@ class UsuarioController
     }
     public function biblioteca()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Libro.php';
         $libro = new Libro();
         $misLibros = $libro->obtenerPorUsuario($_SESSION['usuario']['id']);
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
         $contenido = __DIR__ . '/../views/usuario/biblioteca.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
     public function perfil()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Usuario.php';
         $usuarioModel = new Usuario();
         $usuario = $usuarioModel->obtenerPorId($_SESSION['usuario']['id']);
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
         $contenido = __DIR__ . '/../views/usuario/perfil.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
 
     public function actualizarPerfil()
-    {
-        require_once __DIR__ . '/../models/Usuario.php';
-        $usuarioModel = new Usuario();
+{
+    require_once __DIR__ . '/../models/Usuario.php';
+    $usuarioModel = new Usuario();
 
-        $id = $_SESSION['usuario']['id'];
-        $nombre = $_POST['nombre'];
-        $email = $_POST['email'];
-        $bio = $_POST['bio'] ?? '';
-        $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
+    $id = $_SESSION['usuario']['id'];
+    $nombre = $_POST['nombre'];
+    $email = $_POST['email'];
+    $bio = $_POST['bio'] ?? '';
+    
+    // Nuevos campos agregados
+    $direccion = $_POST['direccion'] ?? '';
+    $genero_preferido = $_POST['genero_preferido'] ?? '';
+    $libro_favorito = $_POST['libro_favorito'] ?? '';
+    
+    $foto = $_SESSION['usuario']['foto'] ?? 'default.jpg';
 
-        if (!empty($_FILES['foto']['name'])) {
-            $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
-            $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
-            if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
-                $foto = $nombreArchivo;
-            }
+    if (!empty($_FILES['foto']['name'])) {
+        $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']);
+        $rutaDestino = __DIR__ . '/../public/img/usuarios/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino)) {
+            $foto = $nombreArchivo;
         }
-
-        $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto);
-
-        // Actualizar sesión
-        $_SESSION['usuario']['nombre'] = $nombre;
-        $_SESSION['usuario']['email'] = $email;
-        $_SESSION['usuario']['bio'] = $bio;
-        $_SESSION['usuario']['foto'] = $foto;
-
-        header("Location: index.php?c=UsuarioController&a=perfil");
     }
+
+    // Llamar al modelo con los nuevos parámetros
+    $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito);
+
+    // Actualizar sesión con todos los campos
+    $_SESSION['usuario']['nombre'] = $nombre;
+    $_SESSION['usuario']['email'] = $email;
+    $_SESSION['usuario']['bio'] = $bio;
+    $_SESSION['usuario']['foto'] = $foto;
+    $_SESSION['usuario']['direccion'] = $direccion;
+    $_SESSION['usuario']['genero_preferido'] = $genero_preferido;
+    $_SESSION['usuario']['libro_favorito'] = $libro_favorito;
+
+    header("Location: index.php?c=UsuarioController&a=perfil");
+}
+
+    
     public function obtenerPorId($id)
     {
         $conn = conectar();
@@ -293,9 +381,16 @@ class UsuarioController
     }
     public function configuracion()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Usuario.php';
         $usuarioModel = new Usuario();
         $config = $usuarioModel->obtenerConfiguracion($_SESSION['usuario']['id']);
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
         $contenido = __DIR__ . '/../views/usuario/configuracion.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
@@ -303,6 +398,10 @@ class UsuarioController
 
     public function guardarConfiguracion()
     {
+        if (!isset($_SESSION['usuario']['id'])) {
+            header("Location: index.php?c=UsuarioController&a=login");
+            exit;
+        }
         require_once __DIR__ . '/../models/Usuario.php';
         $usuarioModel = new Usuario();
 
@@ -310,11 +409,12 @@ class UsuarioController
         $tema = $_POST['tema'] ?? 'claro';
         $color = $_POST['color_acento'] ?? 'morado';
         $vista = $_POST['vista_libros'] ?? 'grid';
-        $notificaciones = isset($_POST['notificaciones']) ? 1 : 0;
+        $notificaciones_activas = isset($_POST['notificaciones']) ? 1 : 0; // <-- cambio de nombre
 
-        $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones);
+        $usuarioModel->guardarConfiguracion($id, $tema, $color, $vista, $notificaciones_activas);
 
         header("Location: index.php?c=UsuarioController&a=configuracion");
+        exit;
     }
 
 }

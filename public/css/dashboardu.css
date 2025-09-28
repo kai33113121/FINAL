@@ -107,3 +107,7 @@ img[alt="Decoración triangular"] {
 img[alt="Decoración triangular"]:hover {
     transform: rotate(15deg) scale(1.1);
 }
+
+.dashboard-hero {
+    overflow: visible;
+}

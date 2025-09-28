@@ -7,11 +7,14 @@ class EventoController
     // 🧑‍💼 Vista para que el admin cree un evento
     public function crear()
     {
+        $evento = new Evento();
+        $eventos = $evento->obtenerActivos();
+
         $contenido = __DIR__ . '/../views/admin/crear_evento.php';
         include __DIR__ . '/../views/layouts/layout_admin.php';
     }
 
-    // 🧑‍💼 Guardar evento creado por el admin
+    //  Guardar evento creado por el admin
     public function guardar()
     {
         $evento = new Evento();
@@ -24,7 +27,7 @@ class EventoController
             $evento->crear($titulo, $descripcion, $creado_por);
         }
 
-        // Obtener todos los foros activos para mostrarlos debajo del formulario
+        // Obtener todos los eventos activos para mostrarlos debajo del formulario
         $eventos = $evento->obtenerActivos();
 
         $contenido = __DIR__ . '/../views/admin/crear_evento.php';
@@ -36,6 +39,13 @@ class EventoController
     {
         $evento = new Evento();
         $eventos = $evento->obtenerActivos();
+
+        // Notificaciones para el usuario
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = [];
+        if (isset($_SESSION['usuario']['id'])) {
+            $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
+        }
 
         $contenido = __DIR__ . '/../views/usuario/lista_eventos.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
@@ -56,6 +66,13 @@ class EventoController
         $datosEvento = $evento->obtenerPorId($id);
         $comentarios = $comentario->obtenerPorEvento($id);
 
+        // Notificaciones para el usuario
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $notificaciones = [];
+        if (isset($_SESSION['usuario']['id'])) {
+            $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
+        }
+
         $contenido = __DIR__ . '/../views/usuario/evento_detalle.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
@@ -73,7 +90,9 @@ class EventoController
         }
 
         header("Location: index.php?c=EventoController&a=ver&id=" . $_POST['id_evento']);
+        exit;
     }
+
     public function editar()
     {
         $id = $_GET['id'] ?? null;
@@ -83,34 +102,35 @@ class EventoController
         $contenido = __DIR__ . '/../views/admin/editar_evento.php';
         include __DIR__ . '/../views/layouts/layout_admin.php';
     }
-    // 📝 Actualizar foro
-public function actualizar()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id = $_POST['id'];
-        $titulo = $_POST['titulo'];
-        $descripcion = $_POST['descripcion'];
 
-        $evento = new Evento();
-        $evento->actualizar($id, $titulo, $descripcion);
+    // 📝 Actualizar foro
+    public function actualizar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $titulo = $_POST['titulo'];
+            $descripcion = $_POST['descripcion'];
+
+            $evento = new Evento();
+            $evento->actualizar($id, $titulo, $descripcion);
+        }
+
+        // Volver al panel de creación
+        $eventos = (new Evento())->obtenerActivos();
+        $contenido = __DIR__ . '/../views/admin/crear_evento.php';
+        include __DIR__ . '/../views/layouts/layout_admin.php';
     }
 
-    // Volver al panel de creación
-    $eventos = (new Evento())->obtenerActivos();
-    $contenido = __DIR__ . '/../views/admin/crear_evento.php';
-    include __DIR__ . '/../views/layouts/layout_admin.php';
-}
+    // 🗑️ Eliminar foro
+    public function eliminar()
+    {
+        $id = $_GET['id'] ?? null;
+        $evento = new Evento();
+        $evento->eliminar($id);
 
-// 🗑️ Eliminar foro
-public function eliminar()
-{
-    $id = $_GET['id'] ?? null;
-    $evento = new Evento();
-    $evento->eliminar($id);
-
-    // Volver al panel de creación
-    $eventos = $evento->obtenerActivos();
-    $contenido = __DIR__ . '/../views/admin/crear_evento.php';
-    include __DIR__ . '/../views/layouts/layout_admin.php';
-}
+        // Volver al panel de creación
+        $eventos = $evento->obtenerActivos();
+        $contenido = __DIR__ . '/../views/admin/crear_evento.php';
+        include __DIR__ . '/../views/layouts/layout_admin.php';
+    }
 }
