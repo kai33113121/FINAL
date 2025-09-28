@@ -1,0 +1,110 @@
+
+    :root {
+        --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --purple: #6a11cb;
+    }
+
+    .card-epic {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .card-epic:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(106, 17, 203, 0.15);
+    }
+
+    .btn-custom-purple {
+        background: var(--gradient-primary);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-custom-purple::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--gradient-secondary);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .btn-custom-purple:hover::before {
+        opacity: 1;
+    }
+
+    .btn-custom-purple:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
+        color: white;
+    }
+
+    .btn-custom-purple * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 15px;
+        border: 2px solid #e9ecef;
+        padding: 12px 20px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--purple);
+        box-shadow: 0 0 0 0.2rem rgba(106, 17, 203, 0.25);
+        background: white;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--purple);
+        margin-bottom: 8px;
+    }
+
+    .profile-image-preview {
+        border-radius: 15px;
+        border: 3px solid white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .profile-image-preview:hover {
+        transform: scale(1.05);
+    }
+
+    .optional-badge {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #8b4513;
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+        margin-left: 8px;
+    }
+
+    .section-title-epic {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
