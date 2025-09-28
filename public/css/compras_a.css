@@ -1,0 +1,140 @@
+ 
+        body {
+            background-image:
+                linear-gradient(135deg, rgba(87, 87, 87, 0.65) 0%, rgba(120, 107, 132, 0.85) 100%),
+                url('/public/img/sideadmin.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .bg-overlay {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .purchases-container {
+            padding: 2rem 0;
+        }
+
+        .purchases-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .purchases-header {
+            background: linear-gradient(135deg, #2f012eff 0%, #a29bfe 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .purchases-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .table-custom {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .table-purple {
+            background: linear-gradient(135deg, #2f012eff 0%, #4e0661ff 100%) !important;
+            color: white !important;
+        }
+
+        .table-purple th {
+            color: black !important;
+            border: none !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+        }
+
+        .table-hover tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table-hover tbody tr:hover {
+            background: rgba(78, 6, 97, 0.05) !important;
+            transform: translateY(-1px);
+        }
+
+        .badge-custom {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .badge-completado {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+        }
+
+        .badge-pendiente {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: white;
+        }
+
+        .badge-cancelado {
+            background: linear-gradient(135deg, #d63031, #e84393);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .purchase-id {
+            background: linear-gradient(135deg, #4e0661ff 0%, #2f012eff 100%);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2f012eff;
+        }
+
+        .book-title {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .purchase-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .purchases-container {
+                padding: 1rem 0;
+            }
+
+            .purchases-header {
+                padding: 1.5rem;
+            }
+        }
+    

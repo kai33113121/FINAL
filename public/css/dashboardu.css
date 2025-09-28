@@ -1,113 +1,300 @@
-.text-shadow {
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
-}
 
-.btn-purple {
-    background-color: #6a11cb;
-    color: white;
-    border: none;
-    transition: all 0.3s ease;
-}
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-tertiary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            --purple: #6a11cb;
+            --purple-light: #f8f4ff;
+        }
 
-.btn-purple:hover {
-    background-color: #5011a1;
-    transform: scale(1.05);
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
 
-.card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        .hero-epic {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            overflow: hidden;
+        }
 
-.card-hover:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            background-image: url('/public/img/adminside.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+            background-size: cover;
+            animation: float 20s ease-in-out infinite;
+        }
 
-.text-purple {
-    color: #6a1b9a;
-}
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
 
-.bg-purple-light {
-    background-color: #f3e5f5;
-}
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: white;
+        }
 
-.text-shadow {
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-}
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+        }
 
-.text-purple {
-    color: #6a1b9a;
-}
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+        }
 
-.text-shadow {
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-}
+        .btn-hero-epic {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
 
-.btn-purple {
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    transition: all 0.3s ease;
-}
+        .btn-hero-epic:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
 
-.btn-purple:hover {
-    background-color: #4a148c;
-    transform: scale(1.05);
-}
+        .collage-img {
+            position: absolute;
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0.6;
+            animation: float 10s ease-in-out infinite;
+        }
 
-.collage-container {
-    pointer-events: none;
-    z-index: 1;
-}
+        .collage-img:nth-child(even) {
+            animation-delay: -5s;
+        }
 
-.collage-img {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    opacity: 0.8;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-}
+        @keyframes float {
 
-.collage-img:hover {
-    transform: scale(1.1);
-}
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
 
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
 
-    50% {
-        transform: translateY(-10px);
-    }
+        .card-epic {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
 
-    100% {
-        transform: translateY(0px);
-    }
-}
+        .card-epic:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
 
-.collage-img {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    opacity: 0.8;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    animation: float 6s ease-in-out infinite;
-}
+        .card-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-img[alt="Decoración triangular"] {
-    transition: transform 0.5s ease;
-}
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
 
-img[alt="Decoración triangular"]:hover {
-    transform: rotate(15deg) scale(1.1);
-}
+        .card-hover:hover::before {
+            opacity: 0.1;
+        }
 
-.dashboard-hero {
-    overflow: visible;
-}
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(106, 17, 203, 0.2);
+        }
+
+        .btn-futuristic {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-futuristic::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-secondary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-futuristic:hover::before {
+            opacity: 1;
+        }
+
+        .btn-futuristic:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
+            color: white;
+        }
+
+        .btn-futuristic * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-epic {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title-epic {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-purple {
+            color: var(--purple) !important;
+        }
+
+        .text-shadow {
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-gradient-light-purple {
+            background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%);
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quick-access-card {
+            transition: all 0.4s ease;
+            border: none;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
+        }
+
+        .quick-access-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(106, 17, 203, 0.15);
+            background: linear-gradient(145deg, #fff, #f8f4ff);
+        }
+
+        .quick-access-card i {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .quick-access-card:hover i {
+            transform: scale(1.1);
+        }
+
+        .cube-card {
+            transition: all 0.4s ease;
+            border: none;
+        }
+
+        .cube-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 40px rgba(106, 17, 203, 0.2);
+        }
+
+        .book-card {
+            transition: all 0.4s ease;
+            border: none;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        }
+
+        .book-card:hover {
+            transform: translateY(-15px) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-epic {
+            background: var(--gradient-dark);
+            padding: 60px 0 30px;
+        }
+
+        .hover-link {
+            transition: all 0.3s ease;
+        }
+
+        .hover-link:hover {
+            color: #f093fb !important;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title-epic {
+                font-size: 2rem;
+            }
+
+            .cube-card {
+                flex-direction: column !important;
+                text-align: center;
+            }
+        }
