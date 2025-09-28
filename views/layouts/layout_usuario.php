@@ -665,11 +665,9 @@
                     });
                 });
             }
-
             // Debug para verificar que los dropdowns están funcionando
             console.log('Bootstrap dropdowns inicializados:', dropdownList.length);
         });
-
         // Manejo de errores global para dropdowns
         window.addEventListener('error', function (e) {
             if (e.message.includes('dropdown') || e.message.includes('Bootstrap')) {
