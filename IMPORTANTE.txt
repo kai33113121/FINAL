@@ -1,0 +1,430 @@
+⚠️ IMPORTANTE - Configuración del Módulo de Pagos
+🚨 Módulo de Compras No Funcional
+El módulo de compras/pagos actualmente NO está cargando debido a restricciones de seguridad de GitHub. Los archivos relacionados con Stripe están vacíos por las siguientes razones:
+
+Tokens de acceso privados: GitHub no permite subir código que contenga API keys o tokens privados
+Información sensible: Las credenciales de Stripe deben mantenerse seguras y no ser expuestas públicamente
+Buenas prácticas de seguridad: Los datos de configuración sensibles deben manejarse por variables de entorno
+
+📋 Archivos Afectados
+Los siguientes archivos están vacíos y necesitan ser configurados localmente:
+
+views/usuario/pago_stripe.php
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagar con Stripe - LibrosWap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="public/css/pago_stripe.css">
+</head>
+<body>
+    <div class="payment-container">
+        <div class="container">
+            <div class="hero-payment">
+                <div class="text-center">
+                    <h1 class="fw-bold mb-3">Finalizar Compra</h1>
+                    <p class="lead mb-0">Pago seguro y confiable con Stripe</p>
+                </div>
+            </div>
+            <div class="progress-steps">
+                <div class="step">
+                    <div class="step-circle step-completed">
+                        <i class="bi bi-check"></i>
+                    </div>
+                    <span>Carrito</span>
+                </div>
+                <div style="width: 50px; height: 2px; background: #28a745;"></div>
+                <div class="step">
+                    <div class="step-circle step-active pulse">
+                        <i class="bi bi-credit-card"></i>
+                    </div>
+                    <span>Pago</span>
+                </div>
+                <div style="width: 50px; height: 2px; background: #dee2e6;"></div>
+                <div class="step">
+                    <div class="step-circle step-pending">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <span>Confirmación</span>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-number">
+                        <?php 
+                        $total_items = 0;
+                        if (isset($_SESSION['carrito'])) {
+                            foreach ($_SESSION['carrito'] as $item) {
+                                $total_items += $item['cantidad'] ?? 1;
+                            }
+                        }
+                        echo $total_items;
+                        ?>
+                    </div>
+                    <div>Artículos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div>Seguridad</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div>Soporte</div>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card-epic">
+                        <div class="card-body p-4">
+                            <h4 class="fw-bold text-purple mb-4">
+                                <i class="bi bi-receipt me-2"></i>
+                                Resumen de tu pedido
+                            </h4>
+                            <div class="item-summary">
+                                <?php if (isset($_SESSION['carrito'])): 
+                                    $total = 0;
+                                    foreach ($_SESSION['carrito'] as $item): 
+                                        $total += ($item['precio'] ?? 1) * ($item['cantidad'] ?? 1);
+                                ?>
+                                    <div class="item-row">
+                                        <div class="flex-grow-1">
+                                            <div class="fw-semibold"><?= htmlspecialchars($item['nombre'] ?? 'Producto') ?></div>
+                                            <small class="text-muted">Cantidad: <?= $item['cantidad'] ?? 1 ?></small>
+                                        </div>
+                                        <div class="text-end">
+                                            <span class="fw-bold">$<?= number_format($item['precio'] ?? 1, 2) ?></span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="item-row">
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-0">Total a pagar</h5>
+                                    </div>
+                                    <div class="text-end">
+                                        <h4 class="mb-0 text-success">$<?= number_format($total, 2) ?></h4>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="mt-4">
+                                <h6 class="fw-bold text-purple mb-3">Incluido en tu compra:</h6>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-truck text-success me-2"></i>
+                                            <small>Envío gratuito</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-shield-check text-primary me-2"></i>
+                                            <small>Compra protegida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-arrow-clockwise text-info me-2"></i>
+                                            <small>30 días devolución</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-headset text-warning me-2"></i>
+                                            <small>Soporte 24/7</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-epic">
+                        <div class="card-body p-4">
+                            <div class="stripe-logo-container">
+                                <svg class="stripe-logo" viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="#635bff" d="M59.5 3.7h-3.1v17.8h3.1V3.7zm-7.7 12.3c0-1.6-1-2.6-2.8-2.6-1.2 0-2.1.4-2.7 1.2l-1.3-1.5c.9-1.1 2.3-1.8 4.2-1.8 2.8 0 4.8 1.7 4.8 4.6v6.6h-2.7v-1.2c-.7.9-1.8 1.4-3.2 1.4-1.9 0-3.4-1.1-3.4-2.9 0-1.9 1.5-2.9 3.4-2.9 1.3 0 2.4.4 3.2 1.1v-.8c0-.9-.6-1.5-1.8-1.5-1 0-1.7.3-2.3.8l-.9-1.6c.8-.7 2-1.1 3.5-1.1zm-.5 4.1c-.6-.5-1.4-.8-2.2-.8-1 0-1.6.5-1.6 1.2 0 .8.6 1.3 1.6 1.3.8 0 1.6-.3 2.2-.8v-.9zm-11.1-4.5h-2.3l-2.5 6.5-2.5-6.5h-2.5l3.7 8.9h2.2l3.9-8.9zm-11.1 0h-2.6v8.9h2.6v-8.9zm-1.3-3.1c-.9 0-1.5.6-1.5 1.4s.6 1.4 1.5 1.4 1.5-.6 1.5-1.4-.6-1.4-1.5-1.4zm-6.2 6.2c-1.3 0-2.2.9-2.2 2.3s.9 2.3 2.2 2.3c.7 0 1.3-.3 1.7-.8l1.4 1.4c-.7.8-1.7 1.3-3.1 1.3-2.3 0-4.1-1.8-4.1-4.2s1.8-4.2 4.1-4.2c1.4 0 2.4.5 3.1 1.3l-1.4 1.4c-.4-.5-1-.8-1.7-.8zm-9.7-3.1h-2.6v3.1h-1.6v1.8h1.6v4.5c0 1.8 1.1 2.8 2.8 2.8.6 0 1.2-.1 1.6-.3l-.4-1.7c-.3.1-.6.2-.9.2-.6 0-.9-.4-.9-1v-4.5h1.6v-1.8h-1.6V9.6h.4zm-8.5 6.2c-1.5 0-2.7 1.2-2.7 2.7 0 1.5 1.2 2.7 2.7 2.7s2.7-1.2 2.7-2.7c0-1.5-1.2-2.7-2.7-2.7zm0 4.2c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm-7.8-8.9c-2.3 0-4.1 1.8-4.1 4.2s1.8 4.2 4.1 4.2c1.4 0 2.4-.5 3.1-1.3l-1.4-1.4c-.4.5-1 .8-1.7.8-1.3 0-2.2-.9-2.2-2.3s.9-2.3 2.2-2.3c.7 0 1.3.3 1.7.8l1.4-1.4c-.7-.8-1.7-1.3-3.1-1.3z"/>
+                                    <path fill="#00d4aa" d="M24.1 21.9c-.2.1-.5.2-.8.3-.6.2-1.3.3-2 .3-2.1 0-3.7-1.6-3.7-3.7 0-2.1 1.6-3.7 3.7-3.7.7 0 1.4.1 2 .3.3.1.6.2.8.3l-.3 1.5c-.3-.2-.7-.3-1.1-.4-.4-.1-.8-.1-1.2-.1-1.3 0-2.3 1-2.3 2.3s1 2.3 2.3 2.3c.4 0 .8 0 1.2-.1.4-.1.8-.2 1.1-.4l.3 1.5z"/>
+                                </svg>
+                            </div>
+                            <h4 class="fw-bold text-center text-purple mb-3">Método de Pago</h4>
+                            <p class="text-center text-muted mb-4">Pago rápido y seguro con Stripe</p>
+                            <div class="stripe-features">
+                                <h6 class="fw-bold mb-3">Por qué elegir Stripe:</h6>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-lightning-charge"></i>
+                                    </div>
+                                    <span>Procesamiento instantáneo</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-shield-check"></i>
+                                    </div>
+                                    <span>Máxima seguridad PCI DSS</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-globe"></i>
+                                    </div>
+                                    <span>Aceptado mundialmente</span>
+                                </div>
+                            </div>
+                            <div class="payment-methods">
+                                <div class="payment-method">
+                                    <i class="bi bi-credit-card fs-2 text-primary mb-2"></i>
+                                    <div class="small">Visa</div>
+                                </div>
+                                <div class="payment-method">
+                                    <i class="bi bi-credit-card-2-front fs-2 text-danger mb-2"></i>
+                                    <div class="small">Mastercard</div>
+                                </div>
+                                <div class="payment-method">
+                                    <i class="bi bi-credit-card-2-back fs-2 text-info mb-2"></i>
+                                    <div class="small">Amex</div>
+                                </div>
+                                <div class="payment-method">
+                                    <i class="bi bi-paypal fs-2 text-primary mb-2"></i>
+                                    <div class="small">PayPal</div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button id="checkout-button" class="btn-stripe">
+                                    <i class="bi bi-lock-fill me-2"></i>
+                                    Pagar con Stripe
+                                </button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-shield-fill me-1"></i>
+                                    Transacción 100% segura y encriptada
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-6">
+                            <div class="security-card">
+                                <i class="bi bi-lock-fill text-success fs-2 mb-2"></i>
+                                <h6 class="fw-bold">Compra Segura</h6>
+                                <small class="text-muted">SSL Certificado</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="security-card">
+                                <i class="bi bi-award-fill text-primary fs-2 mb-2"></i>
+                                <h6 class="fw-bold">Garantía</h6>
+                                <small class="text-muted">Reembolso total</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="/index.php?c=CarritoController&a=ver" class="btn-back">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver al carrito
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        var stripe = Stripe('pk_test_TU_CLAVE_PUBLICA_AQUI');
+        document.getElementById('checkout-button').addEventListener('click', function () {
+            const button = this;
+            button.innerHTML = '<i class="bi bi-arrow-repeat spin me-2"></i>Procesando...';
+            button.disabled = true;
+            stripe.redirectToCheckout({
+                sessionId: "<?php echo $session->id; ?>"
+            }).then(function (result) {
+                if (result.error) {
+                    button.innerHTML = '<i class="bi bi-lock-fill me-2"></i>Pagar con Stripe';
+                    button.disabled = false;
+                    alert(result.error.message);
+                }
+            });
+        });
+    </script>
+    <style>
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>
+
+
+
+EL OTRO ARCHIVO ES EL SIGUIENTE.
+controllers/StripeController.php
+
+
+<?php
+$stripe_loaded = false;
+if (file_exists(__DIR__ . '/../vendor/autoload.php') && !$stripe_loaded) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+    if (class_exists('\Stripe\Stripe')) {
+        $stripe_loaded = true;
+    }
+}
+if (!$stripe_loaded && file_exists(__DIR__ . '/../stripe/init.php')) {
+    try {
+        require_once __DIR__ . '/../stripe/init.php';
+        if (class_exists('\Stripe\Stripe')) {
+            $stripe_loaded = true;
+        }
+    } catch (Exception $e) {
+    }
+}
+if (!$stripe_loaded && is_dir(__DIR__ . '/../stripe/lib')) {
+    spl_autoload_register(function ($class) {
+        if (strpos($class, 'Stripe\\') === 0) {
+            $class = str_replace('Stripe\\', '', $class);
+            $class = str_replace('\\', '/', $class);
+            $file = __DIR__ . '/../stripe/lib/' . $class . '.php';
+            
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        }
+    });
+    if (file_exists(__DIR__ . '/../stripe/lib/Stripe.php')) {
+        require_once __DIR__ . '/../stripe/lib/Stripe.php';
+        $stripe_loaded = true;
+    }
+}
+require_once __DIR__ . '/../models/Compra.php';
+class StripeController
+{
+    public function pagar()
+    {
+        global $stripe_loaded;
+        if (!$stripe_loaded || !class_exists('\Stripe\Stripe')) {
+            echo "<div style='padding:20px;background:#ffebee;border:1px solid #f44336;border-radius:5px;margin:20px;'>";
+            echo "<h3 style='color:#d32f2f;'>❌ Error: Stripe no está configurado</h3>";
+            echo "<p>La librería de Stripe no se pudo cargar correctamente.</p>";
+            echo "<p><strong>Posibles soluciones:</strong></p>";
+            echo "<ul>";
+            echo "<li>Verifica que la carpeta 'stripe' esté completa</li>";
+            echo "<li>Contacta al soporte técnico si persiste el problema</li>";
+            echo "</ul>";
+            echo "<p><a href='index.php?c=CarritoController&a=ver' style='color:#1976d2;'>← Volver al carrito</a></p>";
+            echo "</div>";
+            return;
+        }
+        \Stripe\Stripe::setApiKey('sk_test_TU_CLAVE_SECRETA_AQUI');
+        $carrito = $_SESSION['carrito'] ?? [];
+        if (empty($carrito)) {
+            echo "<h3 style='color:red'>El carrito está vacío. Agrega productos antes de pagar.</h3>";
+            return;
+        }
+        $compraModel = new Compra();
+        $id_usuario = $_SESSION['usuario']['id'];
+        $total = 0;
+        foreach ($carrito as $producto) {
+            $total += ($producto['precio'] ?? 2500) * ($producto['cantidad'] ?? 1);
+        }
+        if ($total < 2000) {
+            echo "<h3 style='color:red'>El monto mínimo para procesar pagos es de $2,000 COP. Total actual: $" . number_format($total) . " COP</h3>";
+            echo "<p><a href='index.php?c=CarritoController&a=ver' style='color:blue;'>← Volver al carrito</a></p>";
+            return;
+        }
+        $compra_id = $compraModel->crearCompraPendiente($id_usuario, $total, $carrito);
+        if (!$compra_id) {
+            echo "<h3 style='color:red'>Error al procesar la compra. Intenta nuevamente.</h3>";
+            return;
+        }
+        $line_items = [];
+        foreach ($carrito as $producto) {
+            $precio_unitario = $producto['precio'] ?? 2500;
+            if ($precio_unitario < 2500) {
+                $precio_unitario = 2500;
+            }
+            $line_items[] = [
+                'price_data' => [
+                    'currency' => 'cop',
+                    'product_data' => [
+                        'name' => $producto['nombre'] ?? $producto['titulo'] ?? 'Producto',
+                    ],
+                    'unit_amount' => intval($precio_unitario * 100), // Stripe usa centavos
+                ],
+                'quantity' => $producto['cantidad'] ?? 1,
+            ];
+        }
+        try {
+            $session = \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $line_items,
+                'mode' => 'payment',
+                'success_url' => 'https://libroswapcol.com/index.php?c=StripeController&a=confirmacion&session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => 'https://libroswapcol.com/index.php?c=StripeController&a=cancelado',
+                'metadata' => [
+                    'compra_id' => $compra_id,
+                    'id_usuario' => $id_usuario
+                ]
+            ]);
+            $compraModel->actualizarSessionId($compra_id, $session->id);
+            require __DIR__ . '/../views/usuario/pago_stripe.php';
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            echo "<h3 style='color:red'>Error al procesar el pago: " . $e->getMessage() . "</h3>";
+            echo "<p>Verifica que los montos sean correctos y que tengas una conexión estable.</p>";
+            echo "<p><a href='index.php?c=CarritoController&a=ver' style='color:blue;'>← Volver al carrito</a></p>";
+        } catch (Exception $e) {
+            echo "<h3 style='color:red'>Error inesperado: " . $e->getMessage() . "</h3>";
+            echo "<p><a href='index.php?c=CarritoController&a=ver' style='color:blue;'>← Volver al carrito</a></p>";
+        }
+    }
+    public function confirmacion()
+    {
+        $session_id = $_GET['session_id'] ?? null;
+        if ($session_id) {
+            $compraModel = new Compra();
+            $compraModel->completarCompra($session_id, 'stripe_payment_completed');
+            unset($_SESSION['carrito']);
+        }
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $id_usuario = $_SESSION['usuario']['id'];
+        $notificaciones = obtenerNotificacionesUsuario($id_usuario);
+
+        $contenido = __DIR__ . '/../views/usuario/pago_confirmacion.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
+    public function cancelado()
+    {
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $id_usuario = $_SESSION['usuario']['id'];
+        $notificaciones = obtenerNotificacionesUsuario($id_usuario);
+        $contenido = __DIR__ . '/../views/usuario/pago_cancelado.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
+    public function webhook()
+    {
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '';
+        $endpoint_secret = 'whsec_TU_WEBHOOK_SECRET_AQUI'; 
+        try {
+            $event = \Stripe\Webhook::constructEvent($payload, $sig_header, $endpoint_secret);
+            if ($event['type'] == 'checkout.session.completed') {
+                $session = $event['data']['object'];
+                $compraModel = new Compra();
+                $compraModel->completarCompra($session->id, $session->payment_intent);
+                error_log("Compra completada via webhook: " . $session->id);
+            }
+        } catch (\Exception $e) {
+            error_log("Webhook error: " . $e->getMessage());
+            http_response_code(400);
+            exit();
+        }
+        http_response_code(200);
+    }
+}
+?>
+
+NADA MAS.
