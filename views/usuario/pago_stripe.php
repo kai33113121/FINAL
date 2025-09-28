@@ -498,7 +498,7 @@
     </div>
     
     <script>
-        var stripe = Stripe('pk_test_51S8CUgJ3kDKkX8r5jDl39AKqj1bT0Wj7MEOWVqz0luaBDbHtTHvAfvqg1HoITVlqoAq5cgEalS6HPjWuzes7drnI00a9dSkR5b');
+        // Configuración de Stripe, va aqui, la clave pero, git me lo prohibe.
         
         document.getElementById('checkout-button').addEventListener('click', function () {
             // Agregar efecto de carga
