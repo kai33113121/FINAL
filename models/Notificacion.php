@@ -9,18 +9,7 @@ class Notificacion
     {
         $this->conexion = conectar();
         if (!$this->conexion) {
-            throw new Exception("No se pudo conectar a la base de datos.");
-        }
-    }
-
-    public function obtenerPorUsuario($usuario_id)
-    {
-        $stmt = $this->conexion->prepare("SELECT id, mensaje, link, intercambio_id, fecha, leida FROM notificaciones WHERE usuario_id = ? ORDER BY fecha DESC");
-        if (!$stmt) return [];
-        $stmt->bind_param("i", $usuario_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $notificaciones = [];
+            throw n
         if ($result) {
             while ($row = $result->fetch_assoc()) {
                 $notificaciones[] = [

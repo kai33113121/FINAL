@@ -76,13 +76,4 @@ class Evento
     public function contarPorGenero()
     {
         $resultado = $this->db->query("SELECT genero, COUNT(*) as total FROM libros GROUP BY genero");
-        $result = [];
-        if ($resultado) {
-            while ($row = $resultado->fetch_assoc()) {
-                $result[$row['genero']] = $row['total'];
-            }
-            $resultado->free();
-        }
-        return $result;
-    }
-}
+ 

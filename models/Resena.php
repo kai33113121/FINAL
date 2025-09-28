@@ -141,13 +141,4 @@ class Resena {
         if (!$stmt) {
             die('❌ Error en la consulta SQL de contarPorLibro: ' . $this->db->error);
         }
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-        $resultados = [];
-        while ($row = $resultado->fetch_assoc()) {
-            $resultados[$row['titulo']] = $row['total'];
-        }
-        $stmt->close();
-        return $resultados;
-    }
-}
+        $stmt
