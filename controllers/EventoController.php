@@ -41,14 +41,7 @@ class EventoController
         $eventos = $evento->obtenerActivos();
 
         // Notificaciones para el usuario
-        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
-        $notificaciones = [];
-        if (isset($_SESSION['usuario']['id'])) {
-            $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
-        }
-
-        $contenido = __DIR__ . '/../views/usuario/lista_eventos.php';
-        include __DIR__ . '/../views/layouts/layout_usuario.php';
+        r
     }
 
     // 👤 Ver detalle del evento + comentarios

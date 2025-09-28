@@ -17,9 +17,7 @@ class ComentarioEvento
         $stmt = $this->db->prepare("INSERT INTO comentarios_evento (id_evento, id_usuario, comentario) VALUES (?, ?, ?)");
         if (!$stmt) return false;
         $stmt->bind_param("iis", $id_evento, $id_usuario, $comentario);
-        $exito = $stmt->execute();
-        $stmt->close();
-        return $exito;
+      
     }
 
     public function obtenerPorEvento($id_evento)

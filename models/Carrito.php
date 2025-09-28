@@ -14,10 +14,7 @@ class Carrito {
     public function agregar($usuario_id, $libro_id) {
         $stmt = $this->conexion->prepare("INSERT INTO carrito (usuario_id, libro_id) VALUES (?, ?)");
         if (!$stmt) return false;
-        $stmt->bind_param("ii", $usuario_id, $libro_id);
-        $exito = $stmt->execute();
-        $stmt->close();
-        return $exito;
+     ;
     }
 
     public function obtener($usuario_id) {
