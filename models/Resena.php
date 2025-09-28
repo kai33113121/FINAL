@@ -1,17 +1,13 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
-
 class Resena {
     private $db;
-
     public function __construct() {
         $this->db = conectar();
         if (!$this->db) {
             throw new Exception("No se pudo conectar a la base de datos.");
         }
     }
-
-    // ✅ Obtener reseñas de un libro (vista usuario)
     public function obtenerPorLibro($libro_id) {
         $sql = "SELECT r.*, u.nombre AS nombre_usuario
                 FROM resenas r
@@ -26,8 +22,6 @@ class Resena {
         $stmt->close();
         return $resenas;
     }
-
-    // ✅ Agregar reseña
     public function agregar($libro_id, $usuario_id, $calificacion, $comentario) {
         $sql = "INSERT INTO resenas (libro_id, usuario_id, calificacion, comentario)
                 VALUES (?, ?, ?, ?)";
@@ -38,8 +32,6 @@ class Resena {
         $stmt->close();
         return $exito;
     }
-
-    // ✅ Promedio de calificación por libro
     public function promedio($libro_id) {
         $sql = "SELECT AVG(calificacion) AS promedio FROM resenas WHERE libro_id = ?";
         $stmt = $this->db->prepare($sql);
@@ -51,8 +43,6 @@ class Resena {
         $stmt->close();
         return $fila ? $fila['promedio'] : null;
     }
-
-    // ✅ Obtener todas las reseñas (vista admin)
     public function obtenerTodas() {
         $sql = "SELECT r.*, u.nombre AS nombre_usuario, l.titulo AS titulo_libro
                 FROM resenas r
@@ -67,8 +57,6 @@ class Resena {
         $resultado->free();
         return $resenas;
     }
-
-    // ✅ Eliminar reseña (admin)
     public function eliminar($id) {
         $sql = "DELETE FROM resenas WHERE id = ?";
         $stmt = $this->db->prepare($sql);
@@ -78,8 +66,6 @@ class Resena {
         $stmt->close();
         return $exito;
     }
-
-    // ✅ Contar todas las reseñas (admin)
     public function contarTodas() {
         $sql = "SELECT COUNT(*) AS total FROM resenas";
         $resultado = $this->db->query($sql);
@@ -87,8 +73,6 @@ class Resena {
         if ($resultado) $resultado->free();
         return $fila ? $fila['total'] : 0;
     }
-
-    // ✅ Verificar si el usuario ya reseñó ese libro
     public function yaResenado($libro_id, $usuario_id) {
         $sql = "SELECT COUNT(*) AS existe FROM resenas WHERE libro_id = ? AND usuario_id = ?";
         $stmt = $this->db->prepare($sql);
@@ -100,7 +84,6 @@ class Resena {
         $stmt->close();
         return $row ? $row['existe'] > 0 : false;
     }
-
     public function obtenerPorUsuario($usuario_id, $limite = 5) {
         $sql = "SELECT r.*, l.titulo AS titulo_libro
                 FROM resenas r
@@ -117,7 +100,6 @@ class Resena {
         $stmt->close();
         return $resenas;
     }
-
     public function contarResenas() {
         $stmt = $this->db->prepare("SELECT COUNT(*) AS total FROM resenas");
         if (!$stmt) return 0;
@@ -127,7 +109,6 @@ class Resena {
         $stmt->close();
         return $fila ? $fila['total'] : 0;
     }
-
     public function contarPorLibro() {
         $sql = "
             SELECT l.titulo, COUNT(r.id) as total
@@ -141,4 +122,13 @@ class Resena {
         if (!$stmt) {
             die('❌ Error en la consulta SQL de contarPorLibro: ' . $this->db->error);
         }
-        $stmt
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $resultados = [];
+        while ($row = $resultado->fetch_assoc()) {
+            $resultados[$row['titulo']] = $row['total'];
+        }
+        $stmt->close();
+        return $resultados;
+    }
+}

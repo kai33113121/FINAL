@@ -3,7 +3,6 @@ require_once __DIR__ . '/../config/config.php';
 class Mensaje
 {
     private $db;
-
     public function __construct()
     {
         $this->db = conectar();
@@ -11,7 +10,6 @@ class Mensaje
             throw new Exception("No se pudo conectar a la base de datos.");
         }
     }
-
     public function enviar($emisor_id, $receptor_id, $mensaje)
     {
         $sql = "INSERT INTO mensajes (emisor_id, receptor_id, mensaje) VALUES (?, ?, ?)";
@@ -22,7 +20,6 @@ class Mensaje
         $stmt->close();
         return $exito;
     }
-
     public function obtenerConversacion($usuario1, $usuario2)
     {
         $sql = "SELECT * FROM mensajes 
@@ -38,7 +35,6 @@ class Mensaje
         $stmt->close();
         return $mensajes;
     }
-
     public function obtenerUsuariosConConversaciones($usuario_id)
     {
         $sql = "SELECT DISTINCT u.id, u.nombre, u.foto
@@ -57,7 +53,6 @@ class Mensaje
         $stmt->close();
         return $usuarios;
     }
-    
     public function obtenerUltimoMensaje($usuario_id, $otro_id)
     {
         $sql = "SELECT mensaje FROM mensajes 
@@ -73,7 +68,6 @@ class Mensaje
         $stmt->close();
         return $fila ? $fila['mensaje'] : null;
     }
-
     public function contarNoLeidos($usuario_id, $otro_id)
     {
         $sql = "SELECT COUNT(*) AS total FROM mensajes 
@@ -87,8 +81,6 @@ class Mensaje
         $stmt->close();
         return $fila ? $fila['total'] : 0;
     }
-
-    // MÉTODO NUEVO - Eliminar conversación completa
     public function eliminarConversacion($usuario1, $usuario2)
     {
         $sql = "DELETE FROM mensajes 
@@ -96,15 +88,12 @@ class Mensaje
                 OR (emisor_id = ? AND receptor_id = ?)";
                 
         $stmt = $this->db->prepare($sql);
-        
         if (!$stmt) {
             return false;
         }
-        
         $stmt->bind_param("iiii", $usuario1, $usuario2, $usuario2, $usuario1);
         $resultado = $stmt->execute();
         $stmt->close();
-        
         return $resultado;
     }
 }
