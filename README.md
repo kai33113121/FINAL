@@ -2,7 +2,9 @@
 
 WEB APLICATIVO DESPLEGADO: libroswapcol.com
 
-cabe resaltar que por tema de rutas el codigo del proyecto local al del hosting por temas de rutas y politicas de llaves de git hub.
+cabe resaltar que por tema de rutas el codigo del proyecto local al del hosting es diferente por temas de politicas de llaves de git hub.
+
+
 Plataforma web para comprar, vender e intercambiar libros entre usuarios. Fomentamos la lectura, conectamos personas y promovemos el conocimiento compartido.
 
 👥 Desarrolladores
