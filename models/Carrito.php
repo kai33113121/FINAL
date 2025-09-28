@@ -1,26 +1,51 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
-
 class Carrito {
     private $conexion;
-
     public function __construct() {
         $this->conexion = conectar();
         if (!$this->conexion) {
             throw new Exception("No se pudo conectar a la base de datos.");
         }
     }
-
     public function agregar($usuario_id, $libro_id) {
-        $stmt = $this->conexion->prepare("INSERT INTO carrito (usuario_id, libro_id) VALUES (?, ?)");
-        if (!$stmt) return false;
-     ;
+    $tabla_origen = 'libros';
+    $stmt = $this->conexion->prepare("SELECT id FROM libros WHERE id = ?");
+    $stmt->bind_param("i", $libro_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (!$result->fetch_assoc()) {
+        $tabla_origen = 'libros_venta';
     }
-
+    $stmt->close();
+    $stmt = $this->conexion->prepare("INSERT INTO carrito (usuario_id, libro_id, tabla_origen) VALUES (?, ?, ?)");
+    if (!$stmt) return false;
+    $stmt->bind_param("iis", $usuario_id, $libro_id, $tabla_origen);
+    $exito = $stmt->execute();
+    $stmt->close();
+    return $exito;
+}
     public function obtener($usuario_id) {
-    $sql = "SELECT c.*, l.titulo, l.autor, l.precio, l.imagen 
+    $sql = "SELECT c.*, 
+                   CASE 
+                       WHEN c.tabla_origen = 'libros' THEN l.titulo
+                       ELSE lv.titulo 
+                   END as titulo,
+                   CASE 
+                       WHEN c.tabla_origen = 'libros' THEN l.autor
+                       ELSE lv.autor 
+                   END as autor,
+                   CASE 
+                       WHEN c.tabla_origen = 'libros' THEN l.precio
+                       ELSE lv.precio 
+                   END as precio,
+                   CASE 
+                       WHEN c.tabla_origen = 'libros' THEN l.imagen
+                       ELSE lv.imagen 
+                   END as imagen
             FROM carrito c 
-            JOIN libros l ON c.libro_id = l.id 
+            LEFT JOIN libros l ON c.libro_id = l.id AND c.tabla_origen = 'libros'
+            LEFT JOIN libros_venta lv ON c.libro_id = lv.id AND c.tabla_origen = 'libros_venta'
             WHERE c.usuario_id = ?";
     $stmt = $this->conexion->prepare($sql);
     if (!$stmt) return [];
@@ -31,7 +56,6 @@ class Carrito {
     $stmt->close();
     return $items;
 }
-
     public function eliminar($id) {
         $stmt = $this->conexion->prepare("DELETE FROM carrito WHERE id = ?");
         if (!$stmt) return false;
@@ -40,7 +64,6 @@ class Carrito {
         $stmt->close();
         return $exito;
     }
-
     public function confirmarCompra($usuario_id) {
         $items = $this->obtener($usuario_id);
         $exito = true;
@@ -68,7 +91,6 @@ class Carrito {
         }
         return $exito;
     }
-
     public function obtenerCompras() {
         $sql = "SELECT c.*, u.nombre AS nombre_usuario, l.titulo AS titulo_libro
                 FROM compras c
