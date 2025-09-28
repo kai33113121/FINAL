@@ -2,7 +2,6 @@
 class Evento
 {
     private $db;
-
     public function __construct()
     {
         $this->db = conectar();
@@ -10,7 +9,6 @@ class Evento
             throw new Exception("No se pudo conectar a la base de datos.");
         }
     }
-
     public function crear($titulo, $descripcion, $creado_por)
 {
     $sql = "INSERT INTO eventos (titulo, descripcion, creado_por, activo) VALUES (?, ?, ?, 1)";
@@ -21,13 +19,11 @@ class Evento
     $stmt->close();
     return $exito;
 }
-
     public function obtenerActivos()
     {
         $resultado = $this->db->query("SELECT * FROM eventos WHERE activo = 1 ORDER BY fecha_creacion DESC");
         return $resultado ? $resultado->fetch_all(MYSQLI_ASSOC) : [];
     }
-
     public function obtenerPorId($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM eventos WHERE id = ?");
@@ -39,7 +35,6 @@ class Evento
         $stmt->close();
         return $evento;
     }
-
     public function actualizar($id, $titulo, $descripcion)
     {
         $sql = "UPDATE eventos SET titulo = ?, descripcion = ? WHERE id = ?";
@@ -50,7 +45,6 @@ class Evento
         $stmt->close();
         return $exito;
     }
-
     public function eliminar($id)
     {
         $sql = "UPDATE eventos SET activo = 0 WHERE id = ?";
@@ -61,7 +55,6 @@ class Evento
         $stmt->close();
         return $exito;
     }
-
     public function contarEventos()
     {
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM eventos");
@@ -72,7 +65,6 @@ class Evento
         $stmt->close();
         return $row[0];
     }
-
     public function contarPorGenero()
     {
         $resultado = $this->db->query("SELECT genero, COUNT(*) as total FROM libros GROUP BY genero");
