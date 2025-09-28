@@ -1,10 +1,8 @@
 <?php
 require_once __DIR__ . '/../models/Intercambio.php';
 require_once __DIR__ . '/../models/Libro.php';
-
 class IntercambioController
 {
-    // Nueva acción para marcar notificación como leída y redirigir a misIntercambios
     public function marcarNotificacionYRedirigir()
     {
         if (!isset($_SESSION['usuario'])) {
@@ -21,39 +19,54 @@ class IntercambioController
         exit;
     }
     public function solicitar()
-    {
-        if (!isset($_SESSION['usuario'])) {
-            header("Location: index.php?c=UsuarioController&a=login");
-            exit;
+{
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: index.php?c=UsuarioController&a=login");
+        exit;
+    }
+   $tabla = $_GET['tabla'] ?? 'libros_venta';  
+    $libro_id = $_GET['id'];
+    $usuario_actual = $_SESSION['usuario']['id'];
+    if ($tabla === 'libros_venta') {
+        require_once __DIR__ . '/../config/config.php';
+        $conexion = conectar();
+        if (!$conexion) {
+            echo "❌ Error de conexión a la base de datos.";
+            return;
         }
-
-        $libro = new Libro();
-        $libroSolicitado = $libro->obtenerPorId($_GET['id']);
-
-        // Validar que el libro exista y no sea del mismo usuario
-        if (!$libroSolicitado || $libroSolicitado['id_usuario'] == $_SESSION['usuario']['id']) {
+        $stmt = $conexion->prepare("SELECT * FROM libros_venta WHERE id = ?");
+        if (!$stmt) {
+            echo "❌ Error en la consulta.";
+            $conexion->close();
+            return;
+        }
+        $stmt->bind_param("i", $libro_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $libroSolicitado = $result->fetch_assoc();
+        $stmt->close();
+        $conexion->close();
+        if (!$libroSolicitado || $libroSolicitado['id_usuario'] == $usuario_actual) {
             echo "❌ No puedes solicitar tu propio libro o el libro no existe.";
             return;
         }
-
-        $misLibros = $libro->obtenerPorUsuario($_SESSION['usuario']['id']);
-
-        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
-        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
-
-        $contenido = __DIR__ . '/../views/usuario/solicitar_intercambio.php';
-        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    } else {
+        echo "❌ Los libros oficiales no están disponibles para intercambio.";
+        return;
     }
-
+    $libro = new Libro();
+    $misLibros = $libro->obtenerPorUsuario($usuario_actual);
+    require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+    $notificaciones = obtenerNotificacionesUsuario($usuario_actual);
+    $contenido = __DIR__ . '/../views/usuario/solicitar_intercambio.php';
+    include __DIR__ . '/../views/layouts/layout_usuario.php';
+}
     public function enviarSolicitud()
     {   
-        
         if (!isset($_SESSION['usuario'])) {
             header("Location: index.php?c=UsuarioController&a=login");
             exit;
         }
-
-        // Validar que los datos estén completos
         if (!isset($_POST['libro_id_1'], $_POST['libro_id_2'], $_POST['usuario_2'])) {
             echo "❌ Datos incompletos.";
             return;
@@ -62,18 +75,13 @@ class IntercambioController
         $libro_id_2 = $_POST['libro_id_2'];
         $usuario_1 = $_SESSION['usuario']['id'];
         $usuario_2 = $_POST['usuario_2'];
-
         $intercambio = new Intercambio();
         $nuevo_id = $intercambio->solicitar($libro_id_1, $libro_id_2, $usuario_1, $usuario_2);
-
         if ($nuevo_id) {
-            // Notificación para el usuario destinatario (usuario_2)
             require_once __DIR__ . '/../models/Notificacion.php';
             require_once __DIR__ . '/../models/Libro.php';
             $libroModel = new Libro();
             $libroSolicitado = $libroModel->obtenerPorId($libro_id_2);
-
-
             if (is_array($libroSolicitado) && isset($libroSolicitado['titulo'])) {
                 $mensaje = "🔄 Has recibido una solicitud de intercambio por tu libro \"{$libroSolicitado['titulo']}\".";
             } else {
@@ -82,14 +90,12 @@ class IntercambioController
             $link = "index.php?c=IntercambioController&a=notificaciones";
             $notificacion = new Notificacion();
             $notificacion->crear($usuario_2, $mensaje, $link, $nuevo_id);
-
             header("Location: index.php?c=IntercambioController&a=solicitar&id=$libro_id_2&exito=1");
             exit;
         } else {
             echo "❌ Error al registrar el intercambio.";
         }
     }
-
     public function verSolicitud()
     {
         if (!isset($_SESSION['usuario'])) {
@@ -102,7 +108,6 @@ class IntercambioController
             echo "❌ Solicitud no válida.";
             return;
         }
-        // Marcar la notificación como leída si corresponde
         if ($noti_id > 0 && isset($_SESSION['usuario']['id'])) {
             require_once __DIR__ . '/../models/Notificacion.php';
             $notiModel = new Notificacion();
@@ -117,14 +122,12 @@ class IntercambioController
                 break;
             }
         }
-        // Enriquecer datos: nombre y foto del libro solicitado, nombre del solicitante
         if ($solicitud) {
             require_once __DIR__ . '/../models/Libro.php';
             $libroModel = new Libro();
             $libro = $libroModel->obtenerPorId($solicitud['libro_id_2']);
             $solicitud['libro_titulo'] = $libro ? $libro['titulo'] : '';
             $solicitud['libro_imagen'] = $libro ? $libro['imagen'] : '';
-            // Obtener nombre del solicitante
             $usuario_nombre = '';
             if (isset($solicitud['usuario_1'])) {
                 $conn = conectar();
@@ -138,12 +141,10 @@ class IntercambioController
             }
             $solicitud['nombre_solicitante'] = $usuario_nombre;
         }
-        // Si se envió el formulario para aceptar/rechazar
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'], $_POST['id_solicitud'])) {
             $accion = $_POST['accion'];
             $id_solicitud = intval($_POST['id_solicitud']);
             if ($solicitud && $intercambio->actualizarEstado($id_solicitud, $accion)) {
-                // Notificar solo al usuario solicitante
                 require_once __DIR__ . '/../models/Notificacion.php';
                 $noti = new Notificacion();
                 $msg = $accion === 'aceptar' ? 'ha sido aceptada' : 'ha sido rechazada';
@@ -162,50 +163,35 @@ class IntercambioController
         $contenido = __DIR__ . '/../views/usuario/ver_solicitud_intercambio.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
     public function misIntercambios()
     {
         if (!isset($_SESSION['usuario'])) {
             header("Location: index.php?c=UsuarioController&a=login");
             exit;
         }
-
         $intercambio = new Intercambio();
         $intercambios = $intercambio->obtenerDetallado($_SESSION['usuario']['id']);
-
         require_once __DIR__ . '/../helpers/notificaciones_helper.php';
         $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
-
         $contenido = __DIR__ . '/../views/usuario/intercambios.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
     public function solicitarIntercambio()
     {
         if (!isset($_SESSION['usuario']['id'])) {
             header("Location: index.php?c=UsuarioController&a=login");
             exit;
         }
-        // Obtener el ID del usuario logueado
         $usuarioId = $_SESSION['usuario']['id'];
-
-        // Crear instancia del modelo Libro
         $libro = new Libro();
-
-        // Obtener el libro solicitado (por ejemplo, por GET o POST)
         $libroSolicitadoId = $_GET['libro_id'];
         $libroSolicitado = $libro->obtenerPorId($libroSolicitadoId);
-
-        // Obtener los libros del usuario logueado
         $misLibros = $libro->obtenerPorUsuario($usuarioId);
-
         require_once __DIR__ . '/../helpers/notificaciones_helper.php';
         $notificaciones = obtenerNotificacionesUsuario($usuarioId);
-
         $contenido = __DIR__ . '/../views/usuario/solicitar_intercambio.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
     public function notificaciones()
     {
         if (!isset($_SESSION['usuario'])) {
@@ -218,7 +204,6 @@ class IntercambioController
         $contenido = __DIR__ . '/../views/usuario/notificaciones.php';
         include __DIR__ . '/../views/layouts/layout_usuario.php';
     }
-
     public function responderSolicitud()
     {
         if (!isset($_SESSION['usuario'])) {
@@ -237,7 +222,6 @@ class IntercambioController
             echo "❌ Error al actualizar la solicitud.";
         }
     }
-
     public function dashboard()
     {
         if (!isset($_SESSION['usuario'])) {
