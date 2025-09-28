@@ -9,7 +9,6 @@
 <div class="container mt-5">
     <h2>⭐ Reseñas del libro</h2>
 <p>Promedio: <?= round($promedio, 1) ?> / 5</p>
-
 <?php if (!empty($_SESSION['usuario'])): ?>
     <?php
     $resena = new Resena();
@@ -34,7 +33,6 @@
 <?php else: ?>
     <div class="alert alert-warning">Debes iniciar sesión para dejar una reseña.</div>
 <?php endif; ?>
-
 <hr>
 <h4>📖 Comentarios</h4>
 <?php if (count($resenas) > 0): ?>

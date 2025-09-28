@@ -1,59 +1,9 @@
-<!-- Estilos mínimos para foros -->
-<style>
-    .text-purple {
-        color: #6a11cb;
-    }
-
-    .card-forum {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        margin-bottom: 20px;
-    }
-
-    .card-forum:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(106, 17, 203, 0.2);
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .forum-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 30px;
-    }
-
-    .stats-row {
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 30px;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #6a11cb;
-    }
-</style>
-
+<link rel="stylesheet" href="public/css/eventos.css">
 <div class="container mt-4">
-
-    <!-- Header -->
     <div class="forum-header text-center">
         <h1 class="mb-2">Centro de Discusión</h1>
         <p class="mb-0">Únete a las conversaciones de la comunidad literaria</p>
     </div>
-
-    <!-- Estadísticas -->
     <div class="stats-row">
         <div class="row">
             <div class="col-md-3 stat-item">
@@ -67,13 +17,10 @@
             
         </div>
     </div>
-
-    <!-- Lista de Foros -->
     <?php if (!empty($eventos)): ?>
         <div class="row">
             <div class="col-12">
                 <h4 class="fw-bold mb-3 text-purple">Foros activos</h4>
-
                 <?php foreach ($eventos as $e): ?>
                     <a href="index.php?c=EventoController&a=ver&id=<?= $e['id'] ?>"
                         class="card-forum d-block text-decoration-none">
@@ -90,7 +37,6 @@
                                     <small class="text-muted">
                                         <i class="bi bi-calendar3 me-1"></i>
                                         <?= date('d M Y', strtotime($e['fecha_creacion'])) ?>
-
                                         <?php if (!empty($e['creador_nombre'])): ?>
                                             | <i class="bi bi-person me-1"></i>
                                             <?= htmlspecialchars($e['creador_nombre']) ?>
@@ -116,5 +62,4 @@
             <p class="text-muted">Sé el primero en crear un foro</p>
         </div>
     <?php endif; ?>
-
 </div>
