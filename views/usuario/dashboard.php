@@ -1,6 +1,5 @@
 <?php
 $usuario = $_SESSION['usuario'];
-// Helper para mostrar fechas relativas
 if (!function_exists('fecha_relativa')) {
     function fecha_relativa($fecha)
     {
@@ -22,10 +21,7 @@ if (!function_exists('fecha_relativa')) {
     }
 }
 ?>
-
-<!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>LibrosWap Dashboard - Épico</title>
@@ -34,327 +30,22 @@ if (!function_exists('fecha_relativa')) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <style>
-        :root {
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-tertiary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            --purple: #6a11cb;
-            --purple-light: #f8f4ff;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-        }
-
-        .hero-epic {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: var(--gradient-primary);
-            overflow: hidden;
-        }
-
-        .hero-background {
-            position: absolute;
-            inset: 0;
-            background-image: url('/FINAL/public/img/adminside.png');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-            z-index: 0;
-            background-size: cover;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            color: white;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 900;
-            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
-            margin-bottom: 2rem;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin-bottom: 3rem;
-            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-hero-epic {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .btn-hero-epic:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .collage-img {
-            position: absolute;
-            width: 80px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            opacity: 0.6;
-            animation: float 10s ease-in-out infinite;
-        }
-
-        .collage-img:nth-child(even) {
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(2deg);
-            }
-        }
-
-        .card-epic {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .card-epic:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-hover {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-hover::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-
-        .card-hover:hover::before {
-            opacity: 0.1;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(106, 17, 203, 0.2);
-        }
-
-        .btn-futuristic {
-            background: var(--gradient-primary);
-            border: none;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-futuristic::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--gradient-secondary);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-futuristic:hover::before {
-            opacity: 1;
-        }
-
-        .btn-futuristic:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
-            color: white;
-        }
-
-        .btn-futuristic * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .section-epic {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-title-epic {
-            font-size: 3rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 60px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .text-purple {
-            color: var(--purple) !important;
-        }
-
-        .text-shadow {
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .bg-gradient-light-purple {
-            background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%);
-        }
-
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .quick-access-card {
-            transition: all 0.4s ease;
-            border: none;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
-        }
-
-        .quick-access-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(106, 17, 203, 0.15);
-            background: linear-gradient(145deg, #fff, #f8f4ff);
-        }
-
-        .quick-access-card i {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: all 0.3s ease;
-        }
-
-        .quick-access-card:hover i {
-            transform: scale(1.1);
-        }
-
-        .cube-card {
-            transition: all 0.4s ease;
-            border: none;
-        }
-
-        .cube-card:hover {
-            transform: translateX(10px);
-            box-shadow: 0 20px 40px rgba(106, 17, 203, 0.2);
-        }
-
-        .book-card {
-            transition: all 0.4s ease;
-            border: none;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-        }
-
-        .book-card:hover {
-            transform: translateY(-15px) rotateY(5deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-        }
-
-        .footer-epic {
-            background: var(--gradient-dark);
-            padding: 60px 0 30px;
-        }
-
-        .hover-link {
-            transition: all 0.3s ease;
-        }
-
-        .hover-link:hover {
-            color: #f093fb !important;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .section-title-epic {
-                font-size: 2rem;
-            }
-
-            .cube-card {
-                flex-direction: column !important;
-                text-align: center;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="public/css/dashboardu.css">
 </head>
-
 <body>
-    <!-- Hero Section Dashboard -->
     <section class="hero-epic">
         <div class="hero-background"></div>
         <div class="hero-overlay"></div>
-
-        <!-- Collage decorativo -->
         <div class="collage-container position-absolute w-100 h-100" style="z-index: 0;">
-            <img src="/FINAL/public/img/1.jpg" class="collage-img" style="top: 4%; left: 6%;">
-            <img src="/FINAL/public/img/2.jpg" class="collage-img" style="top: 12%; right: 8%;">
-            <img src="/FINAL/public/img/3.png" class="collage-img" style="top: 22%; left: 18%;">
-            <img src="/FINAL/public/img/4.jpg" class="collage-img" style="top: 30%; right: 20%;">
-            <img src="/FINAL/public/img/5.jpg" class="collage-img" style="top: 42%; left: 10%;">
-            <img src="/FINAL/public/img/6.jpg" class="collage-img" style="top: 50%; right: 12%;">
-            <img src="/FINAL/public/img/1.jpg" class="collage-img" style="top: 60%; left: 25%;">
-            <img src="/FINAL/public/img/2.jpg" class="collage-img" style="top: 70%; right: 18%;">
+            <img src="public/img/1.jpg" class="collage-img" style="top: 4%; left: 6%;">
+            <img src="public/img/2.jpg" class="collage-img" style="top: 12%; right: 8%;">
+            <img src="public/img/3.png" class="collage-img" style="top: 22%; left: 18%;">
+            <img src="public/img/4.jpg" class="collage-img" style="top: 30%; right: 20%;">
+            <img src="public/img/5.jpg" class="collage-img" style="top: 42%; left: 10%;">
+            <img src="public/img/6.jpg" class="collage-img" style="top: 50%; right: 12%;">
+            <img src="public/img/1.jpg" class="collage-img" style="top: 60%; left: 25%;">
+            <img src="public/img/2.jpg" class="collage-img" style="top: 70%; right: 18%;">
         </div>
-
         <div class="container hero-content">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto text-center">
@@ -377,14 +68,10 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Accesos Rápidos Épicos -->
     <section class="section-epic" id="accesos-rapidos">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">🚀 Tu Centro de Control</h2>
             <div class="row g-4">
-
-                <!-- Publicar libro en venta -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php?c=VentaController&a=crearVista" class="text-decoration-none">
                         <div class="card quick-access-card card-epic h-100 scroll-reveal">
@@ -397,8 +84,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </a>
                 </div>
-
-                <!-- Mis publicaciones -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php?c=VentaController&a=misVentas" class="text-decoration-none">
                         <div class="card quick-access-card card-epic h-100 scroll-reveal">
@@ -411,8 +96,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </a>
                 </div>
-
-                <!-- Ver carrito -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php?c=CarritoController&a=ver" class="text-decoration-none">
                         <div class="card quick-access-card card-epic h-100 scroll-reveal">
@@ -425,8 +108,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </a>
                 </div>
-
-                <!-- Explorar libros -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php?c=LibroController&a=explorar" class="text-decoration-none">
                         <div class="card quick-access-card card-epic h-100 scroll-reveal">
@@ -439,8 +120,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </a>
                 </div>
-
-                <!-- Intercambios -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php?c=IntercambioController&a=misIntercambios" class="text-decoration-none">
                         <div class="card quick-access-card card-epic h-100 scroll-reveal">
@@ -453,8 +132,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </a>
                 </div>
-
-                <!-- Perfil -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php?c=UsuarioController&a=perfil" class="text-decoration-none">
                         <div class="card quick-access-card card-epic h-100 scroll-reveal">
@@ -467,18 +144,13 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Recomendaciones y Populares Épicas -->
     <section class="section-epic bg-gradient-light-purple">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">📚 Libros Destacados Para Ti</h2>
             <div class="row g-5">
-
-                <!-- Recomendaciones -->
                 <div class="col-lg-6">
                     <div class="card card-epic scroll-reveal">
                         <div class="card-header bg-transparent border-0 text-center">
@@ -488,13 +160,11 @@ if (!function_exists('fecha_relativa')) {
                             <div id="sliderRecomendaciones" class="carousel slide" data-bs-ride="carousel"
                                 data-bs-interval="5000">
                                 <div class="carousel-inner">
-
-                                    <!-- Slide 1 -->
                                     <div class="carousel-item active">
                                         <div class="row g-3">
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/recomendado1.jpg" class="card-img-top"
+                                                    <img src="public/img/recomendado1.jpg" class="card-img-top"
                                                         alt="Recomendación 1">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">El Susurro de las Páginas</h6>
@@ -504,7 +174,7 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/recomendado2.jpg" class="card-img-top"
+                                                    <img src="public/img/recomendado2.jpg" class="card-img-top"
                                                         alt="Recomendación 2">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Misterios del Corazón</h6>
@@ -514,13 +184,11 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- Slide 2 -->
                                     <div class="carousel-item">
                                         <div class="row g-3">
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/recomendado3.jpg" class="card-img-top"
+                                                    <img src="public/img/recomendado3.jpg" class="card-img-top"
                                                         alt="Recomendación 3">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Senderos de Sabiduría</h6>
@@ -530,7 +198,7 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/recomendado4.jpg" class="card-img-top"
+                                                    <img src="public/img/recomendado4.jpg" class="card-img-top"
                                                         alt="Recomendación 4">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Voces del Futuro</h6>
@@ -540,7 +208,6 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <button class="carousel-control-prev" type="button"
                                     data-bs-target="#sliderRecomendaciones" data-bs-slide="prev">
@@ -554,8 +221,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
-                <!-- Populares -->
                 <div class="col-lg-6">
                     <div class="card card-epic scroll-reveal">
                         <div class="card-header bg-transparent border-0 text-center">
@@ -565,13 +230,11 @@ if (!function_exists('fecha_relativa')) {
                             <div id="sliderPopulares" class="carousel slide" data-bs-ride="carousel"
                                 data-bs-interval="5000">
                                 <div class="carousel-inner">
-
-                                    <!-- Slide 1 -->
                                     <div class="carousel-item active">
                                         <div class="row g-3">
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/20251.jpg" class="card-img-top"
+                                                    <img src="public/img/20251.jpg" class="card-img-top"
                                                         alt="Popular 1">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Revolución Digital</h6>
@@ -581,7 +244,7 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/20252.jpg" class="card-img-top"
+                                                    <img src="public/img/20252.jpg" class="card-img-top"
                                                         alt="Popular 2">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Nuevos Horizontes</h6>
@@ -591,13 +254,11 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- Slide 2 -->
                                     <div class="carousel-item">
                                         <div class="row g-3">
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/20254.jpg" class="card-img-top"
+                                                    <img src="public/img/20254.jpg" class="card-img-top"
                                                         alt="Popular 3">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Conexiones Humanas</h6>
@@ -607,7 +268,7 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                             <div class="col-6">
                                                 <div class="card h-100 border-0 shadow-sm">
-                                                    <img src="/FINAL/public/img/20253.jpg" class="card-img-top"
+                                                    <img src="public/img/20253.jpg" class="card-img-top"
                                                         alt="Popular 4">
                                                     <div class="card-body text-center">
                                                         <h6 class="card-title fw-bold">Impulso Creativo</h6>
@@ -617,7 +278,6 @@ if (!function_exists('fecha_relativa')) {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#sliderPopulares"
                                     data-bs-slide="prev">
@@ -631,12 +291,9 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
-    <!-- Productos y Ofertas Épicos -->
     <section class="section-epic" id="productos">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">🎁 Catálogo Disponible</h2>
@@ -647,8 +304,9 @@ if (!function_exists('fecha_relativa')) {
                             <div class="card book-card shadow-lg border-0 scroll-reveal"
                                 style="min-width: 220px; scroll-snap-align: start;">
                                 <img src="public/img/libros/<?= htmlspecialchars($libro['imagen']) ?>"
-                                    class="card-img-top mx-auto d-block" alt="<?= htmlspecialchars($libro['titulo']) ?>"
-                                    style="height: 280px; width: 180px; object-fit: cover; object-position: center;">
+    class="card-img-top mx-auto d-block" alt="<?= htmlspecialchars($libro['titulo']) ?>"
+    style="height: 280px; width: 180px; object-fit: cover; object-position: center;"
+    onerror="this.src='https://via.placeholder.com/180x280/667eea/ffffff?text=<?= urlencode(substr($libro['titulo'], 0, 8)) ?>'">
                                 <div class="card-body text-center">
                                     <h6 class="card-title fw-bold"><?= htmlspecialchars($libro['titulo']) ?></h6>
                                     <p class="text-muted small"><?= htmlspecialchars($libro['genero'] ?? '') ?></p>
@@ -667,19 +325,13 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Categorías Épicas -->
     <section class="section-epic" id="categorias" style="background: var(--gradient-dark); color: white;">
         <div class="container">
             <h2 class="section-title-epic text-white scroll-reveal">📚 Universos Literarios</h2>
-
-            <!-- Cubos horizontales -->
             <div class="d-flex flex-column gap-4 align-items-center">
-
-                <!-- Cubo 1 - Fantasía -->
                 <div class="cube-card d-flex flex-row align-items-center shadow-lg rounded-4 overflow-hidden card-epic"
                     style="background: white; color: #6a0dad; max-width: 900px;">
-                    <img src="/FINAL/public/img/categoria1.jpg" alt="Fantasía" class="img-fluid"
+                    <img src="public/img/categoria1.jpg" alt="Fantasía" class="img-fluid"
                         style="width: 200px; height: 150px; object-fit: cover;">
                     <div class="p-4 flex-grow-1">
                         <div class="d-flex align-items-center mb-2">
@@ -694,11 +346,9 @@ if (!function_exists('fecha_relativa')) {
                         </a>
                     </div>
                 </div>
-
-                <!-- Cubo 2 - Thriller -->
                 <div class="cube-card d-flex flex-row align-items-center shadow-lg rounded-4 overflow-hidden card-epic"
                     style="background: white; color: #6a0dad; max-width: 900px;">
-                    <img src="/FINAL/public/img/categoria2.jpg" alt="Thriller" class="img-fluid"
+                    <img src="public/img/categoria2.jpg" alt="Thriller" class="img-fluid"
                         style="width: 200px; height: 150px; object-fit: cover;">
                     <div class="p-4 flex-grow-1">
                         <div class="d-flex align-items-center mb-2">
@@ -713,11 +363,9 @@ if (!function_exists('fecha_relativa')) {
                         </a>
                     </div>
                 </div>
-
-                <!-- Cubo 3 - Romance -->
                 <div class="cube-card d-flex flex-row align-items-center shadow-lg rounded-4 overflow-hidden card-epic"
                     style="background: white; color: #6a0dad; max-width: 900px;">
-                    <img src="/FINAL/public/img/categoria3.jpg" alt="Romance" class="img-fluid"
+                    <img src="public/img/categoria3.jpg" alt="Romance" class="img-fluid"
                         style="width: 200px; height: 150px; object-fit: cover;">
                     <div class="p-4 flex-grow-1">
                         <div class="d-flex align-items-center mb-2">
@@ -732,11 +380,9 @@ if (!function_exists('fecha_relativa')) {
                         </a>
                     </div>
                 </div>
-
-                <!-- Cubo 4 - Clásicos -->
                 <div class="cube-card d-flex flex-row align-items-center shadow-lg rounded-4 overflow-hidden card-epic"
                     style="background: white; color: #6a0dad; max-width: 900px;">
-                    <img src="/FINAL/public/img/categoria4.jpg" alt="Clásicos" class="img-fluid"
+                    <img src="public/img/categoria4.jpg" alt="Clásicos" class="img-fluid"
                         style="width: 200px; height: 150px; object-fit: cover;">
                     <div class="p-4 flex-grow-1">
                         <div class="d-flex align-items-center mb-2">
@@ -751,18 +397,14 @@ if (!function_exists('fecha_relativa')) {
                         </a>
                     </div>
                 </div>
-
-                <!-- Nuevo botón para ver todos los géneros -->
                 <div class="text-center mt-4">
                     <a href="index.php?c=GenerosController&a=index" class="btn btn-outline-light btn-lg">
                         <i class="bi bi-grid-3x3-gap me-2"></i>Ver Todos los Géneros
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
-    <!-- Nuestra Selección Épica -->
     <section class="section-epic bg-gradient-light-purple" id="seleccion">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">🌟 Colección Exclusiva</h2>
@@ -780,11 +422,11 @@ if (!function_exists('fecha_relativa')) {
                                     <p class="text-muted small mb-1">Autor: <?= htmlspecialchars($libro['autor'] ?? '') ?></p>
                                     <p class="text-muted small mb-1">Género: <?= htmlspecialchars($libro['genero'] ?? '') ?></p>
                                     <div class="d-grid gap-2">
-                                        <a href="index.php?c=IntercambioController&a=solicitar&id=<?= $libro['id'] ?>"
-                                            class="btn btn-futuristic btn-sm">Intercambiar</a>
                                         <a href="index.php?c=DetalleLibroController&a=verDetalle&id=<?= $libro['id'] ?>"
-                                            class="btn"
-                                            style="background: rgba(106, 17, 203, 0.1); color: var(--purple); border: 1px solid var(--purple);">Comprar</a>
+                                        class="btn btn-futuristic btn-sm w-100">
+                                        <i class="bi bi-eye me-2"></i>Ver Detalles
+                                    </a>
+                                          </a>
                                     </div>
                                 </div>
                             </div>
@@ -796,14 +438,11 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Actividad Reciente Épica -->
     <section class="section-epic">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">⚡ Actividad Reciente</h2>
             <div class="row g-4">
                 <?php
-                // Unificar y ordenar actividades recientes
                 $actividades = [];
                 if (!empty($libros_recientes)) {
                     foreach ($libros_recientes as $libro) {
@@ -835,7 +474,6 @@ if (!function_exists('fecha_relativa')) {
                         ];
                     }
                 }
-                // Ordenar por fecha descendente
                 if (!empty($actividades)) {
                     usort($actividades, function ($a, $b) {
                         return strtotime($b['fecha']) - strtotime($a['fecha']);
@@ -843,7 +481,6 @@ if (!function_exists('fecha_relativa')) {
                     $actividades = array_slice($actividades, 0, 6);
                 }
                 ?>
-
                 <?php if (!empty($actividades)): ?>
                     <?php foreach ($actividades as $actividad): ?>
                         <div class="col-md-6">
@@ -884,14 +521,12 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Lanzamiento Exclusivo Épico -->
     <section class="section-epic bg-gradient-light-purple" id="lanzamientos">
         <div class="container">
             <div class="card card-epic scroll-reveal">
                 <div class="row g-0 align-items-center">
                     <div class="col-lg-6">
-                        <img src="/FINAL/public/img/6.jpg" class="img-fluid rounded-start" alt="Lanzamiento Exclusivo"
+                        <img src="public/img/6.jpg" class="img-fluid rounded-start" alt="Lanzamiento Exclusivo"
                             style="height: 400px; width: 100%; object-fit: cover;">
                     </div>
                     <div class="col-lg-6">
@@ -919,8 +554,6 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Mis últimas reseñas -->
     <section class="section-epic">
         <div class="container">
             <h2 class="section-title-epic scroll-reveal">📝 Mis Últimas Reseñas</h2>
@@ -955,18 +588,14 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Autores Colombianos Épicos -->
     <section class="section-epic" style="background: var(--gradient-dark); color: white;">
         <div class="container">
             <h2 class="section-title-epic text-white scroll-reveal">🇨🇴 Autores Colombianos</h2>
-
             <div class="row g-4">
-                <!-- García Márquez -->
                 <div class="col-lg-4">
                     <div class="card card-epic h-100 scroll-reveal"
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
-                        <img src="/FINAL/public/img/top1.png" class="card-img-top" alt="García Márquez"
+                        <img src="public/img/top1.png" class="card-img-top" alt="García Márquez"
                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="fw-bold text-white">Gabriel García Márquez</h4>
@@ -980,12 +609,10 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
-                <!-- Laura Restrepo -->
                 <div class="col-lg-4">
                     <div class="card card-epic h-100 scroll-reveal"
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
-                        <img src="/FINAL/public/img/top2.png" class="card-img-top" alt="Laura Restrepo"
+                        <img src="public/img/top2.png" class="card-img-top" alt="Laura Restrepo"
                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="fw-bold text-white">Laura Restrepo</h4>
@@ -999,12 +626,10 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
-                <!-- William Ospina -->
                 <div class="col-lg-4">
                     <div class="card card-epic h-100 scroll-reveal"
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); color: white;">
-                        <img src="/FINAL/public/img/top3.png" class="card-img-top" alt="William Ospina"
+                        <img src="public/img/top3.png" class="card-img-top" alt="William Ospina"
                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="fw-bold text-white">William Ospina</h4>
@@ -1022,7 +647,6 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-    <!-- Sección de Contacto -->
     <section class="py-5" style="background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%); margin-top: 100px;"
         id="contacto">
         <div class="container">
@@ -1036,7 +660,6 @@ if (!function_exists('fecha_relativa')) {
                                 <p class="text-muted">¿Tienes preguntas, sugerencias o necesitas ayuda? Estamos aquí
                                     para ti</p>
                             </div>
-
                             <form method="POST" action="procesar_contacto.php">
                                 <div class="row g-3">
                                     <div class="col-md-6">
@@ -1082,8 +705,6 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Sección Sobre Nosotros -->
     <section
         style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: white; padding: 100px 0; margin-top: 100px;">
         <div class="container">
@@ -1091,9 +712,7 @@ if (!function_exists('fecha_relativa')) {
                 <h2 class="fw-bold mb-3">🌟 Sobre LibrosWap</h2>
                 <p class="lead">Transformando la experiencia de lectura desde 2025</p>
             </div>
-
             <div class="row g-5">
-                <!-- Información Principal -->
                 <div class="col-lg-6">
                     <div
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 30px;">
@@ -1102,7 +721,6 @@ if (!function_exists('fecha_relativa')) {
                             acceden a libros. A través de un sistema intuitivo de transacciones e intercambios, buscamos
                             crear una comunidad activa de lectores que comparten tanto libros como experiencias
                             literarias.</p>
-
                         <h5 class="fw-bold mb-3">🎯 Nuestros Objetivos</h5>
                         <div class="row g-3">
                             <div class="col-12">
@@ -1132,8 +750,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
-                <!-- Características y Equipo -->
                 <div class="col-lg-6">
                     <div
                         style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 30px;">
@@ -1164,7 +780,6 @@ if (!function_exists('fecha_relativa')) {
                                 </div>
                             </div>
                         </div>
-
                         <h5 class="fw-bold mb-3">👥 Nuestro Equipo de Desarrolladores</h5>
                         <div class="row g-2">
                             <div class="col-6">
@@ -1195,8 +810,6 @@ if (!function_exists('fecha_relativa')) {
                     </div>
                 </div>
             </div>
-
-            <!-- Tecnologías -->
             <div class="row mt-5">
                 <div class="col-12">
                     <div class="text-center"
@@ -1233,14 +846,10 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </section>
-
-    <!-- Footer Épico Mejorado -->
     <footer
         style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 60px 0 30px; margin-top: 0;">
         <div class="container">
             <div class="row g-5">
-
-                <!-- Información Principal -->
                 <div class="col-lg-4">
                     <div class="mb-4">
                         <img src="public/img/logow.png" alt="LibrosWap" style="height: 60px;" class="mb-3">
@@ -1248,8 +857,6 @@ if (!function_exists('fecha_relativa')) {
                         <p class="mb-3">Plataforma web para comprar, vender e intercambiar libros entre usuarios.
                             Fomentamos la lectura, conectamos personas y promovemos el conocimiento compartido.</p>
                     </div>
-
-                    <!-- Redes Sociales -->
                     <div>
                         <h6 class="fw-bold mb-3">Síguenos</h6>
                         <div class="d-flex gap-3">
@@ -1268,8 +875,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
-                <!-- Enlaces Útiles -->
                 <div class="col-lg-4">
                     <h6 class="fw-bold mb-3">Enlaces Útiles</h6>
                     <div class="row">
@@ -1314,8 +919,6 @@ if (!function_exists('fecha_relativa')) {
                         </div>
                     </div>
                 </div>
-
-                <!-- Contacto -->
                 <div class="col-lg-4">
                     <h6 class="fw-bold mb-3">Contacto</h6>
                     <div class="mb-3">
@@ -1334,7 +937,6 @@ if (!function_exists('fecha_relativa')) {
                             <span>Soporte 24/7</span>
                         </div>
                     </div>
-
                     <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px;">
                         <h6 class="fw-bold mb-2">¿Necesitas ayuda?</h6>
                         <p class="small mb-0">Nuestro equipo está listo para ayudarte con cualquier pregunta o problema
@@ -1342,11 +944,7 @@ if (!function_exists('fecha_relativa')) {
                     </div>
                 </div>
             </div>
-
-            <!-- Separador -->
             <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
-
-            <!-- Footer Bottom -->
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <p class="mb-0">© 2025 LibrosWap. Todos los derechos reservados. | Diseñado con 💜 por el equipo
@@ -1363,72 +961,10 @@ if (!function_exists('fecha_relativa')) {
             </div>
         </div>
     </footer>
-
-
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Animaciones de scroll reveal
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                }
-            });
-        }, observerOptions);
-
-        // Observar todos los elementos con la clase scroll-reveal
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Efecto de paralaje suave en el hero
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const background = document.querySelector('.hero-background');
-            if (background) {
-                const rate = scrolled * -0.2;
-                background.style.transform = `translateY(${rate}px)`;
-            }
-        });
-
-        // Smooth scrolling para links internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Efectos adicionales para mejorar la experiencia
-        document.addEventListener('DOMContentLoaded', function () {
-            // Animar cards al hacer hover
-            const cards = document.querySelectorAll('.card-epic, .quick-access-card, .book-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                    this.style.transform = 'translateY(-5px) scale(1.02)';
-                });
-
-                card.addEventListener('mouseleave', function () {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-        });
-    </script>
+    <script src="public/js/dashboardu.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.0/font/bootstrap-icons.min.css"
         rel="stylesheet">
 </body>
-
 </html>

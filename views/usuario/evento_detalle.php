@@ -1,98 +1,10 @@
-<!-- Estilos mínimos para detalle de foro -->
-<style>
-    .text-purple {
-        color: #6a11cb;
-    }
-
-    .forum-detail-card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
-
-    .forum-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 15px 15px 0 0;
-        padding: 25px;
-    }
-
-    .comment-card {
-        border: 1px solid #e9ecef;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 15px;
-        transition: all 0.3s ease;
-    }
-
-    .comment-card:hover {
-        box-shadow: 0 4px 15px rgba(106, 17, 203, 0.1);
-        transform: translateY(-2px);
-    }
-
-    .btn-back {
-        background: rgba(106, 17, 203, 0.1);
-        border: 2px solid #6a11cb;
-        color: #6a11cb;
-        border-radius: 25px;
-        padding: 10px 20px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .btn-back:hover {
-        background: #6a11cb;
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-comment {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        color: white;
-        border-radius: 25px;
-        padding: 10px 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .btn-comment:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
-        color: white;
-    }
-
-    .comment-form {
-        background: #f8f9fa;
-        border-radius: 15px;
-        padding: 25px;
-        margin-bottom: 30px;
-    }
-
-    .form-control {
-        border-radius: 10px;
-        border: 2px solid #e9ecef;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-        border-color: #6a11cb;
-        box-shadow: 0 0 0 0.2rem rgba(106, 17, 203, 0.25);
-    }
-</style>
-
+<link rel="stylesheet" href="public/css/evento_detalle.css">
 <div class="container mt-4">
-
-    <!-- Botón volver -->
     <div class="mb-4">
         <a href="index.php?c=EventoController&a=listar" class="btn-back">
             <i class="bi bi-arrow-left me-2"></i>Volver a Foros
         </a>
     </div>
-
-    <!-- Detalle del Foro -->
     <div class="forum-detail-card">
         <div class="forum-header">
             <h2 class="mb-2"><?= htmlspecialchars($datosEvento['titulo']) ?></h2>
@@ -117,8 +29,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Formulario de comentario -->
     <div class="comment-form">
         <h5 class="fw-bold mb-3 text-purple">
             <i class="bi bi-chat-square-text me-2"></i>
@@ -136,14 +46,11 @@
             </button>
         </form>
     </div>
-
-    <!-- Lista de comentarios -->
     <div class="mb-4">
         <h5 class="fw-bold mb-4 text-purple">
             <i class="bi bi-chat-left-text me-2"></i>
             Comentarios (<?= count($comentarios) ?>)
         </h5>
-
         <?php if (!empty($comentarios)): ?>
             <?php foreach ($comentarios as $c): ?>
                 <div class="comment-card">
@@ -179,5 +86,4 @@
             </div>
         <?php endif; ?>
     </div>
-
 </div>
