@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 require_once __DIR__ . '/../models/Carrito.php';
 
 class CarritoController {
@@ -61,4 +61,4 @@ class CarritoController {
         $carrito->confirmarCompra($_SESSION['usuario']['id']);
         echo "✅ Compra confirmada.";
     }
-} -->
+}

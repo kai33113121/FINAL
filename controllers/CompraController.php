@@ -41,4 +41,16 @@ class CompraController
 
         // Verificar que la compra pertenece al usuario
         if (!empty($detalles)) {
-    
+            $primera_compra = $detalles[0];
+            // Aquí podrías agregar validación de que la compra pertenece al usuario
+        }
+
+        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+        $id_usuario = $_SESSION['usuario']['id'];
+        $notificaciones = obtenerNotificacionesUsuario($id_usuario);
+
+        $contenido = __DIR__ . '/../views/usuario/detalle_compra.php';
+        include __DIR__ . '/../views/layouts/layout_usuario.php';
+    }
+}
+?>

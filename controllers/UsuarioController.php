@@ -356,7 +356,14 @@ class UsuarioController
 
     // Llamar al modelo con los nuevos parámetros
     $usuarioModel->actualizarPerfil($id, $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito);
-
+public function actualizarPerfil($id, $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito)
+{
+    $conn = conectar();
+    $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, email = ?, bio = ?, foto = ?, direccion = ?, genero_preferido = ?, libro_favorito = ? WHERE id = ?");
+    $stmt->bind_param("sssssssi", $nombre, $email, $bio, $foto, $direccion, $genero_preferido, $libro_favorito, $id);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
     // Actualizar sesión con todos los campos
     $_SESSION['usuario']['nombre'] = $nombre;
     $_SESSION['usuario']['email'] = $email;

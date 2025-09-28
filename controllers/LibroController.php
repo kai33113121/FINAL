@@ -13,12 +13,12 @@ class LibroController {
 
     public function explorar() {
         // Verifica sesión si la vista lo requiere
-        if (!isset($_SESSION['usuario']['id'])) {
-      
-        require_once __DIR__ . '/../helpers/notificaciones_helper.php';
-        $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
+        if (isset($_SESSION['usuario']['id'])) {
+            require_once __DIR__ . '/../helpers/notificaciones_helper.php';
+            $notificaciones = obtenerNotificacionesUsuario($_SESSION['usuario']['id']);
 
-        $contenido = __DIR__ . '/../views/usuario/explorar.php';
-        include __DIR__ . '/../views/layouts/layout_usuario.php';
+            $contenido = __DIR__ . '/../views/usuario/explorar.php';
+            include __DIR__ . '/../views/layouts/layout_usuario.php';
+        }
     }
 }
