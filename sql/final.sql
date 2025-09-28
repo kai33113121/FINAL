@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 12, 2025 at 05:41 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Host: 127.0.0.1:3306
+-- Generation Time: Sep 28, 2025 at 02:39 AM
+-- Server version: 11.8.3-MariaDB-log
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `final`
+-- Database: `u379646107_final`
 --
 
 -- --------------------------------------------------------
@@ -31,30 +31,18 @@ CREATE TABLE `carrito` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `libro_id` int(11) DEFAULT NULL,
-  `fecha_agregado` datetime DEFAULT current_timestamp()
+  `fecha_agregado` datetime DEFAULT current_timestamp(),
+  `tabla_origen` enum('libros','libros_venta') DEFAULT 'libros'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `carrito`
 --
 
-INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`) VALUES
-(35, 21, 29, '2025-09-11 18:05:09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categorias`
---
-
-CREATE TABLE `categorias` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL,
-  `icono` varchar(10) DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `slug` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`, `tabla_origen`) VALUES
+(72, 40, 75, '2025-09-24 19:03:35', 'libros'),
+(80, 33, 80, '2025-09-27 22:24:00', 'libros'),
+(81, 34, 80, '2025-09-27 23:17:55', 'libros');
 
 -- --------------------------------------------------------
 
@@ -70,6 +58,16 @@ CREATE TABLE `comentarios_evento` (
   `fecha` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `comentarios_evento`
+--
+
+INSERT INTO `comentarios_evento` (`id`, `id_evento`, `id_usuario`, `comentario`, `fecha`) VALUES
+(6, 11, 33, 'sass', '2025-09-24 18:50:24'),
+(7, 11, 40, 'Excelente página 10/10 👍🏻', '2025-09-24 19:00:11'),
+(8, 11, 41, 'Página de calidad, me encanta su diseño y la paleta de color utilizada', '2025-09-24 19:00:58'),
+(9, 11, 33, 'xd', '2025-09-24 19:20:26');
+
 -- --------------------------------------------------------
 
 --
@@ -80,22 +78,31 @@ CREATE TABLE `compras` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `libro_id` int(11) DEFAULT NULL,
-  `fecha` datetime DEFAULT current_timestamp()
+  `fecha` datetime DEFAULT current_timestamp(),
+  `total` decimal(10,2) DEFAULT 0.00,
+  `estado` varchar(50) DEFAULT 'pendiente',
+  `stripe_session_id` varchar(255) DEFAULT NULL,
+  `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+  `tabla_origen` enum('libros','libros_venta') DEFAULT 'libros'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `config_usuario`
+-- Table structure for table `detalle_compras`
 --
 
-CREATE TABLE `config_usuario` (
+CREATE TABLE `detalle_compras` (
   `id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `tema` varchar(20) DEFAULT 'claro',
-  `color_acento` varchar(20) DEFAULT 'morado',
-  `vista_libros` varchar(10) DEFAULT 'grid',
-  `notificaciones` tinyint(1) DEFAULT 1
+  `compra_id` int(11) NOT NULL,
+  `libro_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL DEFAULT 1,
+  `precio` decimal(10,2) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `autor` varchar(255) DEFAULT NULL,
+  `imagen` varchar(255) DEFAULT NULL,
+  `genero` varchar(100) DEFAULT NULL,
+  `tabla_origen` enum('libros','libros_venta') DEFAULT 'libros'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -118,35 +125,7 @@ CREATE TABLE `eventos` (
 --
 
 INSERT INTO `eventos` (`id`, `titulo`, `descripcion`, `fecha_creacion`, `creado_por`, `activo`) VALUES
-(4, '¿García Márquez arruinó la literatura colombiana? El peso de la sombra del Nobel', 'Hablemos sin tapujos de algo que muchos piensan pero pocos se atreven a decir: ¿Gabriel García Márquez se convirtió en una carga para las nuevas generaciones de escritores colombianos?\r\nDesde que ganó el Nobel en 1982, parece que todo escritor colombiano debe ser comparado obligatoriamente con el maestro de Aracataca. Los editores internacionales buscan \"el nuevo García Márquez\", los críticos esperan realismo mágico en cada párrafo, y los lectores extranjeros se decepcionan cuando leen a un colombiano que no habla de mariposas amarillas o lluvia de cuatro años.\r\n¿Será que autores como Juan Gabriel Vásquez, Pilar Quintana, o Mario Mendoza han tenido que luchar contra el fantasma de Macondo para ser reconocidos por mérito propio? ¿O será que García Márquez abrió las puertas para que el mundo finalmente prestara atención a lo que siempre hemos sabido: que aquí se escribe literatura de primer nivel?\r\nPensemos en casos específicos: cuando Fernando Vallejo ganó el Rómulo Gallegos, muchos dijeron que era \"anti-García Márquez\" por su realismo crudo. Cuando Laura Restrepo escribe sobre violencia urbana, la critican por no tener la \"magia\" del maestro. ¿Es justo este eterno juego de comparaciones?\r\nY aquí va la pregunta que realmente duele: ¿cuántos escritores colombianos talentosos han sido ignorados porque no encajan en el molde del \"realismo mágico\"? ¿Cuántos han forzado elementos fantásticos en sus historias solo para ser tomados en serio internacionalmente?\r\nPor otro lado, ¿no será que estamos siendo malagradecidos? García Márquez puso a Colombia en el mapa literario mundial. Antes de \"Cien años de soledad\", ¿quién conocía a nuestros escritores fuera del continente? ¿No deberíamos estar eternamente agradecidos en lugar de quejarnos?\r\n¿Qué opinas? ¿García Márquez es una bendición o una maldición para la literatura colombiana actual?', '2025-09-11 19:33:23', 20, 1),
-(5, 'Los bestsellers están matando la literatura: ¿Por qué 50 Sombras de Grey vende más que Borges?', 'Aquí va una verdad incómoda que necesitamos discutir: mientras Jorge Luis Borges, considerado uno de los escritores más brillantes del siglo XX, vendía miles de ejemplares, E.L. James vendió más de 125 millones de copias de \"50 Sombras de Grey\" en todo el mundo.\r\n¿Qué está pasando con el mundo? ¿Hemos perdido la capacidad de apreciar la verdadera literatura? ¿O será que los escritores \"serios\" se han vuelto tan pretenciosos y elitistas que han perdido la conexión con los lectores reales?\r\nPensemos en esto: Dan Brown, con \"El Código Da Vinci\", vendió más de 80 millones de copias. Mientras tanto, obras maestras como \"Pedro Páramo\" de Juan Rulfo o \"Rayuela\" de Cortázar apenas si llegan a unos pocos millones en décadas de existencia. ¿Es culpa del público \"inculto\" o es culpa de un sistema educativo que presenta la literatura clásica como una medicina amarga que hay que tragar?\r\nPero espera, aquí viene el plot twist: ¿y si los bestsellers realmente están cumpliendo una función importante? ¿Y si libros como \"Harry Potter\" están creando una generación de lectores que después pueden evolucionar hacia literatura más compleja? J.K. Rowling logró que millones de niños se emocionaran leyendo libros de 700 páginas. ¿Eso no merece respeto?\r\nY hablemos de los géneros \"menores\": ¿por qué una novela romántica se considera menos literatura que una novela experimental? ¿Por qué un thriller bien construido vale menos que una novela existencial aburrida? Stephen King ha vendido más de 350 millones de libros y ha creado obras que han definido la cultura popular. ¿No es eso también literatura válida?\r\nAquí está la pregunta que realmente incomoda: ¿será que nosotros, los \"amantes de la literatura seria\", somos unos snobs pretenciosos que despreciamos todo lo que le gusta a las masas? ¿O realmente existe una diferencia cualitativa objetiva entre \"literatura\" y \"entretenimiento\"?\r\n¿Y si el problema no son los bestsellers, sino que la educación literaria está fallando en mostrar por qué los clásicos siguen siendo relevantes?\r\n¿Tú qué piensas? ¿Los bestsellers son el enemigo de la buena literatura o son la puerta de entrada hacia ella?', '2025-09-11 19:34:02', 20, 1),
-(6, '¿Existe realmente la \'literatura femenina\'? El machismo oculto en las estanterías', 'Vamos a tocar un tema que genera chispas: ¿por qué cuando una mujer escribe sobre relaciones y emociones es \"literatura femenina\", pero cuando lo hace un hombre es simplemente \"literatura\"?\r\nPensemos en esto: a Jane Austen la etiquetaron durante siglos como escritora de \"novelitas románticas para señoritas\", hasta que los críticos (la mayoría hombres) finalmente admitieron que era una genio de la sátira social. A Virginia Woolf la llamaban \"neurótica\" cuando exploraba la psicología humana, mientras que James Joyce era \"innovador\" por hacer lo mismo.\r\nY aquí en América Latina no estamos mejor: a Isabel Allende la critican por ser \"demasiado sentimental\" (¿acaso García Márquez no era sentimental?), a Laura Esquivel la encasillaron como \"escritora de cocina\" por \"Como agua para chocolate\", y a Gioconda Belli la reducen a \"poeta erótica\" ignorando su obra política.\r\nPero el machismo literario va más profundo. ¿Sabían que las librerías tienen secciones de \"literatura femenina\" pero no de \"literatura masculina\"? ¿Por qué los libros escritos por hombres se consideran \"universales\" y los escritos por mujeres son \"nicho\"?\r\nHablemos de números reales: las mujeres compran aproximadamente el 68% de todos los libros, pero solo el 32% de las reseñas en medios prestigiosos son sobre libros escritos por mujeres. ¿Coincidencia? Lo dudo.\r\nY aquí viene la pregunta incómoda: ¿cuántos hombres han leído \"Mujeres que corren con lobos\", \"Eat, Pray, Love\" o \"El cuento de la criada\" y los han descartado como \"cosas de mujeres\" sin siquiera darles una oportunidad? ¿Cuántas obras maestras nos estamos perdiendo por prejuicios de género?\r\nPero también hay que voltear la moneda: ¿será que realmente existe una sensibilidad femenina diferente en la escritura? ¿O es que las mujeres han tenido que desarrollar formas distintas de narrar porque históricamente han sido silenciadas?\r\nY aquí va la pregunta que más me intriga: ¿por qué cuando una mujer escribe ciencia ficción o thriller tiene que demostrar el doble que un hombre para ser tomada en serio, pero cuando escribe romance se le dice que \"se conformó con un género fácil\"?\r\n¿Qué opinan? ¿El mundo literario sigue siendo machista o ya hemos superado esas barreras?', '2025-09-11 19:34:28', 20, 1),
-(7, 'Los clásicos están sobrevalorados: ¿Por qué seguimos leyendo libros de hace 200 años?', 'TEMAS DE DEBATE LITERARIO - ROMPE HIELOS\r\n1. LITERATURA COLOMBIANA - TEMA EXPLOSIVO\r\nTítulo: \"¿García Márquez arruinó la literatura colombiana? El peso de la sombra del Nobel\"\r\nDescripción:\r\nHablemos sin tapujos de algo que muchos piensan pero pocos se atreven a decir: ¿Gabriel García Márquez se convirtió en una carga para las nuevas generaciones de escritores colombianos?\r\nDesde que ganó el Nobel en 1982, parece que todo escritor colombiano debe ser comparado obligatoriamente con el maestro de Aracataca. Los editores internacionales buscan \"el nuevo García Márquez\", los críticos esperan realismo mágico en cada párrafo, y los lectores extranjeros se decepcionan cuando leen a un colombiano que no habla de mariposas amarillas o lluvia de cuatro años.\r\n¿Será que autores como Juan Gabriel Vásquez, Pilar Quintana, o Mario Mendoza han tenido que luchar contra el fantasma de Macondo para ser reconocidos por mérito propio? ¿O será que García Márquez abrió las puertas para que el mundo finalmente prestara atención a lo que siempre hemos sabido: que aquí se escribe literatura de primer nivel?\r\nPensemos en casos específicos: cuando Fernando Vallejo ganó el Rómulo Gallegos, muchos dijeron que era \"anti-García Márquez\" por su realismo crudo. Cuando Laura Restrepo escribe sobre violencia urbana, la critican por no tener la \"magia\" del maestro. ¿Es justo este eterno juego de comparaciones?\r\nY aquí va la pregunta que realmente duele: ¿cuántos escritores colombianos talentosos han sido ignorados porque no encajan en el molde del \"realismo mágico\"? ¿Cuántos han forzado elementos fantásticos en sus historias solo para ser tomados en serio internacionalmente?\r\nPor otro lado, ¿no será que estamos siendo malagradecidos? García Márquez puso a Colombia en el mapa literario mundial. Antes de \"Cien años de soledad\", ¿quién conocía a nuestros escritores fuera del continente? ¿No deberíamos estar eternamente agradecidos en lugar de quejarnos?\r\n¿Qué opinas? ¿García Márquez es una bendición o una maldición para la literatura colombiana actual?\r\n\r\n2. DEBATE INTERNACIONAL POLÉMICO\r\nTítulo: \"Los bestsellers están matando la literatura: ¿Por qué 50 Sombras de Grey vende más que Borges?\"\r\nDescripción:\r\nAquí va una verdad incómoda que necesitamos discutir: mientras Jorge Luis Borges, considerado uno de los escritores más brillantes del siglo XX, vendía miles de ejemplares, E.L. James vendió más de 125 millones de copias de \"50 Sombras de Grey\" en todo el mundo.\r\n¿Qué está pasando con el mundo? ¿Hemos perdido la capacidad de apreciar la verdadera literatura? ¿O será que los escritores \"serios\" se han vuelto tan pretenciosos y elitistas que han perdido la conexión con los lectores reales?\r\nPensemos en esto: Dan Brown, con \"El Código Da Vinci\", vendió más de 80 millones de copias. Mientras tanto, obras maestras como \"Pedro Páramo\" de Juan Rulfo o \"Rayuela\" de Cortázar apenas si llegan a unos pocos millones en décadas de existencia. ¿Es culpa del público \"inculto\" o es culpa de un sistema educativo que presenta la literatura clásica como una medicina amarga que hay que tragar?\r\nPero espera, aquí viene el plot twist: ¿y si los bestsellers realmente están cumpliendo una función importante? ¿Y si libros como \"Harry Potter\" están creando una generación de lectores que después pueden evolucionar hacia literatura más compleja? J.K. Rowling logró que millones de niños se emocionaran leyendo libros de 700 páginas. ¿Eso no merece respeto?\r\nY hablemos de los géneros \"menores\": ¿por qué una novela romántica se considera menos literatura que una novela experimental? ¿Por qué un thriller bien construido vale menos que una novela existencial aburrida? Stephen King ha vendido más de 350 millones de libros y ha creado obras que han definido la cultura popular. ¿No es eso también literatura válida?\r\nAquí está la pregunta que realmente incomoda: ¿será que nosotros, los \"amantes de la literatura seria\", somos unos snobs pretenciosos que despreciamos todo lo que le gusta a las masas? ¿O realmente existe una diferencia cualitativa objetiva entre \"literatura\" y \"entretenimiento\"?\r\n¿Y si el problema no son los bestsellers, sino que la educación literaria está fallando en mostrar por qué los clásicos siguen siendo relevantes?\r\n¿Tú qué piensas? ¿Los bestsellers son el enemigo de la buena literatura o son la puerta de entrada hacia ella?\r\n\r\n3. GÉNERO Y LITERATURA - TEMA CANDENTE\r\nTítulo: \"¿Existe realmente la \'literatura femenina\'? El machismo oculto en las estanterías\"\r\nDescripción:\r\nVamos a tocar un tema que genera chispas: ¿por qué cuando una mujer escribe sobre relaciones y emociones es \"literatura femenina\", pero cuando lo hace un hombre es simplemente \"literatura\"?\r\nPensemos en esto: a Jane Austen la etiquetaron durante siglos como escritora de \"novelitas románticas para señoritas\", hasta que los críticos (la mayoría hombres) finalmente admitieron que era una genio de la sátira social. A Virginia Woolf la llamaban \"neurótica\" cuando exploraba la psicología humana, mientras que James Joyce era \"innovador\" por hacer lo mismo.\r\nY aquí en América Latina no estamos mejor: a Isabel Allende la critican por ser \"demasiado sentimental\" (¿acaso García Márquez no era sentimental?), a Laura Esquivel la encasillaron como \"escritora de cocina\" por \"Como agua para chocolate\", y a Gioconda Belli la reducen a \"poeta erótica\" ignorando su obra política.\r\nPero el machismo literario va más profundo. ¿Sabían que las librerías tienen secciones de \"literatura femenina\" pero no de \"literatura masculina\"? ¿Por qué los libros escritos por hombres se consideran \"universales\" y los escritos por mujeres son \"nicho\"?\r\nHablemos de números reales: las mujeres compran aproximadamente el 68% de todos los libros, pero solo el 32% de las reseñas en medios prestigiosos son sobre libros escritos por mujeres. ¿Coincidencia? Lo dudo.\r\nY aquí viene la pregunta incómoda: ¿cuántos hombres han leído \"Mujeres que corren con lobos\", \"Eat, Pray, Love\" o \"El cuento de la criada\" y los han descartado como \"cosas de mujeres\" sin siquiera darles una oportunidad? ¿Cuántas obras maestras nos estamos perdiendo por prejuicios de género?\r\nPero también hay que voltear la moneda: ¿será que realmente existe una sensibilidad femenina diferente en la escritura? ¿O es que las mujeres han tenido que desarrollar formas distintas de narrar porque históricamente han sido silenciadas?\r\nY aquí va la pregunta que más me intriga: ¿por qué cuando una mujer escribe ciencia ficción o thriller tiene que demostrar el doble que un hombre para ser tomada en serio, pero cuando escribe romance se le dice que \"se conformó con un género fácil\"?\r\n¿Qué opinan? ¿El mundo literario sigue siendo machista o ya hemos superado esas barreras?\r\n\r\n4. LITERATURA CLÁSICA VS. CONTEMPORÁNEA\r\nTítulo: \"Los clásicos están sobrevalorados: ¿Por qué seguimos leyendo libros de hace 200 años?\"\r\nDescripción:\r\nAquí va una confesión que va a molestar a muchos: me parece absurdo que en pleno 2025 sigamos obligando a los estudiantes a leer \"Don Quijote\" o \"La Divina Comedia\" cuando hay escritores contemporáneos creando obras igual de brillantes pero infinitamente más relevantes para nuestra época.\r\n¿En serio creen que Cervantes tiene más que decirnos sobre la condición humana que Chimamanda Ngozi Adichie o Haruki Murakami? ¿Por qué Shakespeare sigue siendo \"obligatorio\" en las escuelas cuando tenemos dramaturgos actuales que abordan los mismos temas universales pero con lenguaje y contextos que realmente conectan con las nuevas generaciones?\r\nPensemos en esto objetivamente: \"Cien años de soledad\" se publicó en 1967 y ya se considera un \"clásico moderno\". Pero libros como \"Americanah\" de Adichie (2013) o \"La brevedad de la vida\" de Sara Mesa (2017) tratan temas de identidad, migración y alienación que son mil veces más relevantes para alguien de 20 años en 2025 que las aventuras de un hidalgo loco del siglo XVII.\r\nY no me malentiendan: no estoy diciendo que los clásicos sean malos. Estoy cuestionando esta veneración ciega que nos impide reconocer que tal vez, solo tal vez, algunos de esos libros se mantienen en el canon más por inercia académica que por mérito real.\r\n¿Cuántos de ustedes leyeron \"Madame Bovary\" en el colegio y lo odiaron, pero después leyeron \"Estrella distante\" de Roberto Bolaño y se enamoraron de la literatura? ¿Cuántos se aburrieron con \"Los Miserables\" pero se devoraron \"Los detectives salvajes\"?\r\nAquí va la pregunta realmente provocadora: ¿y si el problema no es que los jóvenes \"no saben leer literatura seria\", sino que les estamos dando libros que ya no hablan su idioma emocional?\r\nPero ojo, que aquí viene el contraargumento: ¿no será que precisamente por leer los clásicos podemos entender mejor la literatura contemporánea? ¿No será que esos libros \"viejos\" nos dan las herramientas para apreciar la innovación de los escritores actuales?\r\nY la pregunta final que los va a hacer pensar: si dentro de 200 años alguien dijera \"¿para qué leer a Bolaño o a Elena Poniatowska si ya tenemos escritores del siglo XXIII?\", ¿qué les responderían?\r\n¿Los clásicos merecen su estatus o es hora de refrescar el canon literario?', '2025-09-11 19:34:55', 20, 1),
-(8, '¿BookTok está salvando o destruyendo la literatura? El debate que divide a los lectores', 'Admitámoslo: BookTok ha vendido más libros en 3 años que todos los suplementos culturales juntos en una década. Pero ¿a qué precio? ¿Estamos ante una revolución democrática de la lectura o ante la degradación definitiva del criterio literario?\r\nLos números son impresionantes: videos de 15 segundos sobre \"Culpa mía\" han generado millones de visualizaciones y han convertido a autores desconocidos en bestsellers internacionales. Mientras tanto, reseñas académicas de 3000 palabras sobre novelas galardonadas apenas consiguen 50 lecturas.\r\n¿Pero qué está pasando realmente? ¿BookTok está creando una generación de lectores superficiales que solo buscan romances tóxicos y finales felices, o está derribando las barreras elitistas que siempre han separado la \"buena literatura\" del público general?\r\nPensemos en casos concretos: \"Los siete maridos de Evelyn Hugo\" se volvió un fenómeno gracias a TikTok, y resulta que es una novela inteligente sobre fama, identidad sexual y manipulación mediática. \"El atlas de las nubes\" resurgió en ventas después de que BookTokers empezaran a recomendarlo. ¿No será que estos jóvenes tienen mejor criterio del que les damos crédito?\r\nPero también está el lado oscuro: la presión por crear contenido \"aesthetic\" está haciendo que los libros se evalúen más por su portada que por su contenido. Hay algoritmos que priorizan libros con covers \"bonitas\" y historias \"romantizables\". ¿Estamos reduciendo la literatura a mera decoración?\r\nY aquí viene lo que realmente me preocupa: ¿qué pasa cuando la velocidad de consumo de TikTok se aplica a la lectura? Estoy viendo reseñas de libros de 400 páginas hechas por personas que claramente solo leyeron las primeras 50. ¿Es eso reseñar o es postureo digital?\r\nPero ojo con ser muy críticos: ¿no será que nosotros, los lectores \"tradicionales\", estamos siendo prejuiciosos? Cuando yo tenía 15 años, leía a Paulo Coelho y lo consideraba el mejor escritor del mundo. ¿No será que BookTok es simplemente la puerta de entrada de esta generación?\r\nLa pregunta que realmente me mantiene despierto: si BookTok logra que un millón de adolescentes lean \"Crepúsculo\" y de ahí el 10% pasa a leer \"Drácula\", y de ese 10% el 1% termina leyendo \"Frankenstein\", ¿no habrá valido la pena?\r\n¿BookTok es el futuro de la promoción literaria o el apocalipsis de la cultura?', '2025-09-11 19:35:23', 20, 1),
-(9, '¿Puede existir literatura apolítica? El falso mito de la neutralidad artística', 'Aquí va una verdad que incomoda a muchos: no existe tal cosa como literatura \"apolítica\". Cada libro que escribes, cada personaje que creas, cada historia que cuentas es una declaración política, te des cuenta o no.\r\nCuando J.K. Rowling dice que Dumbledore es gay pero no lo incluye explícitamente en los libros, esa es una decisión política. Cuando García Márquez escribe sobre dictadores latinoamericanos, obviamente es política. Pero cuando Jane Austen escribe sobre mujeres que necesitan casarse para sobrevivir económicamente, ¿por qué algunos dicen que \"no es política\"?\r\nLa literatura siempre ha sido política, desde \"La Ilíada\" (una historia sobre guerra e imperialismo) hasta \"1984\" (obvio). Pero hay un patrón sospechoso: cuando un escritor hombre, blanco, heterosexual escribe sobre \"temas universales\", se considera arte puro. Cuando una mujer, una persona racializada, o alguien LGBTI+ escribe sobre su experiencia, se considera \"literatura de agenda\".\r\nHablemos de casos concretos: ¿por qué \"El gran Gatsby\" se enseña como una obra maestra sobre el sueño americano, pero \"Beloved\" de Toni Morrison se ve como \"literatura sobre esclavitud\"? Ambas son profundamente políticas, pero solo una se etiqueta así.\r\nY en Colombia tenemos ejemplos clarísimos: cuando Fernando Vallejo critica la violencia y la corrupción, es \"literatura política\". Cuando García Márquez habla de la United Fruit Company en \"Cien años de soledad\", es \"realismo mágico\". ¿Doble estándar, no?\r\nPero aquí viene la pregunta incómoda: ¿será que los lectores usamos la etiqueta \"político\" para descartar libros que nos confrontan con realidades que no queremos enfrentar? Cuando alguien dice \"no me gusta la literatura política\", ¿realmente está diciendo \"no me gusta que me hagan pensar en problemas sociales\"?\r\nY del otro lado: ¿hay escritores que sacrifican calidad literaria por mensaje político? ¿Cuántas novelas \"comprometidas\" son aburridas porque el autor prioriza el sermón sobre la historia?\r\nLa pregunta que realmente me fascina: si todo es político, ¿por qué fingimos que no? ¿No sería más honesto admitir nuestros sesgos y hablar abiertamente de cómo la ideología influye en lo que leemos y cómo lo interpretamos?', '2025-09-11 19:35:53', 20, 1),
-(10, '¿La literatura debe tomar posición o mantenerse \"neutral\"? ¿Existe realmente la neutralidad en el arte. asasasera', '¿La literatura debe tomar posición o mantenerse \"neutral\"? ¿Existe realmente la neutralidad en el arte?', '2025-09-11 21:08:38', 20, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `generos`
---
-
-CREATE TABLE `generos` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `generos`
---
-
-INSERT INTO `generos` (`id`, `nombre`) VALUES
-(1, 'Ficción'),
-(2, 'Romance'),
-(3, 'Ciencia'),
-(4, 'Historia'),
-(5, 'Fantasía');
+(11, 'Que opinas?', 'Mmm', '2025-09-24 18:49:30', 29, 1);
 
 -- --------------------------------------------------------
 
@@ -169,8 +148,49 @@ CREATE TABLE `intercambios` (
 --
 
 INSERT INTO `intercambios` (`id`, `libro_id_1`, `libro_id_2`, `usuario_1`, `usuario_2`, `estado`, `fecha`) VALUES
-(38, 35, 42, 21, 22, 'rechazado', '2025-09-11 18:53:22'),
-(39, 31, 44, 21, 23, 'aceptado', '2025-09-11 18:54:48');
+(51, 26, 31, 33, 34, 'rechazado', '2025-09-23 20:53:40'),
+(52, 26, 31, 33, 34, 'aceptado', '2025-09-24 00:22:41'),
+(53, 26, 31, 33, 34, 'pendiente', '2025-09-24 18:35:52'),
+(54, 36, 34, 35, 41, 'aceptado', '2025-09-24 19:10:29'),
+(55, 37, 34, 33, 41, 'pendiente', '2025-09-25 05:36:55'),
+(56, 31, 38, 34, 42, 'pendiente', '2025-09-27 23:27:02'),
+(57, 29, 30, 34, 33, 'rechazado', '2025-09-27 23:29:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventario_oficial`
+--
+
+CREATE TABLE `inventario_oficial` (
+  `id` int(11) NOT NULL,
+  `isbn` varchar(50) DEFAULT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `autor` varchar(255) NOT NULL,
+  `genero` varchar(100) DEFAULT NULL,
+  `precio_compra` decimal(10,2) DEFAULT 0.00,
+  `precio_venta` decimal(10,2) DEFAULT 0.00,
+  `stock_actual` int(11) DEFAULT 0,
+  `stock_minimo` int(11) DEFAULT 5,
+  `descripcion` text DEFAULT NULL,
+  `imagen` varchar(255) DEFAULT 'default.jpg',
+  `fecha_ingreso` datetime DEFAULT current_timestamp(),
+  `activo` tinyint(1) DEFAULT 1,
+  `libro_id` int(11) DEFAULT NULL,
+  `stock` int(11) DEFAULT 0,
+  `precio_oficial` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inventario_oficial`
+--
+
+INSERT INTO `inventario_oficial` (`id`, `isbn`, `titulo`, `autor`, `genero`, `precio_compra`, `precio_venta`, `stock_actual`, `stock_minimo`, `descripcion`, `imagen`, `fecha_ingreso`, `activo`, `libro_id`, `stock`, `precio_oficial`) VALUES
+(1, '121212121212', '12asss', 'qwqw', 'Ficción', 121212.00, 121221.00, 121212, 1212, '0', 'default.jpg', '2025-09-20 02:45:10', 0, NULL, 0, NULL),
+(2, 'sasasasas', 'asas', 'asasas', 'No ficción', 121212.00, 121212.00, 121212, 51212, '121212', 'default.jpg', '2025-09-20 04:59:05', 0, NULL, 0, NULL),
+(3, '121212121212', 'saaas', 'saassa', 'Ficción', 12.00, 212121.00, 211221, 5212121, '0', 'default.jpg', '2025-09-23 17:19:32', 0, NULL, 0, NULL),
+(4, '12121', 'QWQWQ', 'QWW', 'Ficción', 22.00, 21212.00, 121, 2, '212', 'default.jpg', '2025-09-24 18:55:31', 0, NULL, 0, NULL),
+(5, '12121', 'QWQWQ', 'QWW', 'Ficción', 22.00, 21212.00, 121, 2, '212', 'default.jpg', '2025-09-24 18:55:32', 0, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -189,58 +209,22 @@ CREATE TABLE `libros` (
   `usuario_id` int(11) DEFAULT NULL,
   `modo` enum('intercambio','venta') DEFAULT 'intercambio',
   `precio` decimal(10,2) DEFAULT NULL,
-  `id_usuario` int(11) NOT NULL
+  `id_usuario` int(11) DEFAULT NULL,
+  `tipo_catalogo` enum('oficial','usuario') DEFAULT 'oficial'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `libros`
 --
 
-INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`, `imagen`, `usuario_id`, `modo`, `precio`, `id_usuario`) VALUES
-(29, 'El Señor de los Anillos: La Comunidad del Anillos', 'J.R.R. Tolkien', 'Fantasía', 'usado', 'La obra maestra que definió el género de fantasía épica moderna. Frodo Bolsón hereda un anillo mágico de su tío Bilbo, sin saber que es el Anillo Único forjado por el Señor Oscuro Sauron. Acompañado por el mago Gandalf y una comunidad de valientes compañeros, debe emprender un peligroso viaje para destruir el anillo y salvar la Tierra Media. Una épica aventura llena de magia, amistad, valor y la eterna lucha entre el bien y el mal que ha cautivado a generaciones de lectores.', NULL, NULL, NULL, NULL, 21),
-(30, 'Harry Potter y la Piedra Filosofal', 'J.K. Rowling', 'Fantasía', 'nuevo', 'El libro que inició la saga más popular de la literatura juvenil moderna. Harry Potter descubre en su undécimo cumpleaños que es un mago y ha sido aceptado en Hogwarts, la escuela de magia más prestigiosa del mundo. Junto a sus nuevos amigos Ron y Hermione, debe enfrentar misterios, criaturas mágicas y descubrir la verdad sobre sus padres mientras alguien busca robar la legendaria Piedra Filosofal. Una historia mágica sobre amistad, valentía y el poder del amor.', '68c3543a50ada_Harry Potter y la piedra filosofal - Edición de Minalima _ Reseña Pekeleke.jpg', NULL, 'intercambio', 45.00, 21),
-(31, '1984', 'George Orwell', 'Ciencia Ficción', 'nuevo', 'La distopía más influyente del siglo XX que predijo con escalofriante precisión aspectos de nuestra sociedad moderna. Winston Smith vive en un mundo totalitario donde el Gran Hermano lo vigila todo, la historia se reescribe constantemente y hasta los pensamientos están controlados. Cuando se enamora de Julia, ambos se rebelan contra el sistema en una lucha desesperada por la libertad y la humanidad. Una obra profética sobre vigilancia, manipulación de la información y la resistencia del espíritu humano.', NULL, NULL, NULL, NULL, 21),
-(32, 'Dune', 'Frank Herbert', 'Ciencia Ficción', 'nuevo', 'La saga de ciencia ficción más vendida de todos los tiempos. En el planeta desértico Arrakis, única fuente de la especia melange, Paul Atreides debe navegar por una compleja red de política galáctica, religión y ecología para vengar a su familia y cumplir su destino como líder mesiánico. Una obra maestra que combina aventura épica con profundas reflexiones sobre poder, religión, ecología y evolución humana en un universo ricamente detallado.', NULL, NULL, NULL, NULL, 21),
-(33, 'Orgullo y Prejuicio', 'Jane Austen', 'Romance', 'usado', 'La novela romántica más querida de la literatura inglesa. Elizabeth Bennet, una joven inteligente e independiente, debe superar sus prejuicios hacia el aparentemente arrogante Mr. Darcy, mientras él debe vencer su orgullo de clase. A través de malentendidos, revelaciones y crecimiento personal, ambos descubren que el verdadero amor requiere comprensión, respeto mutuo y la capacidad de cambiar. Una historia atemporal sobre el amor que trasciende las diferencias sociales.', NULL, NULL, NULL, NULL, 21),
-(34, 'Me Before You', 'ojo Moyes', 'Romance', 'usado', 'Una historia de amor profundamente emotiva que cambió la vida de millones de lectores. Louisa Clark acepta un trabajo cuidando a Will Traynor, un joven adinerado que quedó tetrapléjico tras un accidente. Lo que comienza como una relación laboral se transforma en una conexión profunda que cambiará ambas vidas para siempre. Una novela que explora temas de discapacidad, dignidad, amor incondicional y la complejidad de las decisiones más difíciles de la vida.', NULL, NULL, NULL, NULL, 21),
-(35, 'El Código Da Vinci', 'Dan Brown', 'Thriller', 'usado', 'El thriller internacional que mantuvo en vilo a millones de lectores. Cuando el conservador del Louvre es asesinado, el profesor Robert Langdon se ve envuelto en una conspiración milenaria que involucra símbolos secretos, sociedades clandestinas y uno de los mayores misterios de la historia cristiana. Junto a la criptógrafa Sophie Neveu, debe descifrar pistas dejadas por Leonardo Da Vinci mientras huye de fuerzas poderosas que harán cualquier cosa por proteger un secreto ancestral.', NULL, NULL, NULL, NULL, 21),
-(36, 'Perdida', 'Gillian Flynn', 'Thriller', 'nuevo', 'Un thriller psicológico que redefine el concepto de matrimonio y confianza. Cuando Amy Dunne desaparece en su quinto aniversario de boda, todas las sospechas recaen sobre su esposo Nick. Pero nada es lo que parece en esta historia contada desde múltiples perspectivas que revela las capas más oscuras de una relación aparentemente perfecta. Una novela perturbadora que mantiene al lector adivinando hasta la última página sobre quién es realmente la víctima y quién el villano.', NULL, NULL, NULL, NULL, 21),
-(37, 'El Asesinato de Roger Ackroyd', 'Agatha Christie', 'Misterio', 'nuevo', 'Considerada la obra maestra de la Reina del Crimen y una de las novelas de misterio más innovadoras jamás escritas. Cuando el adinerado Roger Ackroyd es encontrado muerto en su estudio, el detective belga Hércules Poirot emerge de su retiro para resolver el caso. Con un final que revolucionó el género del misterio, Christie demuestra una vez más su genio para crear tramas imposibles de predecir y personajes inolvidables en esta joya de la literatura detectivesca.', NULL, NULL, NULL, NULL, 21),
-(38, 'Los Crímenes del Alfabeto', 'Agatha Christie', 'Misterio', 'nuevo', 'Hércules Poirot enfrenta uno de sus casos más desafiantes cuando un asesino en serie mata siguiendo el orden alfabético: Alice Ascher en Andover, Betty Barnard en Bexhill, Carmichael Clarke en Churston. Cada víctima es encontrada junto a una guía de ferrocarriles ABC, y el asesino envía cartas burlándose del detective. Una carrera contra el tiempo para detener a un criminal metódico antes de que complete su macabro alfabeto.', NULL, NULL, NULL, NULL, 22),
-(39, 'Sapiens: De Animales a Dioses', 'Yuval Noah Harari', 'No Ficción', 'usado', 'Una fascinante exploración de la historia de la humanidad desde la aparición del Homo sapiens hasta nuestros días. Harari examina cómo nuestra especie logró dominar el mundo a través de tres revoluciones fundamentales: la cognitiva, la agrícola y la científica. Con un estilo accesible y provocativo, el autor desafía nuestras concepciones sobre progreso, felicidad y el futuro de nuestra especie en una obra que ha redefinido cómo entendemos nuestro lugar en el mundo.', NULL, NULL, NULL, NULL, 22),
-(40, 'El Arte de la Guerra', 'Sun Tzu', 'No Ficción', 'usado', 'El tratado militar más influyente de la historia, escrito hace más de 2.500 años pero sorprendentemente relevante en el mundo moderno. Sun Tzu presenta estrategias y tácticas que van más allá del campo de batalla, aplicables a los negocios, la política y la vida cotidiana. Sus enseñanzas sobre liderazgo, planificación estratégica y psicología del conflicto han influido a generales, empresarios y líderes mundiales a lo largo de los siglos.', NULL, NULL, NULL, NULL, 22),
-(41, 'Cien Años de Soledad', 'Gabriel García Márquez', 'Clásicos', 'usado', 'La obra cumbre del realismo mágico y una de las novelas más importantes del siglo XX. La saga de la familia Buendía en el mítico pueblo de Macondo, donde lo extraordinario y lo cotidiano se entrelazan en una narrativa que abarca siete generaciones. García Márquez teje una historia que es a la vez íntima y universal, explorando temas de soledad, amor, poder y el destino cíclico de América Latina con una prosa poética incomparable que le valió el Premio Nobel de Literatura.', NULL, NULL, NULL, NULL, 22),
-(42, 'El Gran Gatsby', 'F. Scott Fitzgerald', 'Clásicos', 'usado', 'La novela definitiva sobre el sueño americano y la era del jazz. Narrada por Nick Carraway, cuenta la historia de Jay Gatsby, un misterioso millonario obsesionado con reconquistar a su amor perdido, Daisy Buchanan. Ambientada en los locos años veinte, la novela es una crítica brillante a la sociedad americana, explorando temas de clase, amor idealizado, corrupción moral y la imposibilidad de recuperar el pasado con una prosa elegante y memorable.', NULL, NULL, NULL, NULL, 22),
-(43, 'Los Juegos del Hambre', 'Suzanne Collins', 'Juvenil', 'usado', ' La trilogía que definió la literatura juvenil distópica moderna. En un futuro post-apocalíptico, Katniss Everdeen se convierte en el símbolo de la rebelión cuando se ofrece como voluntaria para reemplazar a su hermana menor en los brutales Juegos del Hambre, donde 24 jóvenes luchan a muerte en una arena televisada. Una historia poderosa sobre supervivencia, sacrificio, amor y la lucha contra la opresión que resonó con toda una generación.', NULL, NULL, NULL, NULL, 22),
-(44, 'Bajo la Misma Estrella', 'John Green', 'Juvenil', 'usado', 'Una historia de amor profundamente emotiva que redefinió la literatura juvenil contemporánea. Hazel Grace Lancaster, una adolescente con cáncer, conoce a Augustus Waters en un grupo de apoyo. Juntos emprenden un viaje extraordinario a Ámsterdam para conocer al autor de su libro favorito. Green combina humor, filosofía y emoción cruda en una novela que explora el amor, la mortalidad y el significado de la vida con una honestidad que ha tocado millones de corazones.', NULL, NULL, NULL, NULL, 23),
-(45, 'La Isla del Tesoro', 'Robert Louis Stevenson', 'Aventura', 'usado', 'La novela de aventuras más emocionante jamás escrita y el arquetipo de todas las historias de piratas. El joven Jim Hawkins descubre un mapa del tesoro y se embarca en una expedición hacia una isla misteriosa, donde debe enfrentar a piratas traicioneros liderados por el carismático pero peligroso Long John Silver. Una historia atemporal de valor, traición, amistad y la búsqueda del tesoro más famoso de la literatura que ha inspirado innumerables adaptaciones.', NULL, NULL, NULL, NULL, 23),
-(46, 'Las Aventuras de Tom Sawyer', 'Mark Twain', 'Aventura', 'usado', ' Las travesuras del muchacho más famoso de la literatura americana en el pintoresco pueblo de St. Petersburg, a orillas del río Mississippi. Tom Sawyer, con su ingenio y espíritu aventurero, junto a su mejor amigo Huckleberry Finn, vive aventuras que incluyen presenciar un asesinato, buscar tesoros piratas y asistir a su propio funeral. Una celebración nostálgica de la infancia y la inocencia americana que captura perfectamente el espíritu de una época.', NULL, NULL, NULL, NULL, 23),
-(47, 'El Alquimista', 'Paulo Coelho', 'Otro', 'usado', 'Una fábula inspiradora sobre seguir nuestros sueños que se ha convertido en uno de los libros más vendidos de todos los tiempos. Santiago, un joven pastor andaluz, emprende un viaje desde España hasta las pirámides de Egipto en busca de un tesoro, pero descubre que el verdadero tesoro está en el camino mismo y en escuchar a su corazón. Una novela llena de sabiduría sobre destino, propósito de vida y la importancia de perseguir nuestras leyendas personales.', NULL, NULL, NULL, NULL, 23),
-(48, 'El Monje que Vendió su Ferrari', 'Robin Sharma', 'Otro', 'nuevo', 'Una fábula transformadora sobre liderazgo personal y desarrollo espiritual. Julian Mantle, un exitoso abogado al borde del colapso, abandona su lujosa vida para buscar la iluminación en los Himalayas. Al regresar, comparte con su ex-colega las lecciones de sabiduría antigua que aprendió de los sabios de Sivana, ofreciendo herramientas prácticas para vivir una vida más plena, equilibrada y significativa en el mundo moderno.', NULL, NULL, NULL, NULL, 23),
-(49, 'Juego de Tronos', 'George R.R. Martin', 'Fantasía', 'nuevo', 'La saga épica que revolucionó la fantasía moderna con su realismo político y complejidad moral. En los Siete Reinos de Westeros, múltiples casas nobles luchan por el Trono de Hierro mientras una antigua amenaza despierta en el Norte. Martin teje una narrativa donde nadie está a salvo y las decisiones tienen consecuencias devastadoras, creando un mundo donde la política, la guerra y la magia se entrelazan en una historia adictiva.', NULL, NULL, NULL, NULL, 24),
-(50, 'Las Crónicas de Narnia: El León, la Bruja y el Ropero', 'C.S. Lewis', 'Fantasía', 'usado', 'El clásico portal de fantasía que ha encantado a generaciones. Cuatro hermanos descubren un mundo mágico dentro de un armario donde reina una bruja malvada que ha sumido Narnia en un invierno eterno. Con la ayuda del noble león Aslan, deben cumplir una antigua profecía y restaurar la paz al reino. Una alegoría rica en simbolismo que combina aventura, magia y profundas lecciones sobre valor, sacrificio y redención.', NULL, NULL, NULL, NULL, 24),
-(51, 'Fundación', 'Isaac Asimov', 'Ciencia Ficción', 'usado', 'La obra maestra de Asimov que estableció las bases de la ciencia ficción moderna. Hari Seldon, creador de la psicohistoria, predice la caída del Imperio Galáctico y establece dos Fundaciones para preservar el conocimiento humano y reducir la era oscura venidera. Una saga que explora temas de historia cíclica, predicción del futuro y la evolución de la civilización a través de milenios, combinando ciencia rigurosa con narrativa épica.', NULL, NULL, NULL, NULL, 24),
-(52, 'Fahrenheit 451', 'Ray Bradbury', 'Ciencia Ficción', 'nuevo', 'Una distopía visionaria sobre censura y el poder de los libros. Guy Montag es un bombero cuyo trabajo es quemar libros en una sociedad donde la lectura está prohibida y el entretenimiento superficial domina. Cuando conoce a Clarisse, una joven que cuestiona el mundo, Montag comienza a dudar de su misión y descubre el valor transformador de la literatura. Una advertencia profética sobre la manipulación mediática y la importancia del pensamiento crítico.', NULL, NULL, NULL, NULL, 24),
-(53, 'Romeo y Julieta', 'William Shakespeare', 'Romance', 'nuevo', 'La tragedia romántica más famosa de todos los tiempos. En Verona, dos jóvenes de familias enemigas se enamoran perdidamente, desafiando el odio ancestral que separa a los Montesco y los Capuleto. Su amor prohibido los lleva a casarse en secreto, pero una serie de malentendidos trágicos culmina en el sacrificio final que reconcilia a las familias rivales. Una obra atemporal sobre la pasión, el destino y el precio del amor verdadero.', NULL, NULL, NULL, NULL, 24),
-(54, 'La Chica del Tren', 'Paula Hawkins', 'Thriller', 'nuevo', 'Un thriller psicológico adictivo contado desde tres perspectivas femeninas. Rachel, una divorciada alcoholizada, observa diariamente desde el tren a una pareja aparentemente perfecta hasta que presencia algo que la convierte en parte de un misterio más grande de lo que imaginaba. Cuando la mujer desaparece, Rachel se ve envuelta en una investigación que revelará secretos perturbadores sobre mentiras, obsesiones y la fragilidad de la memoria.', NULL, NULL, NULL, NULL, 24);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `libros_catalogo`
---
-
-CREATE TABLE `libros_catalogo` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(255) DEFAULT NULL,
-  `autor` varchar(255) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `precio` decimal(10,2) DEFAULT NULL,
-  `estado` enum('nuevo','usado') DEFAULT 'nuevo',
-  `genero` varchar(100) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`, `imagen`, `usuario_id`, `modo`, `precio`, `id_usuario`, `tipo_catalogo`) VALUES
+(74, 'El Señor de los Anillos: La Comunidad del Anillo', 'J.R.R. Tolkien', 'Fantasía', 'nuevo', 'La épica aventura de Frodo Bolsón y la Comunidad del Anillo en su misión para destruir el Anillo Único. Una obra maestra de la literatura fantástica que ha inspirado a generaciones de lectores y escritores. Tolkien crea un mundo completo con idiomas, culturas e historia propia en la Tierra Media.', '68d2b7478b2de_EL SEÑOR DE LOS ANILLOS 1 - LA COMUNIDAD DEL ANILLO.jpg', NULL, 'venta', 28000.00, NULL, 'oficial'),
+(75, 'Harry Potter y la Piedra Filosofal', 'J.K. Rowling', 'Fantasía', 'usado', 'El inicio de la saga más popular de la literatura juvenil moderna. Harry Potter descubre que es un mago en su undécimo cumpleaños y comienza su educación en Hogwarts. Una historia que combina magia, amistad y aventura de manera magistral.', '68d2b79d795ac_harry potter.jpg', NULL, 'venta', 22000.00, NULL, 'oficial'),
+(76, '1984', 'George Orwell', 'Ciencia Ficción', 'nuevo', 'Una distopía profética sobre un futuro totalitario donde el Gran Hermano vigila cada movimiento. Orwell creó conceptos como \"doblepensar\" y \"neolengua\" que siguen siendo relevantes hoy. Una obra fundamental que examina el poder, la verdad y la libertad individual.', '68d2b7d1bc5ff_1984.jpg', NULL, 'venta', 25000.00, NULL, 'oficial'),
+(77, 'Los Crímenes de la Calle Morgue', 'Edgar Allan Poe', 'Misterio', 'usado', 'Considerado el primer relato de detective de la literatura, presenta al brillante C. Auguste Dupin resolviendo un misterioso doble asesinato en París. Poe estableció muchas de las convenciones del género detectivesco que perduran hasta hoy.', '68d2b82ae51ad_morgue.jpg', NULL, 'venta', 25000.00, NULL, 'oficial'),
+(78, 'El sendero del guerrero ', 'Miyamoto musashi. Inazo nitobe', 'Clásicos', 'usado', 'Clásicos militares de oriente ', '68d4409d20e4d_17587405825978324384770471361387.jpg', NULL, 'venta', 25000.00, NULL, 'oficial'),
+(79, 'Leyendas del mar ', 'Bernard clavel', 'Aventura', 'usado', 'En el pais de las leyendas un rey parte hacia el fondo del mar entre una urna de cristal, un tiburón juega con los niños, y los hombres se casan con las hijas del océano. ', '68d4411e20d88_17587407082938937595198296731555.jpg', NULL, 'venta', 30000.00, NULL, 'oficial'),
+(80, 'El mundo perdido ', 'Arthur Conan Doyle', 'Aventura', 'usado', 'Una aventura traslada el mundo prehistorico en la historia de un explorador. Donde rarezas le aguardan al pasar el bosque. ', '68d441a7e50f0_17587408492043367823485103585556.jpg', NULL, 'venta', 50000.00, NULL, 'oficial');
 
 -- --------------------------------------------------------
 
@@ -253,13 +237,31 @@ CREATE TABLE `libros_venta` (
   `id_usuario` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `autor` varchar(255) DEFAULT NULL,
+  `genero` varchar(100) DEFAULT NULL,
   `descripcion` text DEFAULT NULL,
   `precio` decimal(10,2) NOT NULL,
   `imagen` varchar(255) DEFAULT NULL,
   `fecha_publicacion` datetime DEFAULT current_timestamp(),
   `estado` enum('nuevo','usado') NOT NULL DEFAULT 'nuevo',
-  `id_genero` int(11) DEFAULT NULL
+  `modo` enum('venta','intercambio','ambos') DEFAULT 'ambos'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `libros_venta`
+--
+
+INSERT INTO `libros_venta` (`id`, `id_usuario`, `titulo`, `autor`, `genero`, `descripcion`, `precio`, `imagen`, `fecha_publicacion`, `estado`, `modo`) VALUES
+(26, 33, 'Don Quijote de la Mancha', 'Miguel de Cervantes', 'Clásicos', 'Considerada la primera novela moderna y una de las obras cumbre de la literatura universal. Las aventuras del ingenioso hidalgo Don Quijote y su fiel escudero Sancho Panza han inspirado a escritores de todo el mundo durante más de cuatro siglos.', 32000.00, '68d2c2f6e41fc_quijote.jpg', '2025-09-23 13:54:24', 'nuevo', 'ambos'),
+(29, 34, 'Dune', 'Frank Herbert', 'Ciencia Ficción', ' La épica historia de Paul Atreides en el planeta desértico Arrakis, fuente de la especia más valiosa del universo. Una obra compleja que combina política, religión, ecología y aventura espacial. Considerada una de las mejores novelas de ciencia ficción jamás escritas.', 30000.00, '68d2b9a452935_Dune.jpg', '2025-09-23 15:15:48', 'nuevo', 'ambos'),
+(30, 33, 'La Isla del Tesoro', 'Robert Louis Stevenson', 'Aventura', 'La clásica historia de piratas que ha definido el género. Jim Hawkins se embarca en una búsqueda del tesoro que lo lleva a enfrentarse con el memorable Long John Silver. Una aventura emocionante llena de mapas del tesoro, motines y piratas.', 21000.00, '68d2c35ce6873__La isla del tesoro_ de Robert L_ Stevenson.jpg', '2025-09-23 15:57:16', 'usado', 'ambos'),
+(31, 34, 'Luna de pluton', 'DROSS', 'Otro', 'En un lejano parque de diversiones y en plena misión secreta para defender a su amada luna de un peligroso emperador, una ogra conoce a un león y juntos se embarcan en una odisea de sucesos desafortunados que desatarán una verdadera guerra galáctica. La misión de Claudia se ve amenazada y su padre resulta preso, cuando ella queda envuelta equívocamente en un asesinato. Ogros y elfos deberán pelear en contra de un mismo y casi todopoderoso enemigo.', 80000.00, '68d2c48be1d89_LIBRO _ LUNA DE PLUTÓN_ Dross_.jpg', '2025-09-23 16:02:19', 'usado', 'ambos'),
+(33, 40, 'La divina comedia', 'Dante', 'Clásicos', '7 infiernos', 60000.00, '68d43f161cafd_images.jpeg', '2025-09-24 18:57:26', 'usado', 'venta'),
+(34, 41, 'La isla misteriosa ', 'Julio verne', 'Aventura', 'Libro de aventura escrito por julio Verne ', 50000.00, '68d43f614037b_LA-ISLA-MISTERIOSA.jpg', '2025-09-24 18:58:41', 'usado', 'venta'),
+(35, 33, 'Sleepy Hollow', 'Whashington Irving', 'Thriller', 'Jinetes sin cabeza, condesas, ultrajadas. Damas guillotinadas, retratos vivientes, sabuesos infernales, princesas encantadas.  Etc. ', 36000.00, '68d43f86aadd7_17587403108917093289609479334017.jpg', '2025-09-24 18:59:18', 'usado', 'venta'),
+(36, 35, 'Akelarre', 'Mario Mendoza ', 'Thriller', 'Crímenes en ciudad gótica ', 50000.00, '68d43fd783011_IMG_20250924_135633.jpg', '2025-09-24 19:00:39', 'usado', 'venta'),
+(37, 33, 'El mensajero de Agarthas', 'Mario Mendoza ', 'Otro', 'La relación de los padres de Felipe se deteriora cada día más y la inminencia de un viaje a Bolivia con su tío Pablo! Historiador y arqueólogo, le abre una nueva posibilidad para fortalecerse psíquicamente. ', 60000.00, '68d44004215b7_17587404366524435064538728341969.jpg', '2025-09-24 19:01:24', 'usado', 'venta'),
+(38, 42, 'Las venas abiertas de América Latina ', 'Eduardo galeano ', 'Fantasía', 'Vendo libro ', 100.00, '68d4418f4fc2c_image.jpg', '2025-09-24 19:07:59', 'usado', 'venta'),
+(39, 35, 'La importancia de morir a tiempo', 'Mario Mendoza ', 'Thriller', 'El trabajo de un escritor requiere adentrarse en el corazón humano.s', 50000.00, '68d441f2b4fcc_IMG_20250924_140718.jpg', '2025-09-24 19:09:38', 'usado', 'venta');
 
 -- --------------------------------------------------------
 
@@ -281,7 +283,19 @@ CREATE TABLE `mensajes` (
 --
 
 INSERT INTO `mensajes` (`id`, `emisor_id`, `receptor_id`, `mensaje`, `fecha_envio`, `leido`) VALUES
-(13, 22, 21, 'Hola, Muy buenas tardes, ¿Disculpa, aun tienes disponible el libro de la comunidad del anillo?\r\nme parece un libro excelente y me gustaria saber por que te gusto, ademas de comprarlo, ya que siento que es un excelente libro para una tarde soleada.\r\nEspero tu pronta respuesta, Gracias.', '2025-09-11 19:06:48', 0);
+(13, 22, 21, 'Hola, Muy buenas tardes, ¿Disculpa, aun tienes disponible el libro de la comunidad del anillo?\r\nme parece un libro excelente y me gustaria saber por que te gusto, ademas de comprarlo, ya que siento que es un excelente libro para una tarde soleada.\r\nEspero tu pronta respuesta, Gracias.', '2025-09-11 19:06:48', 0),
+(23, 23, 21, 'xd', '2025-09-16 23:09:34', 0),
+(30, 40, 41, 'Quiero su libro', '2025-09-24 18:58:41', 0),
+(31, 41, 40, 'No te lo doy 😭', '2025-09-24 18:59:15', 0),
+(32, 40, 41, 'Yo quiero leer', '2025-09-24 18:59:35', 0),
+(33, 42, 40, 'Hola', '2025-09-24 19:09:00', 0),
+(34, 42, 40, 'Precio fijo de tu libro ', '2025-09-24 19:09:15', 0),
+(35, 42, 40, '!!!!', '2025-09-24 19:09:30', 0),
+(36, 42, 40, '!!!!', '2025-09-24 19:09:31', 0),
+(37, 40, 42, '😎', '2025-09-24 19:11:21', 0),
+(40, 33, 34, 'xd', '2025-09-27 22:58:09', 0),
+(41, 33, 35, 'xs', '2025-09-27 22:58:25', 0),
+(42, 33, 29, 'xd', '2025-09-27 22:58:33', 0);
 
 -- --------------------------------------------------------
 
@@ -305,11 +319,18 @@ CREATE TABLE `notificaciones` (
 --
 
 INSERT INTO `notificaciones` (`id`, `usuario_id`, `mensaje`, `link`, `intercambio_id`, `tipo`, `fecha`, `leida`) VALUES
-(41, 22, '🔄 Has recibido una solicitud de intercambio por tu libro \"El Gran Gatsby\".', 'index.php?c=IntercambioController&a=notificaciones', 38, 'info', '2025-09-11 18:53:22', 1),
-(42, 21, 'Tu solicitud de intercambio ha sido rechazada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-11 18:54:02', 0),
-(43, 21, 'Tu solicitud de intercambio ha sido rechazada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-11 18:54:07', 1),
-(44, 23, '🔄 Has recibido una solicitud de intercambio por tu libro \"Bajo la Misma Estrella\".', 'index.php?c=IntercambioController&a=notificaciones', 39, 'info', '2025-09-11 18:54:48', 1),
-(45, 21, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-11 18:55:29', 1);
+(57, 34, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 51, 'info', '2025-09-23 20:53:40', 1),
+(58, 33, 'Tu solicitud de intercambio ha sido rechazada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-23 20:55:01', 1),
+(59, 34, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 52, 'info', '2025-09-24 00:22:41', 1),
+(60, 33, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-24 00:40:18', 0),
+(61, 33, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-24 00:40:29', 1),
+(62, 34, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 53, 'info', '2025-09-24 18:35:52', 0),
+(63, 41, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 54, 'info', '2025-09-24 19:10:29', 1),
+(64, 35, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-24 19:11:25', 1),
+(65, 41, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 55, 'info', '2025-09-25 05:36:55', 0),
+(66, 42, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 56, 'info', '2025-09-27 23:27:02', 0),
+(67, 33, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 57, 'info', '2025-09-27 23:29:54', 1),
+(68, 34, 'Tu solicitud de intercambio ha sido rechazada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-27 23:30:43', 0);
 
 -- --------------------------------------------------------
 
@@ -331,10 +352,8 @@ CREATE TABLE `resenas` (
 --
 
 INSERT INTO `resenas` (`id`, `libro_id`, `usuario_id`, `calificacion`, `comentario`, `fecha`) VALUES
-(9, 29, 21, 5, 'OBRA MAESTRA ABSOLUTA\r\nTolkien no solo creó una novela; fundó un género completo. Su construcción lingüística es impecable: inventó idiomas completos con gramática y etimología coherentes. La profundidad mitológica rivaliza con las grandes epopeyas clásicas, mientras que su prosa conserva una elegancia que nunca cae en lo pretencioso. Críticos han señalado el ritmo ocasionalmente lento, pero esto es precisamente lo que permite la inmersión total en la Tierra Media. Una obra que establece el estándar dorado de la fantasía épica.', '2025-09-11 19:01:53'),
-(10, 32, 21, 4, 'COMPLEJIDAD NARRATIVA EXTRAORDINARIA.\r\nHerbert construye el universo de ciencia ficción más detallado y coherente jamás creado. La integración de política, ecología, religión y evolución humana es magistral. Su prosa puede ser densa, pero cada elemento sirve a la construcción del mundo. Las secuelas decaen, pero este primer volumen mantiene un equilibrio perfecto entre acción y filosofía. Una obra que eleva la ciencia ficción al nivel de la gran literatura', '2025-09-11 19:02:33'),
-(11, 52, 21, 5, 'METÁFORA CULTURAL PODEROSA.\r\nBradbury crea una metáfora potente sobre censura y anti-intelectualismo que resulta proféticamente relevante en la era digital. Su prosa poética contrasta efectivamente con la frialdad del mundo que describe. Algunas explicaciones del sistema resultan simplificadas, pero esto sirve al propósito alegórico. Una obra que funciona mejor como advertencia cultural que como ciencia ficción hard, pero igualmente valiosa.', '2025-09-11 19:03:17'),
-(12, 32, 22, 3, 'perfecto entre acción y filosofía. Una obra que eleva la ciencia ficción al nivel de la gran literatura', '2025-09-11 19:04:37');
+(18, 77, 41, 5, 'Edgar es un escritor excelente, con historias muy buenas y esta es una de ellas', '2025-09-24 19:05:58'),
+(19, 76, 33, 4, 'muy bueno', '2025-09-24 19:23:49');
 
 -- --------------------------------------------------------
 
@@ -351,34 +370,32 @@ CREATE TABLE `usuarios` (
   `foto` varchar(255) DEFAULT NULL,
   `bio` text DEFAULT NULL,
   `token_recuperacion` varchar(255) DEFAULT NULL,
-  `token_expira` datetime DEFAULT NULL
+  `token_expira` datetime DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `genero_preferido` varchar(100) DEFAULT NULL,
+  `libro_favorito` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`) VALUES
-(20, 'Angel David Vanegas Bulla', 'angelvanegas944@gmail.com', '$2y$10$ta6C5cu8b.eqT/aR1OaD3uyP0to0b/EPXvqCML7Dc3WzQwcjYwEkS', 'admin', '68c37134069ad_client9.jpg', 'Estudiante Tecnologo del SENA.\r\nADSO', NULL, NULL),
-(21, 'Cristian Giovanny Salgado Vaquez', 'giovannyv292@gmail.com', '$2y$10$sOHQ0Aje0NxoH6WQ/TMhkOm0wS3CpJLguzx71p/MDRs1K/TJQzeSS', 'usuario', '68c35d873788d_client5.jpg', 'Estudiante SENA, ADSO', NULL, NULL),
-(22, 'Ana Elizabeth Carreño', 'aelixabeth201@gmail.com', '$2y$10$U8XfcxcDZRVHE/bQ9g1RXe2gI/4.x.CXeB44Qs35UkGBaAAPX0OcC', 'usuario', '68c35ac35e1ab_client3.jpg', 'Estudiante del SENA', NULL, NULL),
-(23, 'Jair Santiago Guerra Alarcon', 'jguerra9806@gmail.com', '$2y$10$HYy0ziLNMREQjYJwnLA3leJJ68uliHM8e.M51/xe/lFKFt7El3/3a', 'usuario', '68c35d3ea85ff_client7.jpg', 'Estudiante SENA', NULL, NULL),
-(24, 'Libros Wap Usuario', 'libroswapgroup@gmail.com', '$2y$10$LPX03EXqHCGrFwWfFGYBiuAxBaVX9fxEude7jMHoyhOG4R59Q6Vpy', 'usuario', NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ventas`
---
-
-CREATE TABLE `ventas` (
-  `id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_libro` int(11) NOT NULL,
-  `fecha` datetime DEFAULT current_timestamp(),
-  `precio` decimal(10,2) NOT NULL,
-  `estado` varchar(20) DEFAULT 'completada'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`, `direccion`, `genero_preferido`, `libro_favorito`) VALUES
+(29, 'Angel David Vanegas Bulla', 'angelvanegas944@gmail.com', '$2y$10$8Q5IBKzLTfx6ADznKDUaaumKAyvlxBc2H2k3JUq.5DGxolBHeGnbe', 'admin', '68d2b4474090a_peradmin.jpg', 'Estudiante de Tecnología en Análisis y Desarrollo de Software en el SENA, con una\r\nsólida formación en desarrollo web, programación y gestión contable. Poseo conocimientos\r\nen lenguajes como Python, Java, C#, y HTML, así como en frameworks como Django y\r\nbases de datos como MySQL y SQL Server. Mi enfoque es crear soluciones tecnológicas\r\ninnovadoras, optimizando procesos y adaptándome a las necesidades del cliente. Soy\r\nproactivo, analítico, disciplinado y comprometido con el aprendizaje continuo, con\r\nhabilidades destacadas en trabajo colaborativo, resolución de problemas y comunicación\r\nefectiva.', NULL, NULL, '', '', ''),
+(33, 'Jair Santiago Guerra Alarcon', 'jguerra9806@gmail.com', '$2y$10$69ZXlWhaA1ckGv0pOMmpLuAUfigDIE2Obz5YykE72M56rv54QGsGm', 'usuario', '68d2c0195c83c_sdc.jpg', 'Analista de Bases de datos\r\nCon una sólida formación en normalización, seguridad y modelado relacional\r\n Su enfoque va más allá del SQL: domina la arquitectura de datos como un lenguaje que conecta áreas técnicas con necesidades humanas. Esto lo ha llevado a colaborar en proyectos que integran backend robusto, interfaces intuitivas y flujos de información que responden en tiempo real.', NULL, NULL, 'Calle 22', 'Misterio', 'La Metamorfosis, Franz Kafka'),
+(34, 'Ana Elizabeth Carreño Ducuara', 'aelixabeth201@gmail.com', '$2y$10$LrW2qZc7sgkSRr.ERWgY7OebJrQh4Mr1qVqoffCcqk6e1clir805S', 'usuario', '68d2b3e37afc2_download (2).jpg', 'Especialista en testing y backend. Python, Php', NULL, NULL, 'Dubai', 'Fantasía', 'Libro. THE CAT RETURNS PICTURE BOOK'),
+(35, 'giovanny', 'giovannyV292@gmail.com', '$2y$10$bIpOLx1mBPcjjdFltIDNLeWW.eehGxdIVaQDCK4qOUraq3FAopWq6', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(36, 'Jim clarck', 'clarckjim@outlook.com', '$2y$10$CUIXIvvb3sAZ6FqpaXnWYuur8UOdCMGZYEScMOhUWDg69jfo9ui/u', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(37, 'Nicolás Esteban', 'spiderdash13579@gmail.com', '$2y$10$j.x25VH3X2tQ5JNJZVZWl.JxT/uiiq84ZPKGHLwW.Z7WdjSsfnL/S', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'Cristinne Jhoanna ', 'crisroa34@gmail.com', '$2y$10$WZY0UDSoq82od1OyGiltNeMpulUrlvIJc3BuQWmetQpWddzw5neWW', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 'Sam mora', 'morasamuelrincon@gmail.com', '$2y$10$gfJY45N04xdJeWvr0TtryOjNveM7PpSQo6Q3tD0vnVH/L8g06sRAG', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(40, 'Thomas Felipe Aldana Betancourth', 'thomyaldabe@gmail.com', '$2y$10$/9QAsz6EcmTXCktQR.EvCeEnR7/RIRVgk1sN27sfFXHs5XDuLixhC', 'usuario', '68d4413f61632_IMG20250921114954.jpg', '<br />\r\n<b>Deprecated</b>:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in <b>/home/u379646107/domains/libroswapcol.com/public_html/views/usuario/perfil.php</b> on line <b>150</b><br />\r\n', NULL, NULL, '', '', ''),
+(41, 'Jafet David Pineda Cespedes ', 'jafetdavidpi@gmail.com', '$2y$10$m3NVqW8R1Cn6Gwnzv/ryFen39mURMPYBS0yo3u48/82VYUP/9Jlva', 'usuario', '68d44154e29d2_IMG_20250916_231922_012.webp', '<br />\r\n<b>Deprecated</b>:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in <b>/home/u379646107/domains/libroswapcol.com/public_html/views/usuario/perfil.php</b> on line <b>150</b><br />\r\n', NULL, NULL, '', '', ''),
+(42, 'Alejandro López ', 'javierlopezuni07@gmail.com', '$2y$10$3etHZ7c3XDxROg7whiPGbeoN.Jk/wHJxb/sJX5afIGjTV8CMkGqzS', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(44, 'Alejandro López ', 'javierlopezuni08@gmail.com', '$2y$10$fmOAc9pJljIlY4K1FqZBs.DrV0F3QMUyM8kzeNm.wYYbIZCEZa5lm', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 'Joaquín Cañon ', 'danielcf97@hotmail.com', '$2y$10$ZdPllXwfOrkdCErbEmXNrOxi3cbLkN2Rf1qrqu5rNl.g5XmxPx/bC', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(47, 'Alex Sanchez Linares ', 'alexsanchezli.2005@gmail.com', '$2y$10$hyZNRrqx7aGEcBTukY2GCODzh2urbjPU2/ndgwLFaBqFsAz3Mazh6', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(48, 'Daian Rodríguez ', 'dainicks08@yahoo.com', '$2y$10$z8MuhtlZ2dyJ5.mSOH6fxu29BLF3KAI5YOVXsQeLnBvh8QgGrlQEi', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -391,12 +408,6 @@ ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`),
   ADD KEY `libro_id` (`libro_id`);
-
---
--- Indexes for table `categorias`
---
-ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `comentarios_evento`
@@ -415,22 +426,17 @@ ALTER TABLE `compras`
   ADD KEY `libro_id` (`libro_id`);
 
 --
--- Indexes for table `config_usuario`
+-- Indexes for table `detalle_compras`
 --
-ALTER TABLE `config_usuario`
+ALTER TABLE `detalle_compras`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `compra_id` (`compra_id`),
+  ADD KEY `libro_id` (`libro_id`);
 
 --
 -- Indexes for table `eventos`
 --
 ALTER TABLE `eventos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `generos`
---
-ALTER TABLE `generos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -444,17 +450,18 @@ ALTER TABLE `intercambios`
   ADD KEY `usuario_2` (`usuario_2`);
 
 --
+-- Indexes for table `inventario_oficial`
+--
+ALTER TABLE `inventario_oficial`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `libro_id` (`libro_id`);
+
+--
 -- Indexes for table `libros`
 --
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
-
---
--- Indexes for table `libros_catalogo`
---
-ALTER TABLE `libros_catalogo`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `libros_venta`
@@ -492,14 +499,6 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `ventas`
---
-ALTER TABLE `ventas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_libro` (`id_libro`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -507,97 +506,79 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT for table `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- AUTO_INCREMENT for table `categorias`
---
-ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `comentarios_evento`
 --
 ALTER TABLE `comentarios_evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT for table `config_usuario`
+-- AUTO_INCREMENT for table `detalle_compras`
 --
-ALTER TABLE `config_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `detalle_compras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `generos`
---
-ALTER TABLE `generos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `intercambios`
 --
 ALTER TABLE `intercambios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `inventario_oficial`
+--
+ALTER TABLE `inventario_oficial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
-
---
--- AUTO_INCREMENT for table `libros_catalogo`
---
-ALTER TABLE `libros_catalogo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `libros_venta`
 --
 ALTER TABLE `libros_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `resenas`
 --
 ALTER TABLE `resenas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT for table `ventas`
---
-ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
@@ -607,8 +588,7 @@ ALTER TABLE `ventas`
 -- Constraints for table `carrito`
 --
 ALTER TABLE `carrito`
-  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `carrito_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
+  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Constraints for table `comentarios_evento`
@@ -621,23 +601,28 @@ ALTER TABLE `comentarios_evento`
 -- Constraints for table `compras`
 --
 ALTER TABLE `compras`
-  ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
+  ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `config_usuario`
+-- Constraints for table `detalle_compras`
 --
-ALTER TABLE `config_usuario`
-  ADD CONSTRAINT `config_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+ALTER TABLE `detalle_compras`
+  ADD CONSTRAINT `detalle_compras_ibfk_1` FOREIGN KEY (`compra_id`) REFERENCES `compras` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `intercambios`
 --
 ALTER TABLE `intercambios`
-  ADD CONSTRAINT `intercambios_ibfk_1` FOREIGN KEY (`libro_id_1`) REFERENCES `libros` (`id`),
-  ADD CONSTRAINT `intercambios_ibfk_2` FOREIGN KEY (`libro_id_2`) REFERENCES `libros` (`id`),
+  ADD CONSTRAINT `intercambios_ibfk_1` FOREIGN KEY (`libro_id_1`) REFERENCES `libros_venta` (`id`),
+  ADD CONSTRAINT `intercambios_ibfk_2` FOREIGN KEY (`libro_id_2`) REFERENCES `libros_venta` (`id`),
   ADD CONSTRAINT `intercambios_ibfk_3` FOREIGN KEY (`usuario_1`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `intercambios_ibfk_4` FOREIGN KEY (`usuario_2`) REFERENCES `usuarios` (`id`);
+
+--
+-- Constraints for table `inventario_oficial`
+--
+ALTER TABLE `inventario_oficial`
+  ADD CONSTRAINT `inventario_oficial_ibfk_1` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
 
 --
 -- Constraints for table `libros`
@@ -663,13 +648,6 @@ ALTER TABLE `notificaciones`
 ALTER TABLE `resenas`
   ADD CONSTRAINT `resenas_ibfk_1` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`),
   ADD CONSTRAINT `resenas_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
-
---
--- Constraints for table `ventas`
---
-ALTER TABLE `ventas`
-  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`id_libro`) REFERENCES `libros` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 05, 2025 at 10:51 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Host: 127.0.0.1:3306
+-- Generation Time: Sep 28, 2025 at 02:39 AM
+-- Server version: 11.8.3-MariaDB-log
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `final`
+-- Database: `u379646107_final`
 --
 
 -- --------------------------------------------------------
@@ -31,31 +31,18 @@ CREATE TABLE `carrito` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `libro_id` int(11) DEFAULT NULL,
-  `fecha_agregado` datetime DEFAULT current_timestamp()
+  `fecha_agregado` datetime DEFAULT current_timestamp(),
+  `tabla_origen` enum('libros','libros_venta') DEFAULT 'libros'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `carrito`
 --
 
-INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`) VALUES
-(2, 3, 3, '2025-07-24 03:00:41'),
-(13, 1, 6, '2025-08-05 14:47:56');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categorias`
---
-
-CREATE TABLE `categorias` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL,
-  `icono` varchar(10) DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `slug` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `carrito` (`id`, `usuario_id`, `libro_id`, `fecha_agregado`, `tabla_origen`) VALUES
+(72, 40, 75, '2025-09-24 19:03:35', 'libros'),
+(80, 33, 80, '2025-09-27 22:24:00', 'libros'),
+(81, 34, 80, '2025-09-27 23:17:55', 'libros');
 
 -- --------------------------------------------------------
 
@@ -76,10 +63,10 @@ CREATE TABLE `comentarios_evento` (
 --
 
 INSERT INTO `comentarios_evento` (`id`, `id_evento`, `id_usuario`, `comentario`, `fecha`) VALUES
-(1, 2, 1, 'Es duro y complejo pero opino que para saber que estoy leyendo y de que trata especificamente el tema del libro', '2025-07-25 21:37:44'),
-(2, 3, 3, 'a', '2025-07-25 21:44:11'),
-(3, 3, 1, 'interesante', '2025-07-26 02:17:50'),
-(4, 1, 8, 'hhhdvhs', '2025-07-29 16:08:48');
+(6, 11, 33, 'sass', '2025-09-24 18:50:24'),
+(7, 11, 40, 'Excelente página 10/10 👍🏻', '2025-09-24 19:00:11'),
+(8, 11, 41, 'Página de calidad, me encanta su diseño y la paleta de color utilizada', '2025-09-24 19:00:58'),
+(9, 11, 33, 'xd', '2025-09-24 19:20:26');
 
 -- --------------------------------------------------------
 
@@ -91,44 +78,32 @@ CREATE TABLE `compras` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `libro_id` int(11) DEFAULT NULL,
-  `fecha` datetime DEFAULT current_timestamp()
+  `fecha` datetime DEFAULT current_timestamp(),
+  `total` decimal(10,2) DEFAULT 0.00,
+  `estado` varchar(50) DEFAULT 'pendiente',
+  `stripe_session_id` varchar(255) DEFAULT NULL,
+  `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+  `tabla_origen` enum('libros','libros_venta') DEFAULT 'libros'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `compras`
---
-
-INSERT INTO `compras` (`id`, `usuario_id`, `libro_id`, `fecha`) VALUES
-(1, 3, 2, '2025-07-24 02:56:11'),
-(2, 1, 2, '2025-07-24 17:01:08'),
-(3, 1, 4, '2025-07-24 17:01:08'),
-(4, 1, 4, '2025-07-29 15:03:42'),
-(5, 8, 6, '2025-07-29 16:09:11'),
-(6, 1, 4, '2025-07-29 17:03:55'),
-(7, 1, 2, '2025-07-29 17:03:55');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `config_usuario`
+-- Table structure for table `detalle_compras`
 --
 
-CREATE TABLE `config_usuario` (
+CREATE TABLE `detalle_compras` (
   `id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `tema` varchar(20) DEFAULT 'claro',
-  `color_acento` varchar(20) DEFAULT 'morado',
-  `vista_libros` varchar(10) DEFAULT 'grid',
-  `notificaciones` tinyint(1) DEFAULT 1
+  `compra_id` int(11) NOT NULL,
+  `libro_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL DEFAULT 1,
+  `precio` decimal(10,2) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `autor` varchar(255) DEFAULT NULL,
+  `imagen` varchar(255) DEFAULT NULL,
+  `genero` varchar(100) DEFAULT NULL,
+  `tabla_origen` enum('libros','libros_venta') DEFAULT 'libros'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `config_usuario`
---
-
-INSERT INTO `config_usuario` (`id`, `id_usuario`, `tema`, `color_acento`, `vista_libros`, `notificaciones`) VALUES
-(1, 1, 'oscuro', 'azul', 'lista', 1),
-(2, 8, 'oscuro', 'morado', 'lista', 0);
 
 -- --------------------------------------------------------
 
@@ -150,31 +125,7 @@ CREATE TABLE `eventos` (
 --
 
 INSERT INTO `eventos` (`id`, `titulo`, `descripcion`, `fecha_creacion`, `creado_por`, `activo`) VALUES
-(1, 'Hablemos de categorias en los libros, ¿es necesario que un libro tenga categoria?', 'Categorias', '2025-07-25 21:33:59', 3, 1),
-(2, 'Hablemos de categorias en los libros, ¿es necesario que un libro tenga categoria?', 'Categoriasa', '2025-07-25 21:36:54', 3, 0),
-(3, 'Hablemos de autores Colombianos y de latinoamerica', 'Interesante hablar de visioneros colombianos en la literatura', '2025-07-25 21:44:03', 3, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `generos`
---
-
-CREATE TABLE `generos` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `generos`
---
-
-INSERT INTO `generos` (`id`, `nombre`) VALUES
-(1, 'Ficción'),
-(2, 'Romance'),
-(3, 'Ciencia'),
-(4, 'Historia'),
-(5, 'Fantasía');
+(11, 'Que opinas?', 'Mmm', '2025-09-24 18:49:30', 29, 1);
 
 -- --------------------------------------------------------
 
@@ -197,9 +148,49 @@ CREATE TABLE `intercambios` (
 --
 
 INSERT INTO `intercambios` (`id`, `libro_id_1`, `libro_id_2`, `usuario_1`, `usuario_2`, `estado`, `fecha`) VALUES
-(2, 2, 3, 3, 1, 'aceptado', '2025-07-24 02:13:08'),
-(3, 6, 4, 1, 2, 'rechazado', '2025-07-29 14:51:04'),
-(4, 7, 4, 1, 2, 'pendiente', '2025-08-05 15:00:59');
+(51, 26, 31, 33, 34, 'rechazado', '2025-09-23 20:53:40'),
+(52, 26, 31, 33, 34, 'aceptado', '2025-09-24 00:22:41'),
+(53, 26, 31, 33, 34, 'pendiente', '2025-09-24 18:35:52'),
+(54, 36, 34, 35, 41, 'aceptado', '2025-09-24 19:10:29'),
+(55, 37, 34, 33, 41, 'pendiente', '2025-09-25 05:36:55'),
+(56, 31, 38, 34, 42, 'pendiente', '2025-09-27 23:27:02'),
+(57, 29, 30, 34, 33, 'rechazado', '2025-09-27 23:29:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventario_oficial`
+--
+
+CREATE TABLE `inventario_oficial` (
+  `id` int(11) NOT NULL,
+  `isbn` varchar(50) DEFAULT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `autor` varchar(255) NOT NULL,
+  `genero` varchar(100) DEFAULT NULL,
+  `precio_compra` decimal(10,2) DEFAULT 0.00,
+  `precio_venta` decimal(10,2) DEFAULT 0.00,
+  `stock_actual` int(11) DEFAULT 0,
+  `stock_minimo` int(11) DEFAULT 5,
+  `descripcion` text DEFAULT NULL,
+  `imagen` varchar(255) DEFAULT 'default.jpg',
+  `fecha_ingreso` datetime DEFAULT current_timestamp(),
+  `activo` tinyint(1) DEFAULT 1,
+  `libro_id` int(11) DEFAULT NULL,
+  `stock` int(11) DEFAULT 0,
+  `precio_oficial` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inventario_oficial`
+--
+
+INSERT INTO `inventario_oficial` (`id`, `isbn`, `titulo`, `autor`, `genero`, `precio_compra`, `precio_venta`, `stock_actual`, `stock_minimo`, `descripcion`, `imagen`, `fecha_ingreso`, `activo`, `libro_id`, `stock`, `precio_oficial`) VALUES
+(1, '121212121212', '12asss', 'qwqw', 'Ficción', 121212.00, 121221.00, 121212, 1212, '0', 'default.jpg', '2025-09-20 02:45:10', 0, NULL, 0, NULL),
+(2, 'sasasasas', 'asas', 'asasas', 'No ficción', 121212.00, 121212.00, 121212, 51212, '121212', 'default.jpg', '2025-09-20 04:59:05', 0, NULL, 0, NULL),
+(3, '121212121212', 'saaas', 'saassa', 'Ficción', 12.00, 212121.00, 211221, 5212121, '0', 'default.jpg', '2025-09-23 17:19:32', 0, NULL, 0, NULL),
+(4, '12121', 'QWQWQ', 'QWW', 'Ficción', 22.00, 21212.00, 121, 2, '212', 'default.jpg', '2025-09-24 18:55:31', 0, NULL, 0, NULL),
+(5, '12121', 'QWQWQ', 'QWW', 'Ficción', 22.00, 21212.00, 121, 2, '212', 'default.jpg', '2025-09-24 18:55:32', 0, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -218,45 +209,22 @@ CREATE TABLE `libros` (
   `usuario_id` int(11) DEFAULT NULL,
   `modo` enum('intercambio','venta') DEFAULT 'intercambio',
   `precio` decimal(10,2) DEFAULT NULL,
-  `id_usuario` int(11) NOT NULL
+  `id_usuario` int(11) DEFAULT NULL,
+  `tipo_catalogo` enum('oficial','usuario') DEFAULT 'oficial'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `libros`
 --
 
-INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`, `imagen`, `usuario_id`, `modo`, `precio`, `id_usuario`) VALUES
-(2, 'Cien años de soledads', 'Gabriel Garcia Marquez', 'Fantasia', 'nuevo', 'Una saga familiar mágica en Macondo, mezcla realidad y fantasía.', 'cien.jpg', 3, 'intercambio', NULL, 0),
-(3, 'El código Da Vinci', 'Dan Brown', 'Misterio y Thriller', 'usado', 'Un profesor descubre secretos ocultos en obras de arte que desafían la historia.', 'oferta7.jpg', 1, 'intercambio', NULL, 0),
-(4, 'El psicoanalista', 'Ricardo', 'Romance', 'nuevo', 'LIBRACO', 'cardadmin.jpg', 2, 'intercambio', NULL, 0),
-(6, 'DUNE', 'Frank Herbert', 'Ciencia Ficción', 'nuevo', 'Épica interestelar sobre poder, religión y ecología en el desértico planeta Arrakis.', '687eb9c590e03_crepusculo.jpg', 1, NULL, NULL, 0),
-(7, '\"Sapiens: De animales a dioses\"', 'Yuval Noah Harari', 'No Ficción', 'nuevo', 'Historia de la humanidad desde la evolución hasta la era digital.', 'viento.jpg', 1, 'venta', 222222.00, 0),
-(12, 'sasaas', 'asassa', 'assasa', 'nuevo', 'asas', 'default.jpg', NULL, 'intercambio', 0.00, 3),
-(13, 'El guardián entre el centeno', 'J.D. Salinger', ' Novela literaria / Bildungsroman (novela de formación)', 'nuevo', 'La novela sigue a Holden Caulfield, un adolescente de 16 años expulsado de su escuela preparatoria, quien deambula por Nueva York durante tres días después de huir del colegio. ', 'default.jpg', NULL, 'intercambio', 0.00, 3),
-(14, 'Bajo la misma estrella', ' John Green', 'Romance', 'usado', 'Dos adolescentes con cáncer se enamoran y buscan significado en su vida.', 'default.jpg', NULL, 'intercambio', 0.00, 3),
-(15, 'Los Miserables', 'Victor Hugo', 'Sátira política', 'nuevo', 'Los animales de una granja expulsan a los humanos y crean un sistema igualitario, pero los cerdos (líderes) corrompen el ideal revolucionario hasta replicar la tiranía anterior. Una crítica feroz al totalitarismo soviético y a la manipulación del poder.', '6884776aae082_ficcion.jpg', NULL, 'intercambio', 0.00, 1),
-(16, 'Los Miserables', 'Victor Hugo', 'Sátira política', 'nuevo', 'Los animales de una granja expulsan a los humanos y crean un sistema igualitario, pero los cerdos (líderes) corrompen el ideal revolucionario hasta replicar la tiranía anterior. Una crítica feroz al totalitarismo soviético y a la manipulación del poder.', '6884778759368_ficcion.jpg', NULL, 'intercambio', 0.00, 1),
-(17, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'ppppp', NULL, NULL, NULL, NULL, 1),
-(20, 'spppppppppp', 'pppppppppp', 'ppppppp', 'nuevo', 'sasasa', '68847cf804bfc_6.jpg', NULL, 'intercambio', 0.00, 1),
-(22, 'patatas', 'ahhasgbh', 'hsgahgahsg', 'nuevo', 'gsjahasj', '688925fa3340b_6.jpg', NULL, 'intercambio', 0.00, 8);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `libros_catalogo`
---
-
-CREATE TABLE `libros_catalogo` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(255) DEFAULT NULL,
-  `autor` varchar(255) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `precio` decimal(10,2) DEFAULT NULL,
-  `estado` enum('nuevo','usado') DEFAULT 'nuevo',
-  `genero` varchar(100) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `estado`, `descripcion`, `imagen`, `usuario_id`, `modo`, `precio`, `id_usuario`, `tipo_catalogo`) VALUES
+(74, 'El Señor de los Anillos: La Comunidad del Anillo', 'J.R.R. Tolkien', 'Fantasía', 'nuevo', 'La épica aventura de Frodo Bolsón y la Comunidad del Anillo en su misión para destruir el Anillo Único. Una obra maestra de la literatura fantástica que ha inspirado a generaciones de lectores y escritores. Tolkien crea un mundo completo con idiomas, culturas e historia propia en la Tierra Media.', '68d2b7478b2de_EL SEÑOR DE LOS ANILLOS 1 - LA COMUNIDAD DEL ANILLO.jpg', NULL, 'venta', 28000.00, NULL, 'oficial'),
+(75, 'Harry Potter y la Piedra Filosofal', 'J.K. Rowling', 'Fantasía', 'usado', 'El inicio de la saga más popular de la literatura juvenil moderna. Harry Potter descubre que es un mago en su undécimo cumpleaños y comienza su educación en Hogwarts. Una historia que combina magia, amistad y aventura de manera magistral.', '68d2b79d795ac_harry potter.jpg', NULL, 'venta', 22000.00, NULL, 'oficial'),
+(76, '1984', 'George Orwell', 'Ciencia Ficción', 'nuevo', 'Una distopía profética sobre un futuro totalitario donde el Gran Hermano vigila cada movimiento. Orwell creó conceptos como \"doblepensar\" y \"neolengua\" que siguen siendo relevantes hoy. Una obra fundamental que examina el poder, la verdad y la libertad individual.', '68d2b7d1bc5ff_1984.jpg', NULL, 'venta', 25000.00, NULL, 'oficial'),
+(77, 'Los Crímenes de la Calle Morgue', 'Edgar Allan Poe', 'Misterio', 'usado', 'Considerado el primer relato de detective de la literatura, presenta al brillante C. Auguste Dupin resolviendo un misterioso doble asesinato en París. Poe estableció muchas de las convenciones del género detectivesco que perduran hasta hoy.', '68d2b82ae51ad_morgue.jpg', NULL, 'venta', 25000.00, NULL, 'oficial'),
+(78, 'El sendero del guerrero ', 'Miyamoto musashi. Inazo nitobe', 'Clásicos', 'usado', 'Clásicos militares de oriente ', '68d4409d20e4d_17587405825978324384770471361387.jpg', NULL, 'venta', 25000.00, NULL, 'oficial'),
+(79, 'Leyendas del mar ', 'Bernard clavel', 'Aventura', 'usado', 'En el pais de las leyendas un rey parte hacia el fondo del mar entre una urna de cristal, un tiburón juega con los niños, y los hombres se casan con las hijas del océano. ', '68d4411e20d88_17587407082938937595198296731555.jpg', NULL, 'venta', 30000.00, NULL, 'oficial'),
+(80, 'El mundo perdido ', 'Arthur Conan Doyle', 'Aventura', 'usado', 'Una aventura traslada el mundo prehistorico en la historia de un explorador. Donde rarezas le aguardan al pasar el bosque. ', '68d441a7e50f0_17587408492043367823485103585556.jpg', NULL, 'venta', 50000.00, NULL, 'oficial');
 
 -- --------------------------------------------------------
 
@@ -269,23 +237,31 @@ CREATE TABLE `libros_venta` (
   `id_usuario` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `autor` varchar(255) DEFAULT NULL,
+  `genero` varchar(100) DEFAULT NULL,
   `descripcion` text DEFAULT NULL,
   `precio` decimal(10,2) NOT NULL,
   `imagen` varchar(255) DEFAULT NULL,
   `fecha_publicacion` datetime DEFAULT current_timestamp(),
   `estado` enum('nuevo','usado') NOT NULL DEFAULT 'nuevo',
-  `id_genero` int(11) DEFAULT NULL
+  `modo` enum('venta','intercambio','ambos') DEFAULT 'ambos'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `libros_venta`
 --
 
-INSERT INTO `libros_venta` (`id`, `id_usuario`, `titulo`, `autor`, `descripcion`, `precio`, `imagen`, `fecha_publicacion`, `estado`, `id_genero`) VALUES
-(4, 1, 'Cien Años de Soledad', 'Gabriel Garcia Marquez', 'Cien años de soledad\", publicada en 1967, es considerada la obra maestra de Gabriel García Márquez y un hito del realismo mágico. La historia sigue a la familia Buendía, comenzando con su patriarca, José Arcadio Buendía, quien funda el pueblo de Macondo. A lo largo de la novela, se exploran temas como la soledad, el tiempo cíclico y la historia de América Latina.', 350000.00, '689266186aac6_cien.jpg', '2025-08-04 23:35:50', '', NULL),
-(6, 1, 'El Alquimista', 'Paulo Coelho', 'El Alquimista es una obra que explora el tema de los sueños y el destino a través de la mirada de Santiago, un pastor que emprende un viaje hacia su \"Leyenda Personal\". Santiago, un hombre curioso y amante de la libertad, nació en un pequeño pueblo de Andalucía y estudia el sacerdocio', 200000.00, '689265777929e_oferta4.jpg', '2025-08-05 13:47:49', '', NULL),
-(7, 8, 'Ciencia Visual', 'El Tiempo', 'CIENCIA', 2111.00, 'categoria4.jpg', '2025-08-05 14:14:52', 'nuevo', NULL),
-(8, 1, 'El profesor ', 'John Katzenbach', 'Adrian Thomas es un profesor universitario retirado, al que acaban de diagnosticarle una demencia degenerativa que lo llevará pronto a la muerte.  Jubilado, viudo y enfermo cree que lo mejor que puede hacer es quitarse la vida.\r\n', 150000.00, '689265d347a2a_recomendado4.jpg', '2025-08-05 14:59:46', 'nuevo', NULL);
+INSERT INTO `libros_venta` (`id`, `id_usuario`, `titulo`, `autor`, `genero`, `descripcion`, `precio`, `imagen`, `fecha_publicacion`, `estado`, `modo`) VALUES
+(26, 33, 'Don Quijote de la Mancha', 'Miguel de Cervantes', 'Clásicos', 'Considerada la primera novela moderna y una de las obras cumbre de la literatura universal. Las aventuras del ingenioso hidalgo Don Quijote y su fiel escudero Sancho Panza han inspirado a escritores de todo el mundo durante más de cuatro siglos.', 32000.00, '68d2c2f6e41fc_quijote.jpg', '2025-09-23 13:54:24', 'nuevo', 'ambos'),
+(29, 34, 'Dune', 'Frank Herbert', 'Ciencia Ficción', ' La épica historia de Paul Atreides en el planeta desértico Arrakis, fuente de la especia más valiosa del universo. Una obra compleja que combina política, religión, ecología y aventura espacial. Considerada una de las mejores novelas de ciencia ficción jamás escritas.', 30000.00, '68d2b9a452935_Dune.jpg', '2025-09-23 15:15:48', 'nuevo', 'ambos'),
+(30, 33, 'La Isla del Tesoro', 'Robert Louis Stevenson', 'Aventura', 'La clásica historia de piratas que ha definido el género. Jim Hawkins se embarca en una búsqueda del tesoro que lo lleva a enfrentarse con el memorable Long John Silver. Una aventura emocionante llena de mapas del tesoro, motines y piratas.', 21000.00, '68d2c35ce6873__La isla del tesoro_ de Robert L_ Stevenson.jpg', '2025-09-23 15:57:16', 'usado', 'ambos'),
+(31, 34, 'Luna de pluton', 'DROSS', 'Otro', 'En un lejano parque de diversiones y en plena misión secreta para defender a su amada luna de un peligroso emperador, una ogra conoce a un león y juntos se embarcan en una odisea de sucesos desafortunados que desatarán una verdadera guerra galáctica. La misión de Claudia se ve amenazada y su padre resulta preso, cuando ella queda envuelta equívocamente en un asesinato. Ogros y elfos deberán pelear en contra de un mismo y casi todopoderoso enemigo.', 80000.00, '68d2c48be1d89_LIBRO _ LUNA DE PLUTÓN_ Dross_.jpg', '2025-09-23 16:02:19', 'usado', 'ambos'),
+(33, 40, 'La divina comedia', 'Dante', 'Clásicos', '7 infiernos', 60000.00, '68d43f161cafd_images.jpeg', '2025-09-24 18:57:26', 'usado', 'venta'),
+(34, 41, 'La isla misteriosa ', 'Julio verne', 'Aventura', 'Libro de aventura escrito por julio Verne ', 50000.00, '68d43f614037b_LA-ISLA-MISTERIOSA.jpg', '2025-09-24 18:58:41', 'usado', 'venta'),
+(35, 33, 'Sleepy Hollow', 'Whashington Irving', 'Thriller', 'Jinetes sin cabeza, condesas, ultrajadas. Damas guillotinadas, retratos vivientes, sabuesos infernales, princesas encantadas.  Etc. ', 36000.00, '68d43f86aadd7_17587403108917093289609479334017.jpg', '2025-09-24 18:59:18', 'usado', 'venta'),
+(36, 35, 'Akelarre', 'Mario Mendoza ', 'Thriller', 'Crímenes en ciudad gótica ', 50000.00, '68d43fd783011_IMG_20250924_135633.jpg', '2025-09-24 19:00:39', 'usado', 'venta'),
+(37, 33, 'El mensajero de Agarthas', 'Mario Mendoza ', 'Otro', 'La relación de los padres de Felipe se deteriora cada día más y la inminencia de un viaje a Bolivia con su tío Pablo! Historiador y arqueólogo, le abre una nueva posibilidad para fortalecerse psíquicamente. ', 60000.00, '68d44004215b7_17587404366524435064538728341969.jpg', '2025-09-24 19:01:24', 'usado', 'venta'),
+(38, 42, 'Las venas abiertas de América Latina ', 'Eduardo galeano ', 'Fantasía', 'Vendo libro ', 100.00, '68d4418f4fc2c_image.jpg', '2025-09-24 19:07:59', 'usado', 'venta'),
+(39, 35, 'La importancia de morir a tiempo', 'Mario Mendoza ', 'Thriller', 'El trabajo de un escritor requiere adentrarse en el corazón humano.s', 50000.00, '68d441f2b4fcc_IMG_20250924_140718.jpg', '2025-09-24 19:09:38', 'usado', 'venta');
 
 -- --------------------------------------------------------
 
@@ -307,18 +283,19 @@ CREATE TABLE `mensajes` (
 --
 
 INSERT INTO `mensajes` (`id`, `emisor_id`, `receptor_id`, `mensaje`, `fecha_envio`, `leido`) VALUES
-(1, 1, 8, 'Hola como estas, quiero saber si todavia esta disponible tu libro???', '2025-07-25 22:10:16', 0),
-(2, 8, 1, 'Si por supuesto que esta disponible.', '2025-07-25 22:11:11', 0),
-(3, 1, 2, 'Holaaaaa!!!', '2025-07-25 22:39:10', 0),
-(4, 1, 4, 'Toncessss', '2025-07-25 22:50:03', 0),
-(5, 8, 1, 'Uyy', '2025-07-25 22:51:17', 0),
-(6, 1, 8, 'Holaaaa', '2025-07-25 22:51:45', 0),
-(7, 8, 6, 'a', '2025-07-25 22:58:19', 0),
-(8, 1, 8, 'habaskasjas\r\n', '2025-07-29 14:48:18', 0),
-(9, 10, 1, 'QUE MAS PENDEJP, QUE HIZO MIS 7000 LUKAS?\r\n', '2025-07-29 14:56:22', 0),
-(10, 1, 10, 'entonces', '2025-07-29 14:57:01', 0),
-(11, 1, 10, 'olaaaaaaa', '2025-07-29 16:08:07', 0),
-(12, 11, 1, 'HOLA', '2025-07-29 17:07:28', 0);
+(13, 22, 21, 'Hola, Muy buenas tardes, ¿Disculpa, aun tienes disponible el libro de la comunidad del anillo?\r\nme parece un libro excelente y me gustaria saber por que te gusto, ademas de comprarlo, ya que siento que es un excelente libro para una tarde soleada.\r\nEspero tu pronta respuesta, Gracias.', '2025-09-11 19:06:48', 0),
+(23, 23, 21, 'xd', '2025-09-16 23:09:34', 0),
+(30, 40, 41, 'Quiero su libro', '2025-09-24 18:58:41', 0),
+(31, 41, 40, 'No te lo doy 😭', '2025-09-24 18:59:15', 0),
+(32, 40, 41, 'Yo quiero leer', '2025-09-24 18:59:35', 0),
+(33, 42, 40, 'Hola', '2025-09-24 19:09:00', 0),
+(34, 42, 40, 'Precio fijo de tu libro ', '2025-09-24 19:09:15', 0),
+(35, 42, 40, '!!!!', '2025-09-24 19:09:30', 0),
+(36, 42, 40, '!!!!', '2025-09-24 19:09:31', 0),
+(37, 40, 42, '😎', '2025-09-24 19:11:21', 0),
+(40, 33, 34, 'xd', '2025-09-27 22:58:09', 0),
+(41, 33, 35, 'xs', '2025-09-27 22:58:25', 0),
+(42, 33, 29, 'xd', '2025-09-27 22:58:33', 0);
 
 -- --------------------------------------------------------
 
@@ -331,16 +308,29 @@ CREATE TABLE `notificaciones` (
   `usuario_id` int(11) NOT NULL,
   `mensaje` varchar(255) NOT NULL,
   `link` varchar(255) DEFAULT NULL,
+  `intercambio_id` int(11) DEFAULT NULL,
   `tipo` varchar(50) DEFAULT 'info',
-  `fecha` datetime DEFAULT current_timestamp()
+  `fecha` datetime DEFAULT current_timestamp(),
+  `leida` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notificaciones`
 --
 
-INSERT INTO `notificaciones` (`id`, `usuario_id`, `mensaje`, `link`, `tipo`, `fecha`) VALUES
-(1, 3, '📖 ¡Tu libro recibió una nueva reseña!', 'index.php?c=ResenaController&a=ver&id=2', 'reseña', '2025-07-25 20:47:57');
+INSERT INTO `notificaciones` (`id`, `usuario_id`, `mensaje`, `link`, `intercambio_id`, `tipo`, `fecha`, `leida`) VALUES
+(57, 34, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 51, 'info', '2025-09-23 20:53:40', 1),
+(58, 33, 'Tu solicitud de intercambio ha sido rechazada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-23 20:55:01', 1),
+(59, 34, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 52, 'info', '2025-09-24 00:22:41', 1),
+(60, 33, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-24 00:40:18', 0),
+(61, 33, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-24 00:40:29', 1),
+(62, 34, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 53, 'info', '2025-09-24 18:35:52', 0),
+(63, 41, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 54, 'info', '2025-09-24 19:10:29', 1),
+(64, 35, 'Tu solicitud de intercambio ha sido aceptada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-24 19:11:25', 1),
+(65, 41, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 55, 'info', '2025-09-25 05:36:55', 0),
+(66, 42, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 56, 'info', '2025-09-27 23:27:02', 0),
+(67, 33, '🔄 Has recibido una solicitud de intercambio por uno de tus libros.', 'index.php?c=IntercambioController&a=notificaciones', 57, 'info', '2025-09-27 23:29:54', 1),
+(68, 34, 'Tu solicitud de intercambio ha sido rechazada.', 'index.php?c=IntercambioController&a=misIntercambios', NULL, 'info', '2025-09-27 23:30:43', 0);
 
 -- --------------------------------------------------------
 
@@ -362,11 +352,8 @@ CREATE TABLE `resenas` (
 --
 
 INSERT INTO `resenas` (`id`, `libro_id`, `usuario_id`, `calificacion`, `comentario`, `fecha`) VALUES
-(1, 2, 1, 5, 'Muy buen libraco', '2025-07-24 15:49:09'),
-(2, 4, 1, 1, 'ss', '2025-07-24 16:42:14'),
-(3, 3, 8, 5, 'Muy buen libro, interesante.', '2025-07-25 19:25:46'),
-(4, 4, 8, 5, 'Libro tan gueno mano', '2025-07-25 20:40:19'),
-(5, 2, 8, 3, 'Libro bueno', '2025-07-25 20:47:57');
+(18, 77, 41, 5, 'Edgar es un escritor excelente, con historias muy buenas y esta es una de ellas', '2025-09-24 19:05:58'),
+(19, 76, 33, 4, 'muy bueno', '2025-09-24 19:23:49');
 
 -- --------------------------------------------------------
 
@@ -383,39 +370,32 @@ CREATE TABLE `usuarios` (
   `foto` varchar(255) DEFAULT NULL,
   `bio` text DEFAULT NULL,
   `token_recuperacion` varchar(255) DEFAULT NULL,
-  `token_expira` datetime DEFAULT NULL
+  `token_expira` datetime DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `genero_preferido` varchar(100) DEFAULT NULL,
+  `libro_favorito` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`) VALUES
-(1, 'Angels', 'angelvanegas944@gmail.com', '$2y$10$qilQp4gPc5YigRUy.8AdJu1d.xoxytCNI2n5lh009GGsOc937jXcS', 'usuario', 'default.jpg', '', '6189b6aa33ad90c9e862e8dcc544bfb3cc16e5ee9b6704b662d98011ba115afd', '2025-07-30 14:07:04'),
-(2, 'Ana', 'aelixabeth201@gmail.com', '$2y$10$jxv1n/Z0gK3nuacmUrrje.U107zmdguQOX.902IvsMeafWqdyd8aK', 'usuario', NULL, '', NULL, NULL),
-(3, 'Jairs', 'jair@gmail.com', '$2y$10$a4k0KvfdkJqDuRTKTB473erMg8Utd5js0EmCuzzB4mlNPy348.hwe', 'admin', 'default.jpg', 'Estudiante Tecnologo del SENA', NULL, NULL),
-(4, 'cristian', 'giovannyv292@gmail.com', '$2y$10$B9E8UKgSV5Z4aoDXh3AJN.TrdIVuyCWwfaXjpGZjemF9gUzgZVpTG', 'usuario', NULL, NULL, NULL, NULL),
-(6, 'prueba, Angel 2', 'a@gmail.com', '$2y$10$Je9oSR1kFa.2vPN3xL3Sreuw919ovXhN3s/Gh4PE2kc82/FZMoL1i', 'usuario', NULL, '', NULL, NULL),
-(8, 'Prueba, Angel', 'aa@gmail.com', '$2y$10$K8BHH802dqVSkaBF3Yk08.moYPD7V2ykS8vVd3jLNv9fPfyj7n416', 'usuario', NULL, '', NULL, NULL),
-(10, 'PRUEBADOS', 'prueba4@gmail.com', '$2y$10$b.tz0uQHBmjLKDLvgU5Kh.lIDkYmknZrF0xepm/E6lTNsmxSjigve', 'usuario', NULL, NULL, NULL, NULL),
-(11, 'david', 'david@gmail.com', '$2y$10$L6ZNipHNBmoiezFzymf4hOfivs3pSn.lsqWx.y4JipUK.DAOKZhwG', 'usuario', NULL, NULL, NULL, NULL),
-(12, 'ssssssssssssssssss', 'shirlygeren+1058s67@zohomail.com', '$2y$10$ZPqtgV9uCk5vx4Iia3AlhOv5WV7lTpkmHNe94IN1idO5zZtdzWW9.', 'usuario', NULL, NULL, NULL, NULL),
-(13, 'misnotas_practica', 'aelizabeth@gmail.com', '$2y$10$82mw7BiF/JTIt4aHtcI4x.Zs6M0V7j72EO8/2Y5fKMq0GHrtQQwgS', 'usuario', NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ventas`
---
-
-CREATE TABLE `ventas` (
-  `id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_libro` int(11) NOT NULL,
-  `fecha` datetime DEFAULT current_timestamp(),
-  `precio` decimal(10,2) NOT NULL,
-  `estado` varchar(20) DEFAULT 'completada'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `foto`, `bio`, `token_recuperacion`, `token_expira`, `direccion`, `genero_preferido`, `libro_favorito`) VALUES
+(29, 'Angel David Vanegas Bulla', 'angelvanegas944@gmail.com', '$2y$10$8Q5IBKzLTfx6ADznKDUaaumKAyvlxBc2H2k3JUq.5DGxolBHeGnbe', 'admin', '68d2b4474090a_peradmin.jpg', 'Estudiante de Tecnología en Análisis y Desarrollo de Software en el SENA, con una\r\nsólida formación en desarrollo web, programación y gestión contable. Poseo conocimientos\r\nen lenguajes como Python, Java, C#, y HTML, así como en frameworks como Django y\r\nbases de datos como MySQL y SQL Server. Mi enfoque es crear soluciones tecnológicas\r\ninnovadoras, optimizando procesos y adaptándome a las necesidades del cliente. Soy\r\nproactivo, analítico, disciplinado y comprometido con el aprendizaje continuo, con\r\nhabilidades destacadas en trabajo colaborativo, resolución de problemas y comunicación\r\nefectiva.', NULL, NULL, '', '', ''),
+(33, 'Jair Santiago Guerra Alarcon', 'jguerra9806@gmail.com', '$2y$10$69ZXlWhaA1ckGv0pOMmpLuAUfigDIE2Obz5YykE72M56rv54QGsGm', 'usuario', '68d2c0195c83c_sdc.jpg', 'Analista de Bases de datos\r\nCon una sólida formación en normalización, seguridad y modelado relacional\r\n Su enfoque va más allá del SQL: domina la arquitectura de datos como un lenguaje que conecta áreas técnicas con necesidades humanas. Esto lo ha llevado a colaborar en proyectos que integran backend robusto, interfaces intuitivas y flujos de información que responden en tiempo real.', NULL, NULL, 'Calle 22', 'Misterio', 'La Metamorfosis, Franz Kafka'),
+(34, 'Ana Elizabeth Carreño Ducuara', 'aelixabeth201@gmail.com', '$2y$10$LrW2qZc7sgkSRr.ERWgY7OebJrQh4Mr1qVqoffCcqk6e1clir805S', 'usuario', '68d2b3e37afc2_download (2).jpg', 'Especialista en testing y backend. Python, Php', NULL, NULL, 'Dubai', 'Fantasía', 'Libro. THE CAT RETURNS PICTURE BOOK'),
+(35, 'giovanny', 'giovannyV292@gmail.com', '$2y$10$bIpOLx1mBPcjjdFltIDNLeWW.eehGxdIVaQDCK4qOUraq3FAopWq6', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(36, 'Jim clarck', 'clarckjim@outlook.com', '$2y$10$CUIXIvvb3sAZ6FqpaXnWYuur8UOdCMGZYEScMOhUWDg69jfo9ui/u', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(37, 'Nicolás Esteban', 'spiderdash13579@gmail.com', '$2y$10$j.x25VH3X2tQ5JNJZVZWl.JxT/uiiq84ZPKGHLwW.Z7WdjSsfnL/S', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'Cristinne Jhoanna ', 'crisroa34@gmail.com', '$2y$10$WZY0UDSoq82od1OyGiltNeMpulUrlvIJc3BuQWmetQpWddzw5neWW', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 'Sam mora', 'morasamuelrincon@gmail.com', '$2y$10$gfJY45N04xdJeWvr0TtryOjNveM7PpSQo6Q3tD0vnVH/L8g06sRAG', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(40, 'Thomas Felipe Aldana Betancourth', 'thomyaldabe@gmail.com', '$2y$10$/9QAsz6EcmTXCktQR.EvCeEnR7/RIRVgk1sN27sfFXHs5XDuLixhC', 'usuario', '68d4413f61632_IMG20250921114954.jpg', '<br />\r\n<b>Deprecated</b>:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in <b>/home/u379646107/domains/libroswapcol.com/public_html/views/usuario/perfil.php</b> on line <b>150</b><br />\r\n', NULL, NULL, '', '', ''),
+(41, 'Jafet David Pineda Cespedes ', 'jafetdavidpi@gmail.com', '$2y$10$m3NVqW8R1Cn6Gwnzv/ryFen39mURMPYBS0yo3u48/82VYUP/9Jlva', 'usuario', '68d44154e29d2_IMG_20250916_231922_012.webp', '<br />\r\n<b>Deprecated</b>:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in <b>/home/u379646107/domains/libroswapcol.com/public_html/views/usuario/perfil.php</b> on line <b>150</b><br />\r\n', NULL, NULL, '', '', ''),
+(42, 'Alejandro López ', 'javierlopezuni07@gmail.com', '$2y$10$3etHZ7c3XDxROg7whiPGbeoN.Jk/wHJxb/sJX5afIGjTV8CMkGqzS', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(44, 'Alejandro López ', 'javierlopezuni08@gmail.com', '$2y$10$fmOAc9pJljIlY4K1FqZBs.DrV0F3QMUyM8kzeNm.wYYbIZCEZa5lm', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 'Joaquín Cañon ', 'danielcf97@hotmail.com', '$2y$10$ZdPllXwfOrkdCErbEmXNrOxi3cbLkN2Rf1qrqu5rNl.g5XmxPx/bC', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(47, 'Alex Sanchez Linares ', 'alexsanchezli.2005@gmail.com', '$2y$10$hyZNRrqx7aGEcBTukY2GCODzh2urbjPU2/ndgwLFaBqFsAz3Mazh6', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(48, 'Daian Rodríguez ', 'dainicks08@yahoo.com', '$2y$10$z8MuhtlZ2dyJ5.mSOH6fxu29BLF3KAI5YOVXsQeLnBvh8QgGrlQEi', 'usuario', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -428,12 +408,6 @@ ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`),
   ADD KEY `libro_id` (`libro_id`);
-
---
--- Indexes for table `categorias`
---
-ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `comentarios_evento`
@@ -452,22 +426,17 @@ ALTER TABLE `compras`
   ADD KEY `libro_id` (`libro_id`);
 
 --
--- Indexes for table `config_usuario`
+-- Indexes for table `detalle_compras`
 --
-ALTER TABLE `config_usuario`
+ALTER TABLE `detalle_compras`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `compra_id` (`compra_id`),
+  ADD KEY `libro_id` (`libro_id`);
 
 --
 -- Indexes for table `eventos`
 --
 ALTER TABLE `eventos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `generos`
---
-ALTER TABLE `generos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -481,17 +450,18 @@ ALTER TABLE `intercambios`
   ADD KEY `usuario_2` (`usuario_2`);
 
 --
+-- Indexes for table `inventario_oficial`
+--
+ALTER TABLE `inventario_oficial`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `libro_id` (`libro_id`);
+
+--
 -- Indexes for table `libros`
 --
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
-
---
--- Indexes for table `libros_catalogo`
---
-ALTER TABLE `libros_catalogo`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `libros_venta`
@@ -529,14 +499,6 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `ventas`
---
-ALTER TABLE `ventas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_libro` (`id_libro`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -544,97 +506,79 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT for table `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `categorias`
---
-ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `comentarios_evento`
 --
 ALTER TABLE `comentarios_evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT for table `config_usuario`
+-- AUTO_INCREMENT for table `detalle_compras`
 --
-ALTER TABLE `config_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `detalle_compras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `generos`
---
-ALTER TABLE `generos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `intercambios`
 --
 ALTER TABLE `intercambios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `inventario_oficial`
+--
+ALTER TABLE `inventario_oficial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT for table `libros_catalogo`
---
-ALTER TABLE `libros_catalogo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `libros_venta`
 --
 ALTER TABLE `libros_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `resenas`
 --
 ALTER TABLE `resenas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `ventas`
---
-ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
@@ -644,8 +588,7 @@ ALTER TABLE `ventas`
 -- Constraints for table `carrito`
 --
 ALTER TABLE `carrito`
-  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `carrito_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
+  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Constraints for table `comentarios_evento`
@@ -658,23 +601,28 @@ ALTER TABLE `comentarios_evento`
 -- Constraints for table `compras`
 --
 ALTER TABLE `compras`
-  ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
+  ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `config_usuario`
+-- Constraints for table `detalle_compras`
 --
-ALTER TABLE `config_usuario`
-  ADD CONSTRAINT `config_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+ALTER TABLE `detalle_compras`
+  ADD CONSTRAINT `detalle_compras_ibfk_1` FOREIGN KEY (`compra_id`) REFERENCES `compras` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `intercambios`
 --
 ALTER TABLE `intercambios`
-  ADD CONSTRAINT `intercambios_ibfk_1` FOREIGN KEY (`libro_id_1`) REFERENCES `libros` (`id`),
-  ADD CONSTRAINT `intercambios_ibfk_2` FOREIGN KEY (`libro_id_2`) REFERENCES `libros` (`id`),
+  ADD CONSTRAINT `intercambios_ibfk_1` FOREIGN KEY (`libro_id_1`) REFERENCES `libros_venta` (`id`),
+  ADD CONSTRAINT `intercambios_ibfk_2` FOREIGN KEY (`libro_id_2`) REFERENCES `libros_venta` (`id`),
   ADD CONSTRAINT `intercambios_ibfk_3` FOREIGN KEY (`usuario_1`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `intercambios_ibfk_4` FOREIGN KEY (`usuario_2`) REFERENCES `usuarios` (`id`);
+
+--
+-- Constraints for table `inventario_oficial`
+--
+ALTER TABLE `inventario_oficial`
+  ADD CONSTRAINT `inventario_oficial_ibfk_1` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`);
 
 --
 -- Constraints for table `libros`
@@ -700,13 +648,6 @@ ALTER TABLE `notificaciones`
 ALTER TABLE `resenas`
   ADD CONSTRAINT `resenas_ibfk_1` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`id`),
   ADD CONSTRAINT `resenas_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
-
---
--- Constraints for table `ventas`
---
-ALTER TABLE `ventas`
-  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`id_libro`) REFERENCES `libros` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
