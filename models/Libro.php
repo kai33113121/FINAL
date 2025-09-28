@@ -348,4 +348,19 @@ public function crear($datos) {
     }
 
     public function contarPorGenero() {
-  
+        $stmt = $this->conexion->prepare("SELECT genero, COUNT(*) as total FROM libros GROUP BY genero");
+        if (!$stmt) return [];
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $resultados = [];
+        if ($result) {
+            foreach ($result->fetch_all(MYSQLI_ASSOC) as $row) {
+                $resultados[$row['genero']] = $row['total'];
+            }
+        }
+        $stmt->close();
+        return $resultados;
+    }
+}
+
+

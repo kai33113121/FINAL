@@ -9,8 +9,9 @@ class Notificacion
     {
         $this->conexion = conectar();
         if (!$this->conexion) {
-            throw n
-        if ($result) {
+            throw new Exception("No se pudo conectar a la base de datos.");
+        }
+    }
             while ($row = $result->fetch_assoc()) {
                 $notificaciones[] = [
                     'id'      => $row['id'],

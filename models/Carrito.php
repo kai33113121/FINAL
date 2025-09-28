@@ -8,7 +8,20 @@ class Carrito {
         $this->conexion = conectar();
         if (!$this->conexion) {
             throw new Exception("No se pudo conectar a la base de datos.");
-      
+        }
+    }
+
+    public function agregar($usuario_id, $libro_id) {
+        $stmt = $this->conexion->prepare("INSERT INTO carrito (usuario_id, libro_id) VALUES (?, ?)");
+        if (!$stmt) return false;
+     ;
+    }
+
+    public function obtener($usuario_id) {
+    $sql = "SELECT c.*, l.titulo, l.autor, l.precio, l.imagen 
+            FROM carrito c 
+            JOIN libros l ON c.libro_id = l.id 
+            WHERE c.usuario_id = ?";
     $stmt = $this->conexion->prepare($sql);
     if (!$stmt) return [];
     $stmt->bind_param("i", $usuario_id);
