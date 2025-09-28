@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error en Exportación de Facturas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .error-content {
+            padding: 30px;
+        }
+        
+        .error-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .error-icon {
+            font-size: 36px;
+            color: #e74c3c;
+            margin-right: 15px;
+        }
+        
+        .error-title {
+            font-size: 24px;
+            color: #e74c3c;
+        }
+        
+        .error-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .error-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .error-card h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .steps h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        ol {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .screenshot {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .screenshot img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .severity {
+            background: #fff4f4;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            margin-top: 20px;
+        }
+        
+        .severity h3 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .error-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Gestión E-commerce</h1>
+            <p>Módulo de Consulta de Facturas</p>
+        </header>
+        
+        <div class="error-content">
+            <div class="error-header">
+                <div class="error-icon">⚠️</div>
+                <h2 class="error-title">Error #8: Cierre Inesperado al Exportar Facturas</h2>
+            </div>
+            
+            <div class="error-details">
+                <div class="error-card">
+                    <h3>Descripción del Error</h3>
+                    <p>El sistema se cierra inesperadamente al exportar más de 100 facturas a Excel sin mostrar mensaje de error.</p>
+                </div>
+                
+                <div class="error-card">
+                    <h3>Tipo de Error</h3>
+                    <p>Rendimiento/Estabilidad</p>
+                </div>
+            </div>
+            
+            <div class="steps">
+                <h3>Pasos para Reproducir el Error:</h3>
+                <ol>
+                    <li>Ir al módulo de consulta de facturas</li>
+                    <li>Seleccionar un rango que incluya más de 100 facturas</li>
+                    <li>Hacer clic en "Exportar a Excel"</li>
+                    <li>Esperar el proceso de exportación</li>
+                </ol>
+            </div>
+            
+            <div class="error-details">
+                <div class="error-card">
+                    <h3>Resultado Esperado</h3>
+                    <p>El sistema debe exportar todas las facturas seleccionadas a Excel sin problemas.</p>
+                </div>
+                
+                <div class="error-card">
+                    <h3>Resultado Obtenido</h3>
+                    <p>El software se cierra abruptamente sin generar archivo y sin mostrar mensaje de error.</p>
+                </div>
+            </div>
+            
+            <div class="screenshot">
+                <h3>Representación del Error</h3>
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgODAwIDQwMCI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNmNWY3ZjkiLz48cmVjdCB4PSI1MCIgeT0iNTAiIHdpZHRoPSI3MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZmZmIiBzdHJva2U9IiNlMWUxZTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjQwMCIgeT0iMTQwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNlNzRjM2MiPkVSUk9SICM4PC90ZXh0Pjx0ZXh0IHg9IjQwMCIgeT0iMTgwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM1NTUiPlNpc3RlbWEgY2VycmFkbyBpbmVzcGVyYWRhbWVudGU8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIyMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU1NSI+YWwgZXhwb3J0YXIgbcOhcyBkZSAxMDAgZmFjdHVyYXM8L3RleHQ+PGNpcmNsZSBjeD0iNDAwIiBjeT0iMjcwIiByPSI0MCIgZmlsbD0iI2U3NGMzYyIvPjx0ZXh0IHg9IjQwMCIgeT0iMjc1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiPkY8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIzMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU1NSI+U2V2ZXJpZGFkOiBBbHRhPC90ZXh0Pjwvc3ZnPg==" alt="Representación del Error #8">
+            </div>
+            
+            <div class="severity">
+                <h3>Severidad: Alta</h3>
+                <p>Este error afecta significativamente la funcionalidad del sistema y la productividad de los usuarios, impidiendo la exportación de grandes volúmenes de datos necesarios para reporting y análisis.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Sistema E-commerce &copy; 2023 | Departamento de Desarrollo</p>
+        </footer>
+    </div>
+</body>
+</html>

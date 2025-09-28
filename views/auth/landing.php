@@ -31,6 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="#categorias">Géneros</a></li>
                     <li class="nav-item"><a class="nav-link" href="#seleccion">Intercambios</a></li>
                     <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                 </ul>
             </div>
             <div class="d-flex gap-3">
@@ -924,66 +925,193 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer Épico SIN ESPACIOS EN BLANCO -->
-    <footer class="footer-epic">
-        <div class="container text-center">
+    <!-- Sección de Contacto -->
+    <section class="py-5" style="background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%); margin-top: 100px;"
+        id="contacto">
+        <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="mb-5">
-                        <img src="/FINAL/public/img/logow.png" alt="LibrosWap" style="height: 70px;" class="mb-4">
-                        <h3 class="text-white fw-bold">LibrosWap</h3>
-                        <p class="text-light mb-4 fs-5">Transformando la experiencia de lectura • Conectando mentes
-                            brillantes desde 2025</p>
-                    </div>
-
-                    <div class="row g-4 mb-5">
-                        <div class="col-md-3">
-                            <h6 class="text-white fw-bold mb-3">Explorar</h6>
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="text-light text-decoration-none hover-link">Inicio</a></li>
-                                <li><a href="#productos" class="text-light text-decoration-none hover-link">Catálogo</a>
-                                </li>
-                                <li><a href="#categorias" class="text-light text-decoration-none hover-link">Géneros</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="text-white fw-bold mb-3">Comunidad</h6>
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="text-light text-decoration-none hover-link">Blog</a></li>
-                                <li><a href="#" class="text-light text-decoration-none hover-link">Foro</a></li>
-                                <li><a href="#" class="text-light text-decoration-none hover-link">Eventos</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="text-white fw-bold mb-3">Soporte</h6>
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="text-light text-decoration-none hover-link">Contacto</a></li>
-                                <li><a href="#" class="text-light text-decoration-none hover-link">Ayuda</a></li>
-                                <li><a href="#" class="text-light text-decoration-none hover-link">FAQ</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="text-white fw-bold mb-3">Síguenos</h6>
-                            <div class="d-flex justify-content-center gap-3">
-                                <a href="#" class="text-light fs-4 hover-link"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="text-light fs-4 hover-link"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="text-light fs-4 hover-link"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="text-light fs-4 hover-link"><i class="bi bi-linkedin"></i></a>
+                <div class="col-lg-8">
+                    <div class="card"
+                        style="border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold mb-3" style="color: #6a11cb;">📞 Contáctanos</h2>
+                                <p class="text-muted">¿Tienes preguntas, sugerencias o necesitas ayuda? Estamos aquí
+                                    para ti</p>
                             </div>
+
+                            <form method="POST" action="procesar_contacto.php">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" required
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label fw-semibold">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="asunto" class="form-label fw-semibold">Asunto</label>
+                                        <select class="form-select" id="asunto" name="asunto" required
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                                            <option value="">Selecciona un asunto</option>
+                                            <option value="soporte">Soporte Técnico</option>
+                                            <option value="sugerencia">Sugerencia</option>
+                                            <option value="problema">Reportar Problema</option>
+                                            <option value="cuenta">Problemas con mi cuenta</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="mensaje" class="form-label fw-semibold">Mensaje</label>
+                                        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required
+                                            placeholder="Cuéntanos en qué podemos ayudarte..."
+                                            style="border-radius: 10px; border: 2px solid #e9ecef;"></textarea>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-lg px-5"
+                                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                                       border: none; color: white; border-radius: 25px; font-weight: 600;">
+                                            Enviar Mensaje
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- Footer Épico Mejorado -->
+    <footer
+        style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 60px 0 30px; margin-top: 0;">
+        <div class="container">
+            <div class="row g-5">
+
+                <!-- Información Principal -->
+                <div class="col-lg-4">
+                    <div class="mb-4">
+                        <img src="public/img/logow.png" alt="LibrosWap" style="height: 60px;" class="mb-3">
+                        <h4 class="fw-bold">LibrosWap</h4>
+                        <p class="mb-3">Plataforma web para comprar, vender e intercambiar libros entre usuarios.
+                            Fomentamos la lectura, conectamos personas y promovemos el conocimiento compartido.</p>
+                    </div>
+
+                    <!-- Redes Sociales -->
+                    <div>
+                        <h6 class="fw-bold mb-3">Síguenos</h6>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-twitter"></i>
+                            </a>
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Enlaces Útiles -->
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Enlaces Útiles</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="inicio"
+                                        class="text-white text-decoration-none">Regresar al Inicio</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#productos"
+                                        class="text-white text-decoration-none">Revisar los productos</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#categorias"
+                                        class="text-white text-decoration-none">Generos a tu alcance</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#comunidad"
+                                        class="text-white text-decoration-none">Comunidad</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="index.php?c=EventoController&a=index"
+                                        class="text-white text-decoration-none">Foros</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#contacto" class="text-white text-decoration-none">Contacto</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="politicas/privacidad.pdf" target="_blank"
+                                        class="text-white text-decoration-none">Privacidad</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="politicas/terminos.pdf" target="_blank"
+                                        class="text-white text-decoration-none">Términos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contacto -->
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Contacto</h6>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-envelope me-2"></i>
+                            <a href="mailto:libroswapgroup@gmail.com" class="text-white text-decoration-none">
+                                libroswapgroup@gmail.com
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            <span>Colombia</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock me-2"></i>
+                            <span>Soporte 24/7</span>
                         </div>
                     </div>
 
-                    <hr class="border-light opacity-25 my-4">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px;">
+                        <h6 class="fw-bold mb-2">¿Necesitas ayuda?</h6>
+                        <p class="small mb-0">Nuestro equipo está listo para ayudarte con cualquier pregunta o problema
+                            que tengas.</p>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4">
-                        <p class="text-light mb-2 mb-md-0">© 2025 LibrosWap. Todos los derechos reservados.</p>
-                        <p class="text-light mb-0">
-                            Diseñado con 💜 por Ángel |
-                            <a href="#" class="text-light text-decoration-none hover-link">Privacidad</a> |
-                            <a href="#" class="text-light text-decoration-none hover-link">Términos</a>
-                        </p>
+            <!-- Separador -->
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+
+            <!-- Footer Bottom -->
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p class="mb-0">© 2025 LibrosWap. Todos los derechos reservados. | Diseñado con 💜 por el equipo
+                        LibrosWap</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex justify-content-md-end gap-3">
+                        <a href="politicas/privacidad.pdf" target="_blank"
+                            class="text-white text-decoration-none small">Privacidad</a>
+                        <a href="politicas/terminos.pdf" target="_blank"
+                            class="text-white text-decoration-none small">Términos</a>
                     </div>
                 </div>
             </div>
