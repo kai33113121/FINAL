@@ -3,7 +3,6 @@ require_once __DIR__ . '/../config/config.php';
 class ComentarioEvento
 {
     private $db;
-
     public function __construct()
     {
         $this->db = conectar();
@@ -11,15 +10,15 @@ class ComentarioEvento
             throw new Exception("No se pudo conectar a la base de datos.");
         }
     }
-
     public function agregar($id_evento, $id_usuario, $comentario)
     {
         $stmt = $this->db->prepare("INSERT INTO comentarios_evento (id_evento, id_usuario, comentario) VALUES (?, ?, ?)");
         if (!$stmt) return false;
         $stmt->bind_param("iis", $id_evento, $id_usuario, $comentario);
-      
+        $exito = $stmt->execute();
+        $stmt->close();
+        return $exito;
     }
-
     public function obtenerPorEvento($id_evento)
     {
         $stmt = $this->db->prepare("

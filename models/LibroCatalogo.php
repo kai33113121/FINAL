@@ -1,19 +1,15 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
-
 class LibroCatalogo
 {
     private $db;
-
     public function __construct($conexion = null)
     {
-        // Permite pasar la conexión o crearla si no se pasa
         $this->db = $conexion ?: conectar();
         if (!$this->db) {
             throw new Exception("No se pudo conectar a la base de datos.");
         }
     }
-
     public function obtenerTodos()
     {
         $sql = "SELECT lc.*, u.nombre 
@@ -25,7 +21,6 @@ class LibroCatalogo
         if ($result) $result->free();
         return $libros;
     }
-
     public function obtenerPorId($id)
     {
         $sql = "SELECT * FROM libros_catalogo WHERE id = ?";
@@ -38,7 +33,6 @@ class LibroCatalogo
         $stmt->close();
         return $libro;
     }
-
     public function crear($datos)
     {
         $sql = "INSERT INTO libros_catalogo (titulo, autor, descripcion, imagen, precio, estado, genero, id_usuario)
@@ -60,7 +54,6 @@ class LibroCatalogo
         $stmt->close();
         return $exito;
     }
-
     public function actualizar($id, $datos)
     {
         $sql = "UPDATE libros_catalogo SET titulo=?, autor=?, descripcion=?, imagen=?, precio=?, estado=?, genero=? WHERE id=?";
@@ -81,7 +74,6 @@ class LibroCatalogo
         $stmt->close();
         return $exito;
     }
-
     public function eliminar($id)
     {
         $sql = "DELETE FROM libros_catalogo WHERE id=?";
