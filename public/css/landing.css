@@ -5,7 +5,7 @@
     --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     --gradient-purple: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 50%, #ab47bc 100%);
     --gradient-cyber: linear-gradient(135deg, #0f3460 0%, #e94560 100%);
-    --text-primary: #1a1a1a;
+    --text-primary: #fefefe;
     --text-secondary: #2c2c2c;
     --text-light: #4a4a4a;
     --shadow-soft: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -31,17 +31,16 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background: linear-gradient(135deg, #50054c 0%, #010002 50%, #6f4773 100%);
     background-attachment: fixed;
 }
 
-/* NAVBAR */
 .navbar-futuristic {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(25px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    padding: 15px 0;
+    padding: 20px 0;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
 }
 
@@ -49,11 +48,11 @@ body {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(30px);
     box-shadow: 0 8px 60px rgba(106, 27, 154, 0.2);
-    padding: 10px 0;
+    padding: 15px 0;
 }
 
 .navbar-futuristic .navbar-brand {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 900;
     background: var(--gradient-purple);
     -webkit-background-clip: text;
@@ -64,16 +63,15 @@ body {
 
 .navbar-futuristic .navbar-brand img {
     filter: drop-shadow(0 4px 12px rgba(106, 27, 154, 0.3));
-    height: 45px;
-    max-width: 100%;
+    height: 50px;
 }
 
 .navbar-futuristic .nav-link {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
-    padding: 12px 20px;
+    padding: 15px 25px;
     border-radius: 50px;
-    margin: 0 3px;
+    margin: 0 5px;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
@@ -93,8 +91,8 @@ body {
 
 .navbar-futuristic .nav-link:hover {
     color: white !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(106, 27, 154, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(106, 27, 154, 0.4);
 }
 
 .navbar-futuristic .nav-link:hover::before {
@@ -118,12 +116,11 @@ body {
     box-shadow: none;
 }
 
-/* BOTONES */
 .btn-futuristic {
     background: var(--gradient-primary);
     border: none;
     border-radius: 50px;
-    padding: 12px 25px;
+    padding: 15px 30px;
     font-weight: 700;
     color: white;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -131,7 +128,7 @@ body {
     overflow: hidden;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 .btn-futuristic::before {
@@ -146,8 +143,8 @@ body {
 }
 
 .btn-futuristic:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(106, 27, 154, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(106, 27, 154, 0.4);
     color: white;
 }
 
@@ -159,24 +156,24 @@ body {
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50px;
-    padding: 10px 23px;
+    padding: 13px 28px;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.9);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 .btn-outline-futuristic:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: white;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     color: white;
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
 }
 
-/* HERO SECTION */
+
 .hero-epic {
     position: relative;
     min-height: 100vh;
@@ -184,18 +181,28 @@ body {
     align-items: center;
     overflow: hidden;
     background: var(--gradient-cyber);
-    padding: 0 15px;
 }
 
 .hero-background {
     position: absolute;
     inset: 0;
-    background-image: url('/public/img/adminside.png');
-    background-size: cover;
+    background-image: url('/public/img/admisnside.png');
+    background-size: 110%; 
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.2;
     z-index: 0;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes parallaxFloat {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    100% {
+        transform: scale(1.05) rotate(1deg);
+    }
 }
 
 .hero-overlay {
@@ -215,7 +222,7 @@ body {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 900;
     background: linear-gradient(45deg, #ffffff, #f093fb, #4facfe);
     -webkit-background-clip: text;
@@ -231,6 +238,7 @@ body {
         opacity: 0;
         transform: translateY(50px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -238,7 +246,7 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     margin-bottom: 3rem;
     opacity: 0.95;
     font-weight: 400;
@@ -251,6 +259,7 @@ body {
         opacity: 0;
         transform: translateX(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -261,8 +270,8 @@ body {
     background: var(--gradient-secondary);
     color: white;
     border: none;
-    padding: 18px 40px;
-    font-size: 1.2rem;
+    padding: 20px 50px;
+    font-size: 1.3rem;
     font-weight: 800;
     border-radius: 60px;
     box-shadow: 0 20px 60px rgba(240, 147, 251, 0.4);
@@ -273,8 +282,8 @@ body {
 }
 
 .btn-hero-epic:hover {
-    transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 25px 70px rgba(240, 147, 251, 0.6);
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 30px 80px rgba(240, 147, 251, 0.6);
     color: white;
 }
 
@@ -283,84 +292,76 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* CAROUSEL 3D */
+
 .books-carousel-epic {
     margin-top: 3rem;
     animation: carouselReveal 1.5s ease-out 0.9s both;
     position: relative;
 }
 
-@keyframes carouselReveal {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
 .carousel-container-epic {
     position: relative;
-    height: 450px;
-    perspective: 1200px;
-    margin: 0 auto;
-    max-width: 100%;
+    height: 500px;
+    perspective: 1000px;
+    overflow: visible;
 }
 
 .book-slide-epic {
     position: absolute;
-    width: 300px;
-    height: 380px;
+    width: 320px;
+    height: 420px;
     border-radius: 25px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: var(--shadow-heavy);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     background: white;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform-origin: center center;
 }
 
 .book-slide-epic.active {
     z-index: 10;
-    transform: translateX(-50%) scale(1.05) rotateY(0deg);
-    box-shadow: 0 30px 80px rgba(106, 27, 154, 0.5);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    box-shadow: 0 30px 80px rgba(106, 27, 154, 0.4);
 }
 
 .book-slide-epic.prev {
     z-index: 5;
-    transform: translateX(-350px) scale(0.85) rotateY(35deg);
+    transform: translate(-350px, -50%) scale(0.8) rotateY(25deg);
     opacity: 0.7;
 }
 
 .book-slide-epic.next {
     z-index: 5;
-    transform: translateX(150px) scale(0.85) rotateY(-35deg);
+    transform: translate(100px, -50%) scale(0.8) rotateY(-25deg);
     opacity: 0.7;
 }
 
 .book-slide-epic.hidden {
     opacity: 0;
-    transform: translateX(-50%) scale(0.6) rotateY(60deg);
+    transform: translate(-50%, -50%) scale(0.6);
+    z-index: 1;
 }
 
 .book-image-epic {
     width: 100%;
     height: 75%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
 }
 
 .book-slide-epic:hover .book-image-epic {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 .book-info-epic {
@@ -376,25 +377,26 @@ body {
 .book-title-epic {
     font-size: 1.1rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: black;
     margin-bottom: 5px;
     line-height: 1.2;
 }
 
 .book-category-epic {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
+
 
 .carousel-controls-epic {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -405,13 +407,14 @@ body {
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
+    z-index: 20;
 }
 
 .carousel-controls-epic:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-50%) scale(1.1);
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .carousel-prev-epic {
@@ -422,22 +425,22 @@ body {
     right: -80px;
 }
 
+/* INDICADORES CORREGIDOS */
 .carousel-indicators-epic {
     position: absolute;
-    bottom: -80px;
+    bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 15px;
+    z-index: 20;
 }
 
 .indicator-epic {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     transition: all 0.3s ease;
     border: 2px solid transparent;
@@ -446,20 +449,80 @@ body {
 .indicator-epic.active {
     background: white;
     transform: scale(1.3);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* SECCIONES GENERALES */
+/* RESPONSIVE MEJORADO */
+@media (max-width: 991px) {
+    .carousel-container-epic {
+        height: 450px;
+    }
+    
+    .book-slide-epic {
+        width: 280px;
+        height: 380px;
+    }
+    
+    .carousel-prev-epic {
+        left: -60px;
+    }
+    
+    .carousel-next-epic {
+        right: -60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-container-epic {
+        height: 400px;
+    }
+    
+    .book-slide-epic {
+        width: 250px;
+        height: 340px;
+    }
+    
+    .carousel-controls-epic {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-prev-epic {
+        left: -40px;
+    }
+    
+    .carousel-next-epic {
+        right: -40px;
+    }
+    
+    .carousel-indicators-epic {
+        bottom: -40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-controls-epic {
+        display: none; 
+    }
+    
+    .book-slide-epic {
+        width: 220px;
+        height: 300px;
+    }
+}
+
 .section-epic {
-    padding: 80px 0;
+    padding: 120px 0;
     position: relative;
 }
 
 .section-title-epic {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -471,25 +534,25 @@ body {
 .section-title-epic::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 5px;
+    width: 120px;
+    height: 6px;
     background: var(--gradient-primary);
     border-radius: 3px;
 }
 
-/* CARDS */
+
 .card-epic {
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: var(--shadow-soft);
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     background: white;
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .card-epic::before {
@@ -506,7 +569,7 @@ body {
 }
 
 .card-epic:hover {
-    transform: translateY(-15px) scale(1.02);
+    transform: translateY(-20px) scale(1.03);
     box-shadow: var(--shadow-heavy);
 }
 
@@ -517,17 +580,17 @@ body {
 .card-epic .card-body {
     position: relative;
     z-index: 2;
-    padding: 2rem;
+    padding: 3rem;
 }
 
 .card-epic .card-img-top {
-    height: 250px;
+    height: 300px;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
 .card-epic:hover .card-img-top {
-    transform: scale(1.08);
+    transform: scale(1.1);
 }
 
 .card-epic .card-title {
@@ -539,22 +602,22 @@ body {
     color: var(--text-secondary);
 }
 
-/* RECOMENDACIONES */
+
 .recommendation-epic {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(248, 249, 250, 0.05));
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 30px;
-    padding: 3rem;
-    margin: 2rem 0;
+    border-radius: 40px;
+    padding: 4rem;
+    margin: 3rem 0;
     box-shadow: var(--shadow-medium);
 }
 
 .carousel-title-epic {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 900;
     color: var(--text-primary);
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
     text-align: center;
     position: relative;
 }
@@ -564,27 +627,27 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: -12px;
-    width: 80px;
-    height: 3px;
+    bottom: -15px;
+    width: 100px;
+    height: 4px;
     background: var(--gradient-secondary);
     border-radius: 2px;
 }
 
-/* PRODUCTOS */
+/* ===== PRODUCTOS ===== */
 .products-epic {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(248, 249, 250, 0.05));
     backdrop-filter: blur(20px);
-    padding: 80px 0;
+    padding: 120px 0;
 }
 
 .product-card-epic {
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-radius: 25px;
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: var(--shadow-soft);
     background: white;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     position: relative;
 }
 
@@ -602,7 +665,7 @@ body {
 }
 
 .product-card-epic:hover {
-    transform: translateY(-12px) scale(1.02);
+    transform: translateY(-15px) scale(1.05);
     box-shadow: var(--shadow-heavy);
 }
 
@@ -613,41 +676,40 @@ body {
 .product-card-epic .card-body {
     position: relative;
     z-index: 2;
-    padding: 2rem;
+    padding: 2.5rem;
 }
 
 .product-card-epic .card-title {
     color: var(--text-primary);
     font-weight: 800;
-    font-size: 1.1rem;
 }
 
 .price-badge {
     background: var(--gradient-secondary);
     color: white;
-    padding: 6px 12px;
-    border-radius: 18px;
+    padding: 8px 15px;
+    border-radius: 20px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .category-badge {
     background: var(--gradient-tertiary);
     color: white;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* CATEGORÍAS */
+/* ===== CATEGORÍAS ===== */
 .categories-epic {
     background: var(--gradient-cyber);
     position: relative;
     overflow: hidden;
-    padding: 80px 0;
+    padding: 120px 0;
 }
 
 .categories-epic::before {
@@ -657,7 +719,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('public/img/top3.png');
+    background-image: url('/public/img/top3.png');
     background-size: cover;
     background-position: center;
     opacity: 0.8;
@@ -692,7 +754,7 @@ body {
 .genre-card-epic {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(25px);
-    border-radius: 30px;
+    border-radius: 35px;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -700,24 +762,24 @@ body {
 }
 
 .genre-card-epic:hover {
-    transform: translateY(-20px) scale(1.03);
+    transform: translateY(-25px) scale(1.05);
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3);
     border-color: rgba(255, 255, 255, 0.8);
 }
 
 .genre-card-epic .card-title {
     color: var(--text-primary);
     font-weight: 900;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
 .genre-card-epic .card-text {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     font-weight: 500;
 }
 
@@ -726,35 +788,35 @@ body {
     color: white;
     border: none;
     font-weight: 700;
-    padding: 12px 25px;
-    border-radius: 25px;
+    padding: 15px 30px;
+    border-radius: 30px;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .genre-card-epic .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(106, 27, 154, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(106, 27, 154, 0.4);
     color: white;
 }
 
 .icon-epic {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+    font-size: 5rem;
+    margin-bottom: 2rem;
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* LANZAMIENTO EXCLUSIVO */
+/* ===== LANZAMIENTO EXCLUSIVO ===== */
 .exclusive-epic {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(248, 249, 250, 0.05)), url('/FINAL/public/img/fff.jpg');
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(248, 249, 250, 0.05)), url('/public/img/fff.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    border-radius: 35px;
-    padding: 4rem;
-    margin: 4rem auto;
-    max-width: 1300px;
+    border-radius: 40px;
+    padding: 5rem;
+    margin: 5rem auto;
+    max-width: 1400px;
     box-shadow: var(--shadow-heavy);
     position: relative;
     overflow: hidden;
@@ -777,19 +839,20 @@ body {
     z-index: 2;
 }
 
-/* FOOTER */
-footer {
-    background-image: url('/FINAL/public/img/5.jpg');
+
+.footer-epic {
+    background: var(--gradient-dark);
+    background-image: url('/public/img/5.jpg'); 
     background-size: cover;
     background-position: center;
     color: white;
-    padding: 50px 0 25px;
-    margin-top: 0;
     position: relative;
     overflow: hidden;
+    margin: 0 !important;
+    padding: 80px 0 40px 0 !important;
 }
 
-footer::before {
+.footer-epic::before {
     content: '';
     position: absolute;
     top: 0;
@@ -800,32 +863,36 @@ footer::before {
     z-index: 1;
 }
 
-footer .container {
+.footer-epic .container {
     position: relative;
     z-index: 2;
 }
 
-footer .text-decoration-none {
+.footer-epic .text-light {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.footer-epic .hover-link {
     transition: all 0.3s ease;
     color: rgba(255, 255, 255, 0.8);
 }
 
-footer .text-decoration-none:hover {
+.footer-epic .hover-link:hover {
     color: #f093fb !important;
-    transform: translateX(3px);
+    transform: translateX(5px);
 }
 
-footer a[style*="font-size"]:hover {
-    color: #f093fb !important;
-    transform: scale(1.15);
-}
 
-/* MEJORAS DE CONTRASTE */
 .text-muted {
     color: var(--text-light) !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--text-primary) !important;
     font-weight: 700;
 }
@@ -835,7 +902,6 @@ p {
     line-height: 1.7;
 }
 
-/* ANIMACIONES */
 .scroll-reveal {
     opacity: 0;
     transform: translateY(50px);
@@ -847,37 +913,6 @@ p {
     transform: translateY(0);
 }
 
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-    .hero-title {
-        font-size: 3.5rem;
-    }
-    
-    .carousel-container-epic {
-        height: 420px;
-    }
-    
-    .book-slide-epic {
-        width: 280px;
-        height: 360px;
-    }
-    
-    .carousel-prev-epic {
-        left: -70px;
-    }
-    
-    .carousel-next-epic {
-        right: -70px;
-    }
-    
-    .section-title-epic {
-        font-size: 2.8rem;
-    }
-    
-    .exclusive-epic {
-        padding: 3.5rem;
-    }
-}
 
 @media (max-width: 991px) {
     .navbar-futuristic .navbar-collapse {
@@ -892,509 +927,50 @@ p {
         color: white !important;
         text-align: center;
         margin: 5px 0;
-        padding: 15px 20px;
     }
 
     .navbar-futuristic .nav-link:hover {
-        color: #2f0037 !important;
+        color: #e1bee7 !important;
     }
 
     .hero-title {
-        font-size: 3rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 3.5rem;
     }
 
     .carousel-container-epic {
-        height: 380px;
+        height: 400px;
     }
 
     .book-slide-epic {
-        width: 260px;
-        height: 330px;
+        width: 280px;
+        height: 360px;
     }
 
     .carousel-prev-epic {
-        left: -60px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        left: -80px;
     }
 
     .carousel-next-epic {
-        right: -60px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-    
-    .section-title-epic {
-        font-size: 2.5rem;
-    }
-    
-    .recommendation-epic {
-        padding: 2.5rem;
-    }
-    
-    .exclusive-epic {
-        padding: 3rem;
-        margin: 3rem 1rem;
-    }
-    
-    .btn-hero-epic {
-        padding: 15px 35px;
-        font-size: 1.1rem;
+        right: -80px;
     }
 }
 
 @media (max-width: 768px) {
-    .navbar-futuristic .navbar-brand {
-        font-size: 1.5rem;
-    }
-    
-    .navbar-futuristic .navbar-brand img {
-        height: 35px;
-    }
-
-    .hero-epic {
-        padding: 0 10px;
-        min-height: 90vh;
-    }
-
     .hero-title {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 2.8rem;
     }
 
     .hero-subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    .btn-hero-epic {
-        padding: 12px 25px;
-        font-size: 1rem;
-        letter-spacing: 1px;
-    }
-
-    .carousel-container-epic {
-        height: 320px;
-        margin: 0 20px;
-    }
-
-    .book-slide-epic {
-        width: 220px;
-        height: 280px;
-    }
-
-    .book-slide-epic.prev {
-        transform: translateX(-250px) scale(0.8) rotateY(30deg);
-    }
-
-    .book-slide-epic.next {
-        transform: translateX(80px) scale(0.8) rotateY(-30deg);
-    }
-
-    .book-title-epic {
-        font-size: 1rem;
-    }
-
-    .book-category-epic {
-        font-size: 0.75rem;
-    }
-
-    .carousel-prev-epic,
-    .carousel-next-epic {
-        width: 45px;
-        height: 45px;
-        font-size: 1rem;
-    }
-
-    .carousel-prev-epic {
-        left: -50px;
-    }
-
-    .carousel-next-epic {
-        right: -50px;
-    }
-
-    .carousel-indicators-epic {
-        bottom: -60px;
-        gap: 15px;
-    }
-
-    .section-epic {
-        padding: 60px 0;
-    }
-
-    .section-title-epic {
-        font-size: 2.2rem;
-        margin-bottom: 3rem;
-    }
-
-    .recommendation-epic {
-        padding: 2rem;
-        margin: 1.5rem 0;
-        border-radius: 25px;
-    }
-
-    .carousel-title-epic {
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-    }
-
-    .card-epic .card-body {
-        padding: 1.5rem;
-    }
-
-    .card-epic .card-img-top {
-        height: 200px;
-    }
-
-    .product-card-epic .card-body {
-        padding: 1.5rem;
-    }
-
-    .product-card-epic .card-title {
-        font-size: 1rem;
-    }
-
-    .price-badge {
-        font-size: 0.9rem;
-        padding: 5px 10px;
-    }
-
-    .category-badge {
-        font-size: 0.7rem;
-        padding: 3px 8px;
-    }
-
-    .genre-card-epic .card-title {
         font-size: 1.2rem;
     }
 
-    .genre-card-epic .card-text {
-        font-size: 0.9rem;
-    }
-
-    .icon-epic {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    .exclusive-epic {
-        padding: 2rem;
-        margin: 2rem 0.5rem;
-        border-radius: 25px;
-    }
-
-    .exclusive-epic h1 {
-        font-size: 2rem !important;
-    }
-
-    .exclusive-epic h2 {
-        font-size: 1.3rem !important;
-    }
-
-    .exclusive-epic .btn {
-        padding: 12px 25px;
-        font-size: 0.9rem;
-        margin-bottom: 10px;
-    }
-}
-
-@media (max-width: 576px) {
-    .navbar-futuristic {
-        padding: 10px 0;
-    }
-    
-    .navbar-futuristic .navbar-brand {
-        font-size: 1.3rem;
-    }
-    
-    .navbar-futuristic .navbar-brand img {
-        height: 30px;
-    }
-
-    .navbar-futuristic .nav-link {
-        padding: 12px 15px;
-        font-size: 0.9rem;
-    }
-
-    .btn-futuristic, 
-    .btn-outline-futuristic {
-        padding: 10px 20px;
-        font-size: 0.8rem;
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .hero-epic {
-        min-height: 85vh;
-        padding: 0 5px;
-    }
-
-    .hero-title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-
-    .btn-hero-epic {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
-        width: 100%;
-        max-width: 280px;
-        margin: 0 auto;
-        display: block;
-    }
-
-    .carousel-container-epic {
-        height: 280px;
-        margin: 0 10px;
-    }
-
-    .book-slide-epic {
-        width: 180px;
-        height: 240px;
-    }
-
-    .book-slide-epic.active {
-        transform: translateX(-50%) scale(1) rotateY(0deg);
-    }
-
-    .book-slide-epic.prev,
-    .book-slide-epic.next {
-        display: none;
-    }
-
-    .book-info-epic {
-        padding: 15px;
-    }
-
-    .book-title-epic {
-        font-size: 0.9rem;
-        line-height: 1.1;
-    }
-
-    .book-category-epic {
-        font-size: 0.7rem;
-    }
-
-    .carousel-controls-epic {
-        width: 40px;
-        height: 40px;
-        font-size: 0.9rem;
-    }
-
-    .carousel-prev-epic {
-        left: -45px;
-    }
-
-    .carousel-next-epic {
-        right: -45px;
-    }
-
-    .carousel-indicators-epic {
-        bottom: -50px;
-        gap: 10px;
-    }
-
-    .indicator-epic {
-        width: 12px;
-        height: 12px;
-    }
-
-    .section-epic {
-        padding: 50px 0;
-    }
-
     .section-title-epic {
-        font-size: 1.8rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .section-title-epic::after {
-        width: 80px;
-        height: 4px;
+        font-size: 2.5rem;
     }
 
     .recommendation-epic {
-        padding: 1.5rem;
-        margin: 1rem 0;
-        border-radius: 20px;
-    }
-
-    .carousel-title-epic {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .carousel-title-epic::before {
-        width: 60px;
-        height: 3px;
-    }
-
-    .card-epic {
-        border-radius: 20px;
-        margin-bottom: 1.5rem;
-    }
-
-    .card-epic .card-body {
-        padding: 1.2rem;
-    }
-
-    .card-epic .card-img-top {
-        height: 180px;
-    }
-
-    .card-epic .card-title {
-        font-size: 1rem;
-    }
-
-    .product-card-epic .card-body {
-        padding: 1.2rem;
-    }
-
-    .product-card-epic .card-title {
-        font-size: 0.95rem;
-    }
-
-    .price-badge {
-        font-size: 0.85rem;
-        padding: 4px 8px;
-    }
-
-    .category-badge {
-        font-size: 0.65rem;
-        padding: 3px 6px;
-    }
-
-    .btn-futuristic {
-        padding: 10px 20px;
-        font-size: 0.8rem;
-    }
-
-    .genre-card-epic {
-        border-radius: 25px;
-        margin-bottom: 2rem;
-    }
-
-    .genre-card-epic .card-body {
-        padding: 1.5rem;
-    }
-
-    .genre-card-epic .card-title {
-        font-size: 1.1rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .genre-card-epic .card-text {
-        font-size: 0.85rem;
-        margin-bottom: 1.2rem;
-    }
-
-    .genre-card-epic .btn {
-        padding: 10px 20px;
-        font-size: 0.8rem;
-    }
-
-    .icon-epic {
-        font-size: 2.5rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .exclusive-epic {
-        padding: 1.5rem;
-        margin: 1.5rem 0.25rem;
-        border-radius: 20px;
-    }
-
-    .exclusive-epic h1 {
-        font-size: 1.6rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    .exclusive-epic h2 {
-        font-size: 1.1rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    .exclusive-epic p {
-        font-size: 0.9rem !important;
-        margin-bottom: 1.5rem !important;
-    }
-
-    .exclusive-epic .btn {
-        padding: 10px 20px;
-        font-size: 0.85rem;
-        margin-bottom: 8px;
-        width: 100%;
-    }
-
-    .exclusive-epic .d-flex {
-        flex-direction: column;
-        gap: 0 !important;
-    }
-
-    footer {
-        padding: 40px 0 20px;
-    }
-
-    footer h4,
-    footer h6 {
-        font-size: 1.1rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    footer p {
-        font-size: 0.85rem !important;
-    }
-
-    footer .d-flex {
-        justify-content: center !important;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    footer .col-lg-4 {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    footer .row:last-child .col-md-4 {
-        text-align: center !important;
-        margin-top: 1rem;
-    }
-}
-
-@media (max-width: 400px) {
-    .hero-title {
-        font-size: 1.7rem;
-    }
-
-    .hero-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .carousel-container-epic {
-        height: 250px;
-        margin: 0 5px;
-    }
-
-    .book-slide-epic {
-        width: 160px;
-        height: 210px;
+        padding: 2.5rem;
+        margin: 2rem 0;
     }
 
     .carousel-prev-epic,
@@ -1402,33 +978,16 @@ p {
         display: none;
     }
 
-    .section-title-epic {
-        font-size: 1.6rem;
-    }
-
-    .recommendation-epic,
     .exclusive-epic {
-        padding: 1rem;
-        margin: 1rem 0.1rem;
+        padding: 3rem;
+        margin: 3rem 1rem;
     }
 
-    .carousel-title-epic {
-        font-size: 1.3rem;
+    .navbar-futuristic .navbar-brand {
+        font-size: 1.5rem;
     }
 
-    .card-epic .card-body,
-    .product-card-epic .card-body,
-    .genre-card-epic .card-body {
-        padding: 1rem;
+    .navbar-futuristic .navbar-brand img {
+        height: 40px;
     }
-
-    .exclusive-epic h1 {
-        font-size: 1.4rem !important;
-    }
-
-    .exclusive-epic h2 {
-        font-size: 1rem !important;
-    }
-}
-
 }
